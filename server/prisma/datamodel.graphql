@@ -1,7 +1,34 @@
 type User {
   id: ID! @unique
   name: String!
-  email: String! @unique
+  email: String @unique
+  username: String! @unique
   password: String!
+  # feeds: [Feed!]!
+  # group: [Group!]!
 }
 
+# type Group{
+#   name: String!
+#   admins: [User!]!
+#   members: [User!]!
+#   threads: [Feed!]!
+#   # events: [Event!]!
+# }
+
+type Post{
+  author: User!
+  text: String!
+  comments: [Comment!]! 
+}
+
+type Comment{
+  author: User!
+  text: String!
+}
+
+# type Feed{
+#   # canPost: [User!]!
+#   # canView: [User!]!
+#   posts: [Post!]!
+# }
