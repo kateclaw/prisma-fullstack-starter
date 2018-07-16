@@ -5,8 +5,8 @@ type Query {
 }
 
 type Mutation {
-  signup(email: String!, password: String!, name: String!): AuthPayload!
-  login(email: String!, password: String!): AuthPayload!
+  signup(email: String, username: String!, password: String!, name: String!): AuthPayload!
+  login(username: String!, password: String!): AuthPayload!
 }
 
 type AuthPayload {
@@ -16,6 +16,43 @@ type AuthPayload {
 
 type User {
   id: ID!
-  email: String!
   name: String!
+  email: String 
+  phone: String
+  username: String
+  password: String!
+  groups: [Group!]!
 }
+
+# type Group{
+#   name: String!
+#   admins: [User!]!
+#   members: [User!]!
+#   threads: [Feed!]!
+#   # events: [Event!]!
+# }
+
+type Post{
+  author: User!
+  text: String!
+  comments: [Comment!]! 
+}
+
+type Comment{
+  author: User!
+  text: String!
+}
+
+type Feed{
+  # canPost: [User!]!
+  # canView: [User!]!
+  posts: [Post]
+}
+
+# type Event{
+#   description: String
+#   invited: [User!]!
+#   going: [User!]!
+#   notGoing: [User!]!
+#   admin: [User!]!
+# }

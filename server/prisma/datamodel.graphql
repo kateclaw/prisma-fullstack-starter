@@ -1,7 +1,50 @@
 type User {
   id: ID! @unique
   name: String!
-  email: String! @unique
+  email: String 
+  phone: String
+  username: String!@unique
   password: String!
+  # group: [Group!]!
 }
 
+# type Group{
+#   name: String!
+#   admins: [User!]!
+#   members: [User!]!
+#   threads: [Feed!]!
+#   # events: [Event!]!
+# }
+
+# type Group{
+#   name: String!
+#   admins: [User!]!
+#   members: [User!]!
+#   threads: [Feed!]!
+#   events: [Event!]!
+# }
+
+type Post{
+  author: User!
+  text: String!
+  comments: [Comment!]! 
+}
+
+type Comment{
+  author: User!
+  text: String!
+}
+
+type Feed{
+  # canPost: [User!]!
+  # canView: [User!]!
+  posts: [Post!]!
+}
+
+# type Event{
+#   description: String
+#   invited: [User!]!
+#   going: [User!]!
+#   notGoing: [User!]!
+#   admin: [User!]!
+# }
