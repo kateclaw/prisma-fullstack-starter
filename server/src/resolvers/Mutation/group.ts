@@ -55,15 +55,14 @@ export const group = {
     })
 
     let uniqueAdminInput = new Array<any>(ads.length)
-    let count = 0
+    let uniqueMemberInput = new Array<any>(mems.length + ads.length)
+    let inc = 0
 
     ads.forEach(element => {
-      uniqueAdminInput[count] = { username: element.username }
-      count++
+      uniqueAdminInput[inc] = { username: element.username }
+      uniqueMemberInput[inc] = { username: element.username }
+      inc++
     })
-
-    let uniqueMemberInput = new Array<any>(mems.length)
-    let inc = 0
 
     mems.forEach(element => {
       uniqueMemberInput[inc] = { username: element.username }
