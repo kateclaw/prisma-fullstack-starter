@@ -6,6 +6,8 @@ import t from "tcomb-form-native";
 const Form = t.form.Form;
 
 const User = t.struct({
+  email: t.String,
+  name: t.String,
   username: t.String,
   password: t.String
 });
@@ -20,9 +22,9 @@ const options = {
   }
 };
 
-export default class LinksScreen extends React.Component {
+export default class SignupScreen extends React.Component {
   static navigationOptions = {
-    title: "Log in"
+    title: "Sign up"
   };
 
   handleSubmit = () => {
@@ -34,7 +36,7 @@ export default class LinksScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Form ref={c => (this._form = c)} type={User} options={options} />
-        <Button title="Log in" onPress={this.handleSubmit} />
+        <Button title="Sign up" onPress={this.handleSubmit} />
       </View>
     );
   }
