@@ -6,7 +6,8 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
+  StatusBar,
 } from "react-native";
 import { WebBrowser } from "expo";
 import { Query } from "react-apollo";
@@ -14,50 +15,19 @@ import gql from "graphql-tag";
 
 import { MonoText } from "../components/StyledText";
 
-const ALL_MOVIES = gql`
-  query {
-    allMovies {
-      id
-      title
-    }
-  }
-`;
-
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
-    header: null
+    drawerLabel: "Home"
   };
 
   render() {
     return (
       <View style={styles.container}>
+      <StatusBar barStyle="light-content"/>
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
-          <Query query={ALL_MOVIES}>
-            {({ data, loading, error }) => {
-              if (loading) {
-                return "LOading...";
-              }
-
-              if (error) {
-                return "OOPS";
-              }
-
-              if (!data) {
-                return "no data";
-              }
-
-              return (
-                <View>
-                  {data.allMovies.map(movie => {
-                    return <Text key={movie.id}>{movie.title}</Text>;
-                  })}
-                </View>
-              );
-            }}
-          </Query>
           <View style={styles.welcomeContainer}>
             <Image
               source={
@@ -124,12 +94,7 @@ export default class HomeScreen extends React.Component {
         </Text>
       );
 
-      return (
-        <Text style={styles.developmentModeText}>
-          Development mode is enabled, your app will be slower but you can use
-          useful development tools. {learnMoreButton}
-        </Text>
-      );
+      return <Text style={styles.developmentModeText}>{learnMoreButton}</Text>;
     } else {
       return (
         <Text style={styles.developmentModeText}>
