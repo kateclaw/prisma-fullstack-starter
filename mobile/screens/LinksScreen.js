@@ -1,27 +1,50 @@
-import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import { ExpoLinksView } from '@expo/samples';
+import React from "react";
+import { View, ScrollView, StyleSheet, Button, Text } from "react-native";
+
+import t from "tcomb-form-native";
+
+const Form = t.form.Form;
+
+const User = t.struct({
+  username: t.String,
+  password: t.String
+});
+
+const options = {
+  auto: "placeholders",
+  fields: {
+    password: {
+      password: true,
+      secureTextEntry: true
+    }
+  }
+};
 
 export default class LinksScreen extends React.Component {
   static navigationOptions = {
-    title: 'Links',
+    title: "Log in"
+  };
+
+  handleSubmit = () => {
+    const value = this._form.getValue(); // use that ref to get the form value
+    console.log("value: ", value);
   };
 
   render() {
     return (
-      <ScrollView style={styles.container}>
-        {/* Go ahead and delete ExpoLinksView and replace it with your
-           * content, we just wanted to provide you with some helpful links */}
-        <ExpoLinksView />
-      </ScrollView>
+      <View style={styles.container}>
+        <Form ref={c => (this._form = c)} type={User} options={options} />
+        <Button title="Log in" onPress={this.handleSubmit} />
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#fff',
-  },
+    justifyContent: "center",
+    marginTop: 50,
+    padding: 20,
+    backgroundColor: "#ffffff"
+  }
 });
