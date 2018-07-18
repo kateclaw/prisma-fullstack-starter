@@ -4,10 +4,7 @@ type User {
   email: String @unique
   username: String! @unique
   password: String!
-  feedsCanPostIn: [Feed!]! @relation(name: "PostIn")
-  feedsCanView: [Feed!]! @relation(name: "View")
-
-  # group: [Group!]!
+  groups: [Group!]! @relation(name: "All")
   adminOf: [Group!]! @relation(name: "Admins")
   memberOf: [Group!]! @relation(name: "Members")
 }
@@ -17,15 +14,17 @@ type Group {
   name: String!
   admins: [User!]! @relation(name: "Admins")
   members: [User!]! @relation(name: "Members")
-  threads: [Feed!]!
+  allUsers: [User!]! @relation(name: "All")
+  feed: [Post!]!
   # events: [Event!]!
 }
+
 
 type Post {
   id: ID! @unique
   author: User!
   text: String!
-  feed: Feed!
+  group: Group!
   comments: [Comment!]!
 }
 
@@ -36,11 +35,4 @@ type Comment {
   post: Post!
 }
 
-type Feed {
-  id: ID! @unique
-  canPost: [User!]! @relation(name: "PostIn")
-  canView: [User!]! @relation(name: "View")
-  posts: [Post!]!
-  group: Group!
-  name: String!
-}
+

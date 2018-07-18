@@ -14,19 +14,17 @@ type Mutation {
 
   login(username: String!, password: String!): AuthPayload!
 
+#username should be the locally stored username for the current user
   createGroup(
     username: String!
     name: String!
     members: [String!]!
     admins: [String!]!
-    id: ID!
   ): Group!
 
-  #name is the name of the feed and group is the unique id of the parent group
-  createFeed(name: String!, group: ID!): Feed!
 
   #text is the inner of the post and feed is the unique id of the parent feed
-  createPost(text: String!, feed: ID!): Post!
+  createPost(text: String!, group: ID!): Post!
 
   #text is the inner of the comment and post is the unique id of the parent post
   createComment(text: String!, post: ID!): Comment!
@@ -37,16 +35,13 @@ type AuthPayload {
   user: User!
 }
 
-input GroupPayload {
-  username: String!
-}
-
 type User {
   id: ID!
   name: String!
   email: String
   username: String
   password: String!
+  groups: [Group!]!
 }
 
 type Group {
@@ -54,7 +49,7 @@ type Group {
   name: String!
   admins: [User!]!
   members: [User!]!
-  threads: [Feed!]!
+  feed: [Post!]!
   # events: [Event!]!
 }
 
@@ -62,7 +57,7 @@ type Post {
   id: ID!
   author: User!
   text: String!
-  feed: Feed!
+  group: Group!
   comments: [Comment!]
 }
 
@@ -73,11 +68,6 @@ type Comment {
   post: Post!
 }
 
-type Feed {
-  id: ID!
-  group: Group!
-  name: String!
-  canPost: [User!]!
-  canView: [User!]!
-  posts: [Post!]
-}
+
+
+
