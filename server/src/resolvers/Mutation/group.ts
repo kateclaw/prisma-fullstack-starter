@@ -69,22 +69,71 @@ export const group = {
       inc++
     })
 
-    return await ctx.db.mutation.createFeed({
-      data: {
-        group: {
-          connect: {
-            //group identifier password
-            password: group.password
+    return await ctx.db.mutation.createFeed(
+      {
+        data: {
+          password: args.password,
+          group: {
+            connect: {
+              //group identifier password
+              password: group.password
+            }
+          },
+          name: args.name,
+          canPost: {
+            connect: uniqueAdminInput
+          },
+          canView: {
+            connect: uniqueMemberInput
           }
-        },
-        name: args.name,
-        canPost: {
-          connect: uniqueAdminInput
-        },
-        canView: {
-          connect: uniqueMemberInput
         }
-      }
-    })
+      },
+      info
+    )
+  },
+
+  async createPost(parent, args, ctx: Context, info) {
+    const id = getUserId(ctx)
+    return await ctx.db.mutation.createPost(
+      {
+        data: {
+          author: {
+            connect: {
+              id: id
+            }
+          },
+          text: args.text,
+          feed: {
+            connect: {
+              password: args.feed
+            }
+          },
+          password: args.password
+        }
+      },
+      info
+    )
+  },
+
+  async createComment(parent, args, ctx: Context, info) {
+    const id = getUserId(ctx)
+    return await ctx.db.mutation.createComment(
+      {
+        data: {
+          author: {
+            connect: {
+              id: id
+            }
+          },
+          text: args.text,
+          post: {
+            connect: {
+              password: args.post
+            }
+          }
+        }
+      },
+      info
+    )
   }
 }

@@ -11,6 +11,9 @@ type Mutation {
     password: String!
     name: String!
   ): AuthPayload!
+
+  #password to be replaced later with local storage functions
+  #password refers to a unique string which allows a feed to be created later
   login(username: String!, password: String!): AuthPayload!
 
   createGroup(
@@ -20,7 +23,12 @@ type Mutation {
     password: String!
   ): Group!
 
-  createFeed(name: String!, group: String!): Feed!
+  #password to be replaced later with local storage functions
+  #group refers to the unique password that was created with the group
+  #password refers to a unique string which allows a post to be created later
+  createFeed(name: String!, group: String!, password: String!): Feed!
+  createPost(text: String!, feed: String!, password: String!): Post!
+  createComment(text: String!, post: String!): Comment!
 }
 
 type AuthPayload {
@@ -52,15 +60,19 @@ type Group {
 type Post {
   author: User!
   text: String!
-  comments: [Comment!]!
+  feed: Feed!
+  comments: [Comment!]
+  password: String!
 }
 
 type Comment {
   author: User!
   text: String!
+  post: Post!
 }
 
 type Feed {
+  password: String!
   group: Group!
   name: String!
   canPost: [User!]!

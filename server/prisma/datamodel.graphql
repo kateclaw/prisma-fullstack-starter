@@ -25,16 +25,20 @@ type Group {
 type Post {
   author: User!
   text: String!
+  feed: Feed!
   comments: [Comment!]!
+  password: String! @unique
 }
 
 type Comment {
   author: User!
   text: String!
+  post: Post!
 }
 
 type Feed {
   id: ID! @unique
+  password: String! @unique
   canPost: [User!]! @relation(name: "PostIn")
   canView: [User!]! @relation(name: "View")
   posts: [Post!]!
