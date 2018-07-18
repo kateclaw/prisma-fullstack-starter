@@ -37,6 +37,8 @@ export default class App extends React.Component {
         </ApolloProvider>
       );
     }
+
+    
   }
 
   _loadResourcesAsync = async () => {

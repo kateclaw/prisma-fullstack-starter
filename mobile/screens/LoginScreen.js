@@ -7,7 +7,8 @@ import {
   Text,
   TextInput,
   AsyncStorage,
-  Alert
+  Alert,
+  Scene
 } from "react-native";
 
 import { Mutation } from "react-apollo";
@@ -52,7 +53,7 @@ export default class LoginScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { state, navigate } = navigation;
     return {
-      title: "Log in"
+    title: "Log in",
     };
   };
 
@@ -64,6 +65,7 @@ export default class LoginScreen extends React.Component {
 
   render() {
     return (
+  
       <Mutation mutation={LOGIN}>
         {(login, { data, loading, error }) => {
           return (
@@ -119,6 +121,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 50,
     padding: 20,
-    backgroundColor: "#ffffff"
+    backgroundColor: "#ffffff",
   }
 });

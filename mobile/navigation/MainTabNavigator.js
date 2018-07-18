@@ -24,16 +24,16 @@ const HomeStack = createStackNavigator(
 
 const LoginStack = createStackNavigator(
   {
-    Lgoin: LoginScreen
+    Login: LoginScreen
   },
   {
-    headerMode: "none"
+   headerMode: "none"
   }
 );
 
-const SignupStack = createStackNavigator(
+const GroupStack = createStackNavigator(
   {
-    Signup: SignupScreen
+    Group: GroupScreen
   },
   {
     headerMode: "none"
@@ -53,15 +53,16 @@ const DrawerStack = createDrawerNavigator(
     Home: {
       screen: HomeStack
     },
-    Signup: {
-      screen: SignupStack
+    Groups: {
+      screen: GroupStack
     },
-    Login: {
-      screen: LoginStack
+    Logout: {
+      screen: LoginStack,
+        
     }
   },
   {
-    initialRouteName: "Home"
+    initialRouteName: "Logout"
   }
 );
 
