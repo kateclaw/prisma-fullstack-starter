@@ -1,7 +1,11 @@
 # source: https://eu1.prisma.sh/kylepecci-e3ce8e/prisma/dev
-# timestamp: Mon Jul 16 2018 21:45:02 GMT+0100 (Western European Summer Time)
+# timestamp: Wed Jul 18 2018 18:04:46 GMT+0100 (Western European Summer Time)
 
 type AggregateComment {
+  count: Int!
+}
+
+type AggregateGroup {
   count: Int!
 }
 
@@ -18,9 +22,11 @@ type BatchPayload {
   count: Long!
 }
 
-type Comment {
+type Comment implements Node {
+  id: ID!
   author(where: UserWhereInput): User!
   text: String!
+  post(where: PostWhereInput): Post!
 }
 
 """A connection to a list of items."""
@@ -36,10 +42,17 @@ type CommentConnection {
 input CommentCreateInput {
   text: String!
   author: UserCreateOneInput!
+  post: PostCreateOneWithoutCommentsInput!
 }
 
-input CommentCreateManyInput {
-  create: [CommentCreateInput!]
+input CommentCreateManyWithoutPostInput {
+  create: [CommentCreateWithoutPostInput!]
+  connect: [CommentWhereUniqueInput!]
+}
+
+input CommentCreateWithoutPostInput {
+  text: String!
+  author: UserCreateOneInput!
 }
 
 """An edge in a connection."""
@@ -52,10 +65,10 @@ type CommentEdge {
 }
 
 enum CommentOrderByInput {
-  text_ASC
-  text_DESC
   id_ASC
   id_DESC
+  text_ASC
+  text_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -63,6 +76,7 @@ enum CommentOrderByInput {
 }
 
 type CommentPreviousValues {
+  id: ID!
   text: String!
 }
 
@@ -108,10 +122,32 @@ input CommentSubscriptionWhereInput {
 input CommentUpdateInput {
   text: String
   author: UserUpdateOneInput
+  post: PostUpdateOneWithoutCommentsInput
 }
 
-input CommentUpdateManyInput {
-  create: [CommentCreateInput!]
+input CommentUpdateManyWithoutPostInput {
+  create: [CommentCreateWithoutPostInput!]
+  connect: [CommentWhereUniqueInput!]
+  disconnect: [CommentWhereUniqueInput!]
+  delete: [CommentWhereUniqueInput!]
+  update: [CommentUpdateWithWhereUniqueWithoutPostInput!]
+  upsert: [CommentUpsertWithWhereUniqueWithoutPostInput!]
+}
+
+input CommentUpdateWithoutPostDataInput {
+  text: String
+  author: UserUpdateOneInput
+}
+
+input CommentUpdateWithWhereUniqueWithoutPostInput {
+  where: CommentWhereUniqueInput!
+  data: CommentUpdateWithoutPostDataInput!
+}
+
+input CommentUpsertWithWhereUniqueWithoutPostInput {
+  where: CommentWhereUniqueInput!
+  update: CommentUpdateWithoutPostDataInput!
+  create: CommentCreateWithoutPostInput!
 }
 
 input CommentWhereInput {
@@ -123,6 +159,46 @@ input CommentWhereInput {
 
   """Logical NOT on all given filters combined by AND."""
   NOT: [CommentWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
   text: String
 
   """All values that are not equal to given value."""
@@ -164,9 +240,366 @@ input CommentWhereInput {
   """All values not ending with the given string."""
   text_not_ends_with: String
   author: UserWhereInput
-  _MagicalBackRelation_CommentToPost_every: PostWhereInput
-  _MagicalBackRelation_CommentToPost_some: PostWhereInput
-  _MagicalBackRelation_CommentToPost_none: PostWhereInput
+  post: PostWhereInput
+}
+
+input CommentWhereUniqueInput {
+  id: ID
+}
+
+type Group implements Node {
+  id: ID!
+  name: String!
+  admins(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  members(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  allUsers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  feed(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
+}
+
+"""A connection to a list of items."""
+type GroupConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [GroupEdge]!
+  aggregate: AggregateGroup!
+}
+
+input GroupCreateInput {
+  name: String!
+  admins: UserCreateManyWithoutAdminOfInput
+  members: UserCreateManyWithoutMemberOfInput
+  allUsers: UserCreateManyWithoutGroupsInput
+  feed: PostCreateManyWithoutGroupInput
+}
+
+input GroupCreateManyWithoutAdminsInput {
+  create: [GroupCreateWithoutAdminsInput!]
+  connect: [GroupWhereUniqueInput!]
+}
+
+input GroupCreateManyWithoutAllUsersInput {
+  create: [GroupCreateWithoutAllUsersInput!]
+  connect: [GroupWhereUniqueInput!]
+}
+
+input GroupCreateManyWithoutMembersInput {
+  create: [GroupCreateWithoutMembersInput!]
+  connect: [GroupWhereUniqueInput!]
+}
+
+input GroupCreateOneWithoutFeedInput {
+  create: GroupCreateWithoutFeedInput
+  connect: GroupWhereUniqueInput
+}
+
+input GroupCreateWithoutAdminsInput {
+  name: String!
+  members: UserCreateManyWithoutMemberOfInput
+  allUsers: UserCreateManyWithoutGroupsInput
+  feed: PostCreateManyWithoutGroupInput
+}
+
+input GroupCreateWithoutAllUsersInput {
+  name: String!
+  admins: UserCreateManyWithoutAdminOfInput
+  members: UserCreateManyWithoutMemberOfInput
+  feed: PostCreateManyWithoutGroupInput
+}
+
+input GroupCreateWithoutFeedInput {
+  name: String!
+  admins: UserCreateManyWithoutAdminOfInput
+  members: UserCreateManyWithoutMemberOfInput
+  allUsers: UserCreateManyWithoutGroupsInput
+}
+
+input GroupCreateWithoutMembersInput {
+  name: String!
+  admins: UserCreateManyWithoutAdminOfInput
+  allUsers: UserCreateManyWithoutGroupsInput
+  feed: PostCreateManyWithoutGroupInput
+}
+
+"""An edge in a connection."""
+type GroupEdge {
+  """The item at the end of the edge."""
+  node: Group!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum GroupOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type GroupPreviousValues {
+  id: ID!
+  name: String!
+}
+
+type GroupSubscriptionPayload {
+  mutation: MutationType!
+  node: Group
+  updatedFields: [String!]
+  previousValues: GroupPreviousValues
+}
+
+input GroupSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [GroupSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [GroupSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [GroupSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: GroupWhereInput
+}
+
+input GroupUpdateInput {
+  name: String
+  admins: UserUpdateManyWithoutAdminOfInput
+  members: UserUpdateManyWithoutMemberOfInput
+  allUsers: UserUpdateManyWithoutGroupsInput
+  feed: PostUpdateManyWithoutGroupInput
+}
+
+input GroupUpdateManyWithoutAdminsInput {
+  create: [GroupCreateWithoutAdminsInput!]
+  connect: [GroupWhereUniqueInput!]
+  disconnect: [GroupWhereUniqueInput!]
+  delete: [GroupWhereUniqueInput!]
+  update: [GroupUpdateWithWhereUniqueWithoutAdminsInput!]
+  upsert: [GroupUpsertWithWhereUniqueWithoutAdminsInput!]
+}
+
+input GroupUpdateManyWithoutAllUsersInput {
+  create: [GroupCreateWithoutAllUsersInput!]
+  connect: [GroupWhereUniqueInput!]
+  disconnect: [GroupWhereUniqueInput!]
+  delete: [GroupWhereUniqueInput!]
+  update: [GroupUpdateWithWhereUniqueWithoutAllUsersInput!]
+  upsert: [GroupUpsertWithWhereUniqueWithoutAllUsersInput!]
+}
+
+input GroupUpdateManyWithoutMembersInput {
+  create: [GroupCreateWithoutMembersInput!]
+  connect: [GroupWhereUniqueInput!]
+  disconnect: [GroupWhereUniqueInput!]
+  delete: [GroupWhereUniqueInput!]
+  update: [GroupUpdateWithWhereUniqueWithoutMembersInput!]
+  upsert: [GroupUpsertWithWhereUniqueWithoutMembersInput!]
+}
+
+input GroupUpdateOneWithoutFeedInput {
+  create: GroupCreateWithoutFeedInput
+  connect: GroupWhereUniqueInput
+  delete: Boolean
+  update: GroupUpdateWithoutFeedDataInput
+  upsert: GroupUpsertWithoutFeedInput
+}
+
+input GroupUpdateWithoutAdminsDataInput {
+  name: String
+  members: UserUpdateManyWithoutMemberOfInput
+  allUsers: UserUpdateManyWithoutGroupsInput
+  feed: PostUpdateManyWithoutGroupInput
+}
+
+input GroupUpdateWithoutAllUsersDataInput {
+  name: String
+  admins: UserUpdateManyWithoutAdminOfInput
+  members: UserUpdateManyWithoutMemberOfInput
+  feed: PostUpdateManyWithoutGroupInput
+}
+
+input GroupUpdateWithoutFeedDataInput {
+  name: String
+  admins: UserUpdateManyWithoutAdminOfInput
+  members: UserUpdateManyWithoutMemberOfInput
+  allUsers: UserUpdateManyWithoutGroupsInput
+}
+
+input GroupUpdateWithoutMembersDataInput {
+  name: String
+  admins: UserUpdateManyWithoutAdminOfInput
+  allUsers: UserUpdateManyWithoutGroupsInput
+  feed: PostUpdateManyWithoutGroupInput
+}
+
+input GroupUpdateWithWhereUniqueWithoutAdminsInput {
+  where: GroupWhereUniqueInput!
+  data: GroupUpdateWithoutAdminsDataInput!
+}
+
+input GroupUpdateWithWhereUniqueWithoutAllUsersInput {
+  where: GroupWhereUniqueInput!
+  data: GroupUpdateWithoutAllUsersDataInput!
+}
+
+input GroupUpdateWithWhereUniqueWithoutMembersInput {
+  where: GroupWhereUniqueInput!
+  data: GroupUpdateWithoutMembersDataInput!
+}
+
+input GroupUpsertWithoutFeedInput {
+  update: GroupUpdateWithoutFeedDataInput!
+  create: GroupCreateWithoutFeedInput!
+}
+
+input GroupUpsertWithWhereUniqueWithoutAdminsInput {
+  where: GroupWhereUniqueInput!
+  update: GroupUpdateWithoutAdminsDataInput!
+  create: GroupCreateWithoutAdminsInput!
+}
+
+input GroupUpsertWithWhereUniqueWithoutAllUsersInput {
+  where: GroupWhereUniqueInput!
+  update: GroupUpdateWithoutAllUsersDataInput!
+  create: GroupCreateWithoutAllUsersInput!
+}
+
+input GroupUpsertWithWhereUniqueWithoutMembersInput {
+  where: GroupWhereUniqueInput!
+  update: GroupUpdateWithoutMembersDataInput!
+  create: GroupCreateWithoutMembersInput!
+}
+
+input GroupWhereInput {
+  """Logical AND on all given filters."""
+  AND: [GroupWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [GroupWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [GroupWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  admins_every: UserWhereInput
+  admins_some: UserWhereInput
+  admins_none: UserWhereInput
+  members_every: UserWhereInput
+  members_some: UserWhereInput
+  members_none: UserWhereInput
+  allUsers_every: UserWhereInput
+  allUsers_some: UserWhereInput
+  allUsers_none: UserWhereInput
+  feed_every: PostWhereInput
+  feed_some: PostWhereInput
+  feed_none: PostWhereInput
+}
+
+input GroupWhereUniqueInput {
+  id: ID
 }
 
 """
@@ -176,18 +609,30 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
+  createGroup(data: GroupCreateInput!): Group!
   createPost(data: PostCreateInput!): Post!
-  createUser(data: UserCreateInput!): User!
   createComment(data: CommentCreateInput!): Comment!
+  createUser(data: UserCreateInput!): User!
+  updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group
+  updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
+  updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  deleteGroup(where: GroupWhereUniqueInput!): Group
+  deletePost(where: PostWhereUniqueInput!): Post
+  deleteComment(where: CommentWhereUniqueInput!): Comment
   deleteUser(where: UserWhereUniqueInput!): User
+  upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
+  upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
+  upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  updateManyGroups(data: GroupUpdateInput!, where: GroupWhereInput): BatchPayload!
   updateManyPosts(data: PostUpdateInput!, where: PostWhereInput): BatchPayload!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyComments(data: CommentUpdateInput!, where: CommentWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  deleteManyGroups(where: GroupWhereInput): BatchPayload!
   deleteManyPosts(where: PostWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyComments(where: CommentWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -217,9 +662,11 @@ type PageInfo {
   endCursor: String
 }
 
-type Post {
+type Post implements Node {
+  id: ID!
   author(where: UserWhereInput): User!
   text: String!
+  group(where: GroupWhereInput): Group!
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
 }
 
@@ -236,7 +683,30 @@ type PostConnection {
 input PostCreateInput {
   text: String!
   author: UserCreateOneInput!
-  comments: CommentCreateManyInput
+  group: GroupCreateOneWithoutFeedInput!
+  comments: CommentCreateManyWithoutPostInput
+}
+
+input PostCreateManyWithoutGroupInput {
+  create: [PostCreateWithoutGroupInput!]
+  connect: [PostWhereUniqueInput!]
+}
+
+input PostCreateOneWithoutCommentsInput {
+  create: PostCreateWithoutCommentsInput
+  connect: PostWhereUniqueInput
+}
+
+input PostCreateWithoutCommentsInput {
+  text: String!
+  author: UserCreateOneInput!
+  group: GroupCreateOneWithoutFeedInput!
+}
+
+input PostCreateWithoutGroupInput {
+  text: String!
+  author: UserCreateOneInput!
+  comments: CommentCreateManyWithoutPostInput
 }
 
 """An edge in a connection."""
@@ -249,10 +719,10 @@ type PostEdge {
 }
 
 enum PostOrderByInput {
-  text_ASC
-  text_DESC
   id_ASC
   id_DESC
+  text_ASC
+  text_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -260,6 +730,7 @@ enum PostOrderByInput {
 }
 
 type PostPreviousValues {
+  id: ID!
   text: String!
 }
 
@@ -305,7 +776,53 @@ input PostSubscriptionWhereInput {
 input PostUpdateInput {
   text: String
   author: UserUpdateOneInput
-  comments: CommentUpdateManyInput
+  group: GroupUpdateOneWithoutFeedInput
+  comments: CommentUpdateManyWithoutPostInput
+}
+
+input PostUpdateManyWithoutGroupInput {
+  create: [PostCreateWithoutGroupInput!]
+  connect: [PostWhereUniqueInput!]
+  disconnect: [PostWhereUniqueInput!]
+  delete: [PostWhereUniqueInput!]
+  update: [PostUpdateWithWhereUniqueWithoutGroupInput!]
+  upsert: [PostUpsertWithWhereUniqueWithoutGroupInput!]
+}
+
+input PostUpdateOneWithoutCommentsInput {
+  create: PostCreateWithoutCommentsInput
+  connect: PostWhereUniqueInput
+  delete: Boolean
+  update: PostUpdateWithoutCommentsDataInput
+  upsert: PostUpsertWithoutCommentsInput
+}
+
+input PostUpdateWithoutCommentsDataInput {
+  text: String
+  author: UserUpdateOneInput
+  group: GroupUpdateOneWithoutFeedInput
+}
+
+input PostUpdateWithoutGroupDataInput {
+  text: String
+  author: UserUpdateOneInput
+  comments: CommentUpdateManyWithoutPostInput
+}
+
+input PostUpdateWithWhereUniqueWithoutGroupInput {
+  where: PostWhereUniqueInput!
+  data: PostUpdateWithoutGroupDataInput!
+}
+
+input PostUpsertWithoutCommentsInput {
+  update: PostUpdateWithoutCommentsDataInput!
+  create: PostCreateWithoutCommentsInput!
+}
+
+input PostUpsertWithWhereUniqueWithoutGroupInput {
+  where: PostWhereUniqueInput!
+  update: PostUpdateWithoutGroupDataInput!
+  create: PostCreateWithoutGroupInput!
 }
 
 input PostWhereInput {
@@ -317,6 +834,46 @@ input PostWhereInput {
 
   """Logical NOT on all given filters combined by AND."""
   NOT: [PostWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
   text: String
 
   """All values that are not equal to given value."""
@@ -358,19 +915,29 @@ input PostWhereInput {
   """All values not ending with the given string."""
   text_not_ends_with: String
   author: UserWhereInput
+  group: GroupWhereInput
   comments_every: CommentWhereInput
   comments_some: CommentWhereInput
   comments_none: CommentWhereInput
 }
 
+input PostWhereUniqueInput {
+  id: ID
+}
+
 type Query {
+  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  group(where: GroupWhereUniqueInput!): Group
+  post(where: PostWhereUniqueInput!): Post
+  comment(where: CommentWhereUniqueInput!): Comment
   user(where: UserWhereUniqueInput!): User
+  groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -380,9 +947,10 @@ type Query {
 }
 
 type Subscription {
+  group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
 type User implements Node {
@@ -391,6 +959,9 @@ type User implements Node {
   email: String
   username: String!
   password: String!
+  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
+  adminOf(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
+  memberOf(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
 }
 
 """A connection to a list of items."""
@@ -408,11 +979,56 @@ input UserCreateInput {
   email: String
   username: String!
   password: String!
+  groups: GroupCreateManyWithoutAllUsersInput
+  adminOf: GroupCreateManyWithoutAdminsInput
+  memberOf: GroupCreateManyWithoutMembersInput
+}
+
+input UserCreateManyWithoutAdminOfInput {
+  create: [UserCreateWithoutAdminOfInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutGroupsInput {
+  create: [UserCreateWithoutGroupsInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutMemberOfInput {
+  create: [UserCreateWithoutMemberOfInput!]
+  connect: [UserWhereUniqueInput!]
 }
 
 input UserCreateOneInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutAdminOfInput {
+  name: String!
+  email: String
+  username: String!
+  password: String!
+  groups: GroupCreateManyWithoutAllUsersInput
+  memberOf: GroupCreateManyWithoutMembersInput
+}
+
+input UserCreateWithoutGroupsInput {
+  name: String!
+  email: String
+  username: String!
+  password: String!
+  adminOf: GroupCreateManyWithoutAdminsInput
+  memberOf: GroupCreateManyWithoutMembersInput
+}
+
+input UserCreateWithoutMemberOfInput {
+  name: String!
+  email: String
+  username: String!
+  password: String!
+  groups: GroupCreateManyWithoutAllUsersInput
+  adminOf: GroupCreateManyWithoutAdminsInput
 }
 
 """An edge in a connection."""
@@ -493,6 +1109,9 @@ input UserUpdateDataInput {
   email: String
   username: String
   password: String
+  groups: GroupUpdateManyWithoutAllUsersInput
+  adminOf: GroupUpdateManyWithoutAdminsInput
+  memberOf: GroupUpdateManyWithoutMembersInput
 }
 
 input UserUpdateInput {
@@ -500,6 +1119,36 @@ input UserUpdateInput {
   email: String
   username: String
   password: String
+  groups: GroupUpdateManyWithoutAllUsersInput
+  adminOf: GroupUpdateManyWithoutAdminsInput
+  memberOf: GroupUpdateManyWithoutMembersInput
+}
+
+input UserUpdateManyWithoutAdminOfInput {
+  create: [UserCreateWithoutAdminOfInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutAdminOfInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutAdminOfInput!]
+}
+
+input UserUpdateManyWithoutGroupsInput {
+  create: [UserCreateWithoutGroupsInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutGroupsInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutGroupsInput!]
+}
+
+input UserUpdateManyWithoutMemberOfInput {
+  create: [UserCreateWithoutMemberOfInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutMemberOfInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutMemberOfInput!]
 }
 
 input UserUpdateOneInput {
@@ -510,9 +1159,69 @@ input UserUpdateOneInput {
   upsert: UserUpsertNestedInput
 }
 
+input UserUpdateWithoutAdminOfDataInput {
+  name: String
+  email: String
+  username: String
+  password: String
+  groups: GroupUpdateManyWithoutAllUsersInput
+  memberOf: GroupUpdateManyWithoutMembersInput
+}
+
+input UserUpdateWithoutGroupsDataInput {
+  name: String
+  email: String
+  username: String
+  password: String
+  adminOf: GroupUpdateManyWithoutAdminsInput
+  memberOf: GroupUpdateManyWithoutMembersInput
+}
+
+input UserUpdateWithoutMemberOfDataInput {
+  name: String
+  email: String
+  username: String
+  password: String
+  groups: GroupUpdateManyWithoutAllUsersInput
+  adminOf: GroupUpdateManyWithoutAdminsInput
+}
+
+input UserUpdateWithWhereUniqueWithoutAdminOfInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutAdminOfDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutGroupsInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutGroupsDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutMemberOfInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutMemberOfDataInput!
+}
+
 input UserUpsertNestedInput {
   update: UserUpdateDataInput!
   create: UserCreateInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutAdminOfInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutAdminOfDataInput!
+  create: UserCreateWithoutAdminOfInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutGroupsInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutGroupsDataInput!
+  create: UserCreateWithoutGroupsInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutMemberOfInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutMemberOfDataInput!
+  create: UserCreateWithoutMemberOfInput!
 }
 
 input UserWhereInput {
@@ -724,12 +1433,21 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
-  _MagicalBackRelation_PostToUser_every: PostWhereInput
-  _MagicalBackRelation_PostToUser_some: PostWhereInput
-  _MagicalBackRelation_PostToUser_none: PostWhereInput
+  groups_every: GroupWhereInput
+  groups_some: GroupWhereInput
+  groups_none: GroupWhereInput
+  adminOf_every: GroupWhereInput
+  adminOf_some: GroupWhereInput
+  adminOf_none: GroupWhereInput
+  memberOf_every: GroupWhereInput
+  memberOf_some: GroupWhereInput
+  memberOf_none: GroupWhereInput
   _MagicalBackRelation_CommentToUser_every: CommentWhereInput
   _MagicalBackRelation_CommentToUser_some: CommentWhereInput
   _MagicalBackRelation_CommentToUser_none: CommentWhereInput
+  _MagicalBackRelation_PostToUser_every: PostWhereInput
+  _MagicalBackRelation_PostToUser_some: PostWhereInput
+  _MagicalBackRelation_PostToUser_none: PostWhereInput
 }
 
 input UserWhereUniqueInput {

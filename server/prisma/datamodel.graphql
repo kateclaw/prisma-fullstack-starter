@@ -4,31 +4,35 @@ type User {
   email: String @unique
   username: String! @unique
   password: String!
-  # feeds: [Feed!]!
-  # group: [Group!]!
+  groups: [Group!]! @relation(name: "All")
+  adminOf: [Group!]! @relation(name: "Admins")
+  memberOf: [Group!]! @relation(name: "Members")
 }
 
-# type Group{
-#   name: String!
-#   admins: [User!]!
-#   members: [User!]!
-#   threads: [Feed!]!
-#   # events: [Event!]!
-# }
+type Group {
+  id: ID! @unique
+  name: String!
+  admins: [User!]! @relation(name: "Admins")
+  members: [User!]! @relation(name: "Members")
+  allUsers: [User!]! @relation(name: "All")
+  feed: [Post!]!
+  # events: [Event!]!
+}
 
-type Post{
+
+type Post {
+  id: ID! @unique
   author: User!
   text: String!
-  comments: [Comment!]! 
+  group: Group!
+  comments: [Comment!]!
 }
 
-type Comment{
+type Comment {
+  id: ID! @unique
   author: User!
   text: String!
+  post: Post!
 }
 
-# type Feed{
-#   # canPost: [User!]!
-#   # canView: [User!]!
-#   posts: [Post!]!
-# }
+
