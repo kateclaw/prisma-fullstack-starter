@@ -6,9 +6,10 @@ export const group = {
     // const user = await ctx.db.query.user({ where: { id } }, info)
     //FIX WITH THE: localStorage.getItem("username")
 
-    let uniqueAdminInput = new Array<any>(args.admins.length)
-    let count = 0
+    let uniqueAdminInput = new Array<any>(args.admins.length + 1)
+    let count = 1
 
+    uniqueAdminInput[0] = { username: args.username }
     args.admins.forEach(element => {
       uniqueAdminInput[count] = { username: element }
       count++
@@ -26,7 +27,6 @@ export const group = {
       {
         data: {
           name: args.name,
-          password: args.password,
           // admins: args.admins,
           // members: args.members
           admins: {
@@ -43,15 +43,15 @@ export const group = {
 
   async createFeed(parent, args, ctx: Context, info) {
     const group = await ctx.db.query.group({
-      where: { password: args.group }
+      where: { id: args.group }
     })
 
     const ads = await ctx.db.query.users({
-      where: { adminOf_some: { password: args.group } }
+      where: { adminOf_some: { id: args.group } }
     })
 
     const mems = await ctx.db.query.users({
-      where: { memberOf_some: { password: args.group } }
+      where: { memberOf_some: { id: args.group } }
     })
 
     let uniqueAdminInput = new Array<any>(ads.length)
@@ -72,11 +72,10 @@ export const group = {
     return await ctx.db.mutation.createFeed(
       {
         data: {
-          password: args.password,
           group: {
             connect: {
               //group identifier password
-              password: group.password
+              id: args.group
             }
           },
           name: args.name,
@@ -105,10 +104,9 @@ export const group = {
           text: args.text,
           feed: {
             connect: {
-              password: args.feed
+              id: args.feed
             }
-          },
-          password: args.password
+          }
         }
       },
       info
@@ -128,7 +126,7 @@ export const group = {
           text: args.text,
           post: {
             connect: {
-              password: args.post
+              id: args.post
             }
           }
         }

@@ -14,7 +14,6 @@ type User {
 
 type Group {
   id: ID! @unique
-  password: String! @unique
   name: String!
   admins: [User!]! @relation(name: "Admins")
   members: [User!]! @relation(name: "Members")
@@ -23,14 +22,15 @@ type Group {
 }
 
 type Post {
+  id: ID! @unique
   author: User!
   text: String!
   feed: Feed!
   comments: [Comment!]!
-  password: String! @unique
 }
 
 type Comment {
+  id: ID! @unique
   author: User!
   text: String!
   post: Post!
@@ -38,7 +38,6 @@ type Comment {
 
 type Feed {
   id: ID! @unique
-  password: String! @unique
   canPost: [User!]! @relation(name: "PostIn")
   canView: [User!]! @relation(name: "View")
   posts: [Post!]!
