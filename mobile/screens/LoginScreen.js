@@ -58,8 +58,6 @@ export default class LoginScreen extends React.Component {
 
   handleSubmit = () => {
     const value = this._form.getValue(); // use that ref to get the form value
-    // const username = value.username;
-    // const password = value.password;
   };
 
   render() {
@@ -101,7 +99,7 @@ export default class LoginScreen extends React.Component {
                 }}
               />
 
-              <Text>Don't have an account?</Text>
+              <Text>New to Shout?</Text>
               <Button
                 title="Sign up"
                 onPress={() => this.props.navigation.navigate("Signup")}
