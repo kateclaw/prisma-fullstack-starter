@@ -1,8 +1,18 @@
 import React from "react";
-import { View, ScrollView, StyleSheet, Button, Text } from "react-native";
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  Button,
+  Text,
+  AsyncStorage
+} from "react-native";
 
+import { Mutation } from "react-apollo";
+import gql from "graphql-tag";
+
+// FORM SET UP
 import t from "tcomb-form-native";
-
 const Form = t.form.Form;
 
 const User = t.struct({
@@ -22,9 +32,37 @@ const options = {
   }
 };
 
+// BACKEND SETUP
+const SIGNUP = gql`
+  mutation signup(
+    $email: String!
+    $password: String!
+    $name: String!
+    $username: String!
+  ) {
+    signup(
+      email: $email
+      password: $password
+      name: $name
+      username: $username
+    ) {
+      token
+      user {
+        id
+        name
+        email
+        username
+      }
+    }
+  }
+`;
+
 export default class SignupScreen extends React.Component {
-  static navigationOptions = {
-    title: "Sign up"
+  static navigationOptions = ({ navigation }) => {
+    const { state, navigate } = navigation;
+    return {
+      title: "Sign up"
+    };
   };
 
   handleSubmit = () => {
@@ -34,10 +72,46 @@ export default class SignupScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Form ref={c => (this._form = c)} type={User} options={options} />
-        <Button title="Sign up" onPress={this.handleSubmit} />
-      </View>
+      <Mutation mutation={SIGNUP}>
+        {(signup, { data, loading, error }) => {
+          return (
+            <View style={styles.container}>
+              <Form ref={c => (this._form = c)} type={User} options={options} />
+              <Button
+                title="Sign up"
+                onPress={async () => {
+                  const value = this._form.getValue(); // use that ref to get the form value
+
+                  try {
+                    const { data } = await signup({
+                      variables: {
+                        email: value.email,
+                        name: value.name,
+                        username: value.username,
+                        password: value.password
+                      }
+                    });
+                    AsyncStorage.setItem(data.signup.token, "token");
+                    AsyncStorage.setItem(data.signup.user.username, "username");
+
+                    // CHANGE THIS TO GROUP PAGE
+                    this.props.navigation.navigate("Home");
+
+                    console.log({ data });
+                  } catch (error) {
+                    // redirect to sign up
+                    console.log({ error });
+
+                    Alert.alert(
+                      "There was an error signing you up. Try again!"
+                    );
+                  }
+                }}
+              />
+            </View>
+          );
+        }}
+      </Mutation>
     );
   }
 }

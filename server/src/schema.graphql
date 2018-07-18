@@ -5,8 +5,30 @@ type Query {
 }
 
 type Mutation {
-  signup(email: String, username: String!, password: String!, name: String!): AuthPayload!
+  signup(
+    email: String
+    username: String!
+    password: String!
+    name: String!
+  ): AuthPayload!
+
+  #password to be replaced later with local storage functions
+  #password refers to a unique string which allows a feed to be created later
   login(username: String!, password: String!): AuthPayload!
+
+  createGroup(
+    name: String!
+    members: [String!]!
+    admins: [String!]!
+    password: String!
+  ): Group!
+
+  #password to be replaced later with local storage functions
+  #group refers to the unique password that was created with the group
+  #password refers to a unique string which allows a post to be created later
+  createFeed(name: String!, group: String!, password: String!): Feed!
+  createPost(text: String!, feed: String!, password: String!): Post!
+  createComment(text: String!, post: String!): Comment!
 }
 
 type AuthPayload {
@@ -14,30 +36,46 @@ type AuthPayload {
   user: User!
 }
 
+input GroupPayload {
+  username: String!
+}
+
 type User {
   id: ID!
   name: String!
-  email: String 
+  email: String
   username: String
   password: String!
-  # feeds: [Feed!]!
-
-  # groups: [Group!]!
 }
 
-type Post{
+type Group {
+  name: String!
+  password: String!
+  admins: [User!]!
+  members: [User!]!
+  threads: [Feed!]!
+  # events: [Event!]!
+}
+
+type Post {
   author: User!
   text: String!
-  comments: [Comment!]! 
+  feed: Feed!
+  comments: [Comment!]
+  password: String!
 }
 
-type Comment{
+type Comment {
   author: User!
   text: String!
+  post: Post!
 }
 
-# type Feed{
-#   # canPost: [User!]!
-#   # canView: [User!]!
-#   posts: [Post!]!
-# }
+type Feed {
+  password: String!
+  group: Group!
+  name: String!
+  canPost: [User!]!
+  canView: [User!]!
+  posts: [Post!]
+}
