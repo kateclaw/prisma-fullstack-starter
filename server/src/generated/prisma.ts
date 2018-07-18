@@ -7,16 +7,14 @@ export interface Query {
     groups: <T = Group[]>(args: { where?: GroupWhereInput, orderBy?: GroupOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     posts: <T = Post[]>(args: { where?: PostWhereInput, orderBy?: PostOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     comments: <T = Comment[]>(args: { where?: CommentWhereInput, orderBy?: CommentOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    feeds: <T = Feed[]>(args: { where?: FeedWhereInput, orderBy?: FeedOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     users: <T = User[]>(args: { where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     group: <T = Group | null>(args: { where: GroupWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     post: <T = Post | null>(args: { where: PostWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    feed: <T = Feed | null>(args: { where: FeedWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    comment: <T = Comment | null>(args: { where: CommentWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     user: <T = User | null>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     groupsConnection: <T = GroupConnection>(args: { where?: GroupWhereInput, orderBy?: GroupOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     postsConnection: <T = PostConnection>(args: { where?: PostWhereInput, orderBy?: PostOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     commentsConnection: <T = CommentConnection>(args: { where?: CommentWhereInput, orderBy?: CommentOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    feedsConnection: <T = FeedConnection>(args: { where?: FeedWhereInput, orderBy?: FeedOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     usersConnection: <T = UserConnection>(args: { where?: UserWhereInput, orderBy?: UserOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     node: <T = Node | null>(args: { id: ID_Output }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
@@ -25,29 +23,26 @@ export interface Mutation {
     createGroup: <T = Group>(args: { data: GroupCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createPost: <T = Post>(args: { data: PostCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createComment: <T = Comment>(args: { data: CommentCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    createFeed: <T = Feed>(args: { data: FeedCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     createUser: <T = User>(args: { data: UserCreateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateGroup: <T = Group | null>(args: { data: GroupUpdateInput, where: GroupWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updatePost: <T = Post | null>(args: { data: PostUpdateInput, where: PostWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateFeed: <T = Feed | null>(args: { data: FeedUpdateInput, where: FeedWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    updateComment: <T = Comment | null>(args: { data: CommentUpdateInput, where: CommentWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateUser: <T = User | null>(args: { data: UserUpdateInput, where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteGroup: <T = Group | null>(args: { where: GroupWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deletePost: <T = Post | null>(args: { where: PostWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteFeed: <T = Feed | null>(args: { where: FeedWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    deleteComment: <T = Comment | null>(args: { where: CommentWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteUser: <T = User | null>(args: { where: UserWhereUniqueInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertGroup: <T = Group>(args: { where: GroupWhereUniqueInput, create: GroupCreateInput, update: GroupUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertPost: <T = Post>(args: { where: PostWhereUniqueInput, create: PostCreateInput, update: PostUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    upsertFeed: <T = Feed>(args: { where: FeedWhereUniqueInput, create: FeedCreateInput, update: FeedUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
+    upsertComment: <T = Comment>(args: { where: CommentWhereUniqueInput, create: CommentCreateInput, update: CommentUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     upsertUser: <T = User>(args: { where: UserWhereUniqueInput, create: UserCreateInput, update: UserUpdateInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyGroups: <T = BatchPayload>(args: { data: GroupUpdateInput, where?: GroupWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyPosts: <T = BatchPayload>(args: { data: PostUpdateInput, where?: PostWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyComments: <T = BatchPayload>(args: { data: CommentUpdateInput, where?: CommentWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    updateManyFeeds: <T = BatchPayload>(args: { data: FeedUpdateInput, where?: FeedWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     updateManyUsers: <T = BatchPayload>(args: { data: UserUpdateInput, where?: UserWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyGroups: <T = BatchPayload>(args: { where?: GroupWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyPosts: <T = BatchPayload>(args: { where?: PostWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyComments: <T = BatchPayload>(args: { where?: CommentWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
-    deleteManyFeeds: <T = BatchPayload>(args: { where?: FeedWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> ,
     deleteManyUsers: <T = BatchPayload>(args: { where?: UserWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<T> 
   }
 
@@ -55,7 +50,6 @@ export interface Subscription {
     group: <T = GroupSubscriptionPayload | null>(args: { where?: GroupSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
     post: <T = PostSubscriptionPayload | null>(args: { where?: PostSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
     comment: <T = CommentSubscriptionPayload | null>(args: { where?: CommentSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
-    feed: <T = FeedSubscriptionPayload | null>(args: { where?: FeedSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> ,
     user: <T = UserSubscriptionPayload | null>(args: { where?: UserSubscriptionWhereInput }, info?: GraphQLResolveInfo | string, options?: Options) => Promise<AsyncIterator<T>> 
   }
 
@@ -63,7 +57,6 @@ export interface Exists {
   Group: (where?: GroupWhereInput) => Promise<boolean>
   Post: (where?: PostWhereInput) => Promise<boolean>
   Comment: (where?: CommentWhereInput) => Promise<boolean>
-  Feed: (where?: FeedWhereInput) => Promise<boolean>
   User: (where?: UserWhereInput) => Promise<boolean>
 }
 
@@ -93,10 +86,6 @@ const typeDefs = `type AggregateComment {
   count: Int!
 }
 
-type AggregateFeed {
-  count: Int!
-}
-
 type AggregateGroup {
   count: Int!
 }
@@ -114,7 +103,8 @@ type BatchPayload {
   count: Long!
 }
 
-type Comment {
+type Comment implements Node {
+  id: ID!
   author(where: UserWhereInput): User!
   text: String!
   post(where: PostWhereInput): Post!
@@ -138,6 +128,7 @@ input CommentCreateInput {
 
 input CommentCreateManyWithoutPostInput {
   create: [CommentCreateWithoutPostInput!]
+  connect: [CommentWhereUniqueInput!]
 }
 
 input CommentCreateWithoutPostInput {
@@ -155,10 +146,10 @@ type CommentEdge {
 }
 
 enum CommentOrderByInput {
-  text_ASC
-  text_DESC
   id_ASC
   id_DESC
+  text_ASC
+  text_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -166,6 +157,7 @@ enum CommentOrderByInput {
 }
 
 type CommentPreviousValues {
+  id: ID!
   text: String!
 }
 
@@ -216,6 +208,27 @@ input CommentUpdateInput {
 
 input CommentUpdateManyWithoutPostInput {
   create: [CommentCreateWithoutPostInput!]
+  connect: [CommentWhereUniqueInput!]
+  disconnect: [CommentWhereUniqueInput!]
+  delete: [CommentWhereUniqueInput!]
+  update: [CommentUpdateWithWhereUniqueWithoutPostInput!]
+  upsert: [CommentUpsertWithWhereUniqueWithoutPostInput!]
+}
+
+input CommentUpdateWithoutPostDataInput {
+  text: String
+  author: UserUpdateOneInput
+}
+
+input CommentUpdateWithWhereUniqueWithoutPostInput {
+  where: CommentWhereUniqueInput!
+  data: CommentUpdateWithoutPostDataInput!
+}
+
+input CommentUpsertWithWhereUniqueWithoutPostInput {
+  where: CommentWhereUniqueInput!
+  update: CommentUpdateWithoutPostDataInput!
+  create: CommentCreateWithoutPostInput!
 }
 
 input CommentWhereInput {
@@ -227,6 +240,46 @@ input CommentWhereInput {
 
   """Logical NOT on all given filters combined by AND."""
   NOT: [CommentWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
   text: String
 
   """All values that are not equal to given value."""
@@ -271,421 +324,17 @@ input CommentWhereInput {
   post: PostWhereInput
 }
 
-type Feed implements Node {
-  id: ID!
-  password: String!
-  canPost(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  canView(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
-  group(where: GroupWhereInput): Group!
-  name: String!
-}
-
-"""A connection to a list of items."""
-type FeedConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [FeedEdge]!
-  aggregate: AggregateFeed!
-}
-
-input FeedCreateInput {
-  password: String!
-  name: String!
-  canPost: UserCreateManyWithoutFeedsCanPostInInput
-  canView: UserCreateManyWithoutFeedsCanViewInput
-  posts: PostCreateManyWithoutFeedInput
-  group: GroupCreateOneWithoutThreadsInput!
-}
-
-input FeedCreateManyWithoutCanPostInput {
-  create: [FeedCreateWithoutCanPostInput!]
-  connect: [FeedWhereUniqueInput!]
-}
-
-input FeedCreateManyWithoutCanViewInput {
-  create: [FeedCreateWithoutCanViewInput!]
-  connect: [FeedWhereUniqueInput!]
-}
-
-input FeedCreateManyWithoutGroupInput {
-  create: [FeedCreateWithoutGroupInput!]
-  connect: [FeedWhereUniqueInput!]
-}
-
-input FeedCreateOneWithoutPostsInput {
-  create: FeedCreateWithoutPostsInput
-  connect: FeedWhereUniqueInput
-}
-
-input FeedCreateWithoutCanPostInput {
-  password: String!
-  name: String!
-  canView: UserCreateManyWithoutFeedsCanViewInput
-  posts: PostCreateManyWithoutFeedInput
-  group: GroupCreateOneWithoutThreadsInput!
-}
-
-input FeedCreateWithoutCanViewInput {
-  password: String!
-  name: String!
-  canPost: UserCreateManyWithoutFeedsCanPostInInput
-  posts: PostCreateManyWithoutFeedInput
-  group: GroupCreateOneWithoutThreadsInput!
-}
-
-input FeedCreateWithoutGroupInput {
-  password: String!
-  name: String!
-  canPost: UserCreateManyWithoutFeedsCanPostInInput
-  canView: UserCreateManyWithoutFeedsCanViewInput
-  posts: PostCreateManyWithoutFeedInput
-}
-
-input FeedCreateWithoutPostsInput {
-  password: String!
-  name: String!
-  canPost: UserCreateManyWithoutFeedsCanPostInInput
-  canView: UserCreateManyWithoutFeedsCanViewInput
-  group: GroupCreateOneWithoutThreadsInput!
-}
-
-"""An edge in a connection."""
-type FeedEdge {
-  """The item at the end of the edge."""
-  node: Feed!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum FeedOrderByInput {
-  id_ASC
-  id_DESC
-  password_ASC
-  password_DESC
-  name_ASC
-  name_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type FeedPreviousValues {
-  id: ID!
-  password: String!
-  name: String!
-}
-
-type FeedSubscriptionPayload {
-  mutation: MutationType!
-  node: Feed
-  updatedFields: [String!]
-  previousValues: FeedPreviousValues
-}
-
-input FeedSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [FeedSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [FeedSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [FeedSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: FeedWhereInput
-}
-
-input FeedUpdateInput {
-  password: String
-  name: String
-  canPost: UserUpdateManyWithoutFeedsCanPostInInput
-  canView: UserUpdateManyWithoutFeedsCanViewInput
-  posts: PostUpdateManyWithoutFeedInput
-  group: GroupUpdateOneWithoutThreadsInput
-}
-
-input FeedUpdateManyWithoutCanPostInput {
-  create: [FeedCreateWithoutCanPostInput!]
-  connect: [FeedWhereUniqueInput!]
-  disconnect: [FeedWhereUniqueInput!]
-  delete: [FeedWhereUniqueInput!]
-  update: [FeedUpdateWithWhereUniqueWithoutCanPostInput!]
-  upsert: [FeedUpsertWithWhereUniqueWithoutCanPostInput!]
-}
-
-input FeedUpdateManyWithoutCanViewInput {
-  create: [FeedCreateWithoutCanViewInput!]
-  connect: [FeedWhereUniqueInput!]
-  disconnect: [FeedWhereUniqueInput!]
-  delete: [FeedWhereUniqueInput!]
-  update: [FeedUpdateWithWhereUniqueWithoutCanViewInput!]
-  upsert: [FeedUpsertWithWhereUniqueWithoutCanViewInput!]
-}
-
-input FeedUpdateManyWithoutGroupInput {
-  create: [FeedCreateWithoutGroupInput!]
-  connect: [FeedWhereUniqueInput!]
-  disconnect: [FeedWhereUniqueInput!]
-  delete: [FeedWhereUniqueInput!]
-  update: [FeedUpdateWithWhereUniqueWithoutGroupInput!]
-  upsert: [FeedUpsertWithWhereUniqueWithoutGroupInput!]
-}
-
-input FeedUpdateOneWithoutPostsInput {
-  create: FeedCreateWithoutPostsInput
-  connect: FeedWhereUniqueInput
-  delete: Boolean
-  update: FeedUpdateWithoutPostsDataInput
-  upsert: FeedUpsertWithoutPostsInput
-}
-
-input FeedUpdateWithoutCanPostDataInput {
-  password: String
-  name: String
-  canView: UserUpdateManyWithoutFeedsCanViewInput
-  posts: PostUpdateManyWithoutFeedInput
-  group: GroupUpdateOneWithoutThreadsInput
-}
-
-input FeedUpdateWithoutCanViewDataInput {
-  password: String
-  name: String
-  canPost: UserUpdateManyWithoutFeedsCanPostInInput
-  posts: PostUpdateManyWithoutFeedInput
-  group: GroupUpdateOneWithoutThreadsInput
-}
-
-input FeedUpdateWithoutGroupDataInput {
-  password: String
-  name: String
-  canPost: UserUpdateManyWithoutFeedsCanPostInInput
-  canView: UserUpdateManyWithoutFeedsCanViewInput
-  posts: PostUpdateManyWithoutFeedInput
-}
-
-input FeedUpdateWithoutPostsDataInput {
-  password: String
-  name: String
-  canPost: UserUpdateManyWithoutFeedsCanPostInInput
-  canView: UserUpdateManyWithoutFeedsCanViewInput
-  group: GroupUpdateOneWithoutThreadsInput
-}
-
-input FeedUpdateWithWhereUniqueWithoutCanPostInput {
-  where: FeedWhereUniqueInput!
-  data: FeedUpdateWithoutCanPostDataInput!
-}
-
-input FeedUpdateWithWhereUniqueWithoutCanViewInput {
-  where: FeedWhereUniqueInput!
-  data: FeedUpdateWithoutCanViewDataInput!
-}
-
-input FeedUpdateWithWhereUniqueWithoutGroupInput {
-  where: FeedWhereUniqueInput!
-  data: FeedUpdateWithoutGroupDataInput!
-}
-
-input FeedUpsertWithoutPostsInput {
-  update: FeedUpdateWithoutPostsDataInput!
-  create: FeedCreateWithoutPostsInput!
-}
-
-input FeedUpsertWithWhereUniqueWithoutCanPostInput {
-  where: FeedWhereUniqueInput!
-  update: FeedUpdateWithoutCanPostDataInput!
-  create: FeedCreateWithoutCanPostInput!
-}
-
-input FeedUpsertWithWhereUniqueWithoutCanViewInput {
-  where: FeedWhereUniqueInput!
-  update: FeedUpdateWithoutCanViewDataInput!
-  create: FeedCreateWithoutCanViewInput!
-}
-
-input FeedUpsertWithWhereUniqueWithoutGroupInput {
-  where: FeedWhereUniqueInput!
-  update: FeedUpdateWithoutGroupDataInput!
-  create: FeedCreateWithoutGroupInput!
-}
-
-input FeedWhereInput {
-  """Logical AND on all given filters."""
-  AND: [FeedWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [FeedWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [FeedWhereInput!]
+input CommentWhereUniqueInput {
   id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  password: String
-
-  """All values that are not equal to given value."""
-  password_not: String
-
-  """All values that are contained in given list."""
-  password_in: [String!]
-
-  """All values that are not contained in given list."""
-  password_not_in: [String!]
-
-  """All values less than the given value."""
-  password_lt: String
-
-  """All values less than or equal the given value."""
-  password_lte: String
-
-  """All values greater than the given value."""
-  password_gt: String
-
-  """All values greater than or equal the given value."""
-  password_gte: String
-
-  """All values containing the given string."""
-  password_contains: String
-
-  """All values not containing the given string."""
-  password_not_contains: String
-
-  """All values starting with the given string."""
-  password_starts_with: String
-
-  """All values not starting with the given string."""
-  password_not_starts_with: String
-
-  """All values ending with the given string."""
-  password_ends_with: String
-
-  """All values not ending with the given string."""
-  password_not_ends_with: String
-  name: String
-
-  """All values that are not equal to given value."""
-  name_not: String
-
-  """All values that are contained in given list."""
-  name_in: [String!]
-
-  """All values that are not contained in given list."""
-  name_not_in: [String!]
-
-  """All values less than the given value."""
-  name_lt: String
-
-  """All values less than or equal the given value."""
-  name_lte: String
-
-  """All values greater than the given value."""
-  name_gt: String
-
-  """All values greater than or equal the given value."""
-  name_gte: String
-
-  """All values containing the given string."""
-  name_contains: String
-
-  """All values not containing the given string."""
-  name_not_contains: String
-
-  """All values starting with the given string."""
-  name_starts_with: String
-
-  """All values not starting with the given string."""
-  name_not_starts_with: String
-
-  """All values ending with the given string."""
-  name_ends_with: String
-
-  """All values not ending with the given string."""
-  name_not_ends_with: String
-  canPost_every: UserWhereInput
-  canPost_some: UserWhereInput
-  canPost_none: UserWhereInput
-  canView_every: UserWhereInput
-  canView_some: UserWhereInput
-  canView_none: UserWhereInput
-  posts_every: PostWhereInput
-  posts_some: PostWhereInput
-  posts_none: PostWhereInput
-  group: GroupWhereInput
-}
-
-input FeedWhereUniqueInput {
-  id: ID
-  password: String
 }
 
 type Group implements Node {
   id: ID!
-  password: String!
   name: String!
   admins(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   members(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
-  threads(where: FeedWhereInput, orderBy: FeedOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feed!]
+  allUsers(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  feed(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
 }
 
 """A connection to a list of items."""
@@ -699,15 +348,20 @@ type GroupConnection {
 }
 
 input GroupCreateInput {
-  password: String!
   name: String!
   admins: UserCreateManyWithoutAdminOfInput
   members: UserCreateManyWithoutMemberOfInput
-  threads: FeedCreateManyWithoutGroupInput
+  allUsers: UserCreateManyWithoutGroupsInput
+  feed: PostCreateManyWithoutGroupInput
 }
 
 input GroupCreateManyWithoutAdminsInput {
   create: [GroupCreateWithoutAdminsInput!]
+  connect: [GroupWhereUniqueInput!]
+}
+
+input GroupCreateManyWithoutAllUsersInput {
+  create: [GroupCreateWithoutAllUsersInput!]
   connect: [GroupWhereUniqueInput!]
 }
 
@@ -716,30 +370,37 @@ input GroupCreateManyWithoutMembersInput {
   connect: [GroupWhereUniqueInput!]
 }
 
-input GroupCreateOneWithoutThreadsInput {
-  create: GroupCreateWithoutThreadsInput
+input GroupCreateOneWithoutFeedInput {
+  create: GroupCreateWithoutFeedInput
   connect: GroupWhereUniqueInput
 }
 
 input GroupCreateWithoutAdminsInput {
-  password: String!
   name: String!
   members: UserCreateManyWithoutMemberOfInput
-  threads: FeedCreateManyWithoutGroupInput
+  allUsers: UserCreateManyWithoutGroupsInput
+  feed: PostCreateManyWithoutGroupInput
+}
+
+input GroupCreateWithoutAllUsersInput {
+  name: String!
+  admins: UserCreateManyWithoutAdminOfInput
+  members: UserCreateManyWithoutMemberOfInput
+  feed: PostCreateManyWithoutGroupInput
+}
+
+input GroupCreateWithoutFeedInput {
+  name: String!
+  admins: UserCreateManyWithoutAdminOfInput
+  members: UserCreateManyWithoutMemberOfInput
+  allUsers: UserCreateManyWithoutGroupsInput
 }
 
 input GroupCreateWithoutMembersInput {
-  password: String!
   name: String!
   admins: UserCreateManyWithoutAdminOfInput
-  threads: FeedCreateManyWithoutGroupInput
-}
-
-input GroupCreateWithoutThreadsInput {
-  password: String!
-  name: String!
-  admins: UserCreateManyWithoutAdminOfInput
-  members: UserCreateManyWithoutMemberOfInput
+  allUsers: UserCreateManyWithoutGroupsInput
+  feed: PostCreateManyWithoutGroupInput
 }
 
 """An edge in a connection."""
@@ -754,8 +415,6 @@ type GroupEdge {
 enum GroupOrderByInput {
   id_ASC
   id_DESC
-  password_ASC
-  password_DESC
   name_ASC
   name_DESC
   updatedAt_ASC
@@ -766,7 +425,6 @@ enum GroupOrderByInput {
 
 type GroupPreviousValues {
   id: ID!
-  password: String!
   name: String!
 }
 
@@ -810,11 +468,11 @@ input GroupSubscriptionWhereInput {
 }
 
 input GroupUpdateInput {
-  password: String
   name: String
   admins: UserUpdateManyWithoutAdminOfInput
   members: UserUpdateManyWithoutMemberOfInput
-  threads: FeedUpdateManyWithoutGroupInput
+  allUsers: UserUpdateManyWithoutGroupsInput
+  feed: PostUpdateManyWithoutGroupInput
 }
 
 input GroupUpdateManyWithoutAdminsInput {
@@ -826,6 +484,15 @@ input GroupUpdateManyWithoutAdminsInput {
   upsert: [GroupUpsertWithWhereUniqueWithoutAdminsInput!]
 }
 
+input GroupUpdateManyWithoutAllUsersInput {
+  create: [GroupCreateWithoutAllUsersInput!]
+  connect: [GroupWhereUniqueInput!]
+  disconnect: [GroupWhereUniqueInput!]
+  delete: [GroupWhereUniqueInput!]
+  update: [GroupUpdateWithWhereUniqueWithoutAllUsersInput!]
+  upsert: [GroupUpsertWithWhereUniqueWithoutAllUsersInput!]
+}
+
 input GroupUpdateManyWithoutMembersInput {
   create: [GroupCreateWithoutMembersInput!]
   connect: [GroupWhereUniqueInput!]
@@ -835,33 +502,40 @@ input GroupUpdateManyWithoutMembersInput {
   upsert: [GroupUpsertWithWhereUniqueWithoutMembersInput!]
 }
 
-input GroupUpdateOneWithoutThreadsInput {
-  create: GroupCreateWithoutThreadsInput
+input GroupUpdateOneWithoutFeedInput {
+  create: GroupCreateWithoutFeedInput
   connect: GroupWhereUniqueInput
   delete: Boolean
-  update: GroupUpdateWithoutThreadsDataInput
-  upsert: GroupUpsertWithoutThreadsInput
+  update: GroupUpdateWithoutFeedDataInput
+  upsert: GroupUpsertWithoutFeedInput
 }
 
 input GroupUpdateWithoutAdminsDataInput {
-  password: String
   name: String
   members: UserUpdateManyWithoutMemberOfInput
-  threads: FeedUpdateManyWithoutGroupInput
+  allUsers: UserUpdateManyWithoutGroupsInput
+  feed: PostUpdateManyWithoutGroupInput
+}
+
+input GroupUpdateWithoutAllUsersDataInput {
+  name: String
+  admins: UserUpdateManyWithoutAdminOfInput
+  members: UserUpdateManyWithoutMemberOfInput
+  feed: PostUpdateManyWithoutGroupInput
+}
+
+input GroupUpdateWithoutFeedDataInput {
+  name: String
+  admins: UserUpdateManyWithoutAdminOfInput
+  members: UserUpdateManyWithoutMemberOfInput
+  allUsers: UserUpdateManyWithoutGroupsInput
 }
 
 input GroupUpdateWithoutMembersDataInput {
-  password: String
   name: String
   admins: UserUpdateManyWithoutAdminOfInput
-  threads: FeedUpdateManyWithoutGroupInput
-}
-
-input GroupUpdateWithoutThreadsDataInput {
-  password: String
-  name: String
-  admins: UserUpdateManyWithoutAdminOfInput
-  members: UserUpdateManyWithoutMemberOfInput
+  allUsers: UserUpdateManyWithoutGroupsInput
+  feed: PostUpdateManyWithoutGroupInput
 }
 
 input GroupUpdateWithWhereUniqueWithoutAdminsInput {
@@ -869,20 +543,31 @@ input GroupUpdateWithWhereUniqueWithoutAdminsInput {
   data: GroupUpdateWithoutAdminsDataInput!
 }
 
+input GroupUpdateWithWhereUniqueWithoutAllUsersInput {
+  where: GroupWhereUniqueInput!
+  data: GroupUpdateWithoutAllUsersDataInput!
+}
+
 input GroupUpdateWithWhereUniqueWithoutMembersInput {
   where: GroupWhereUniqueInput!
   data: GroupUpdateWithoutMembersDataInput!
 }
 
-input GroupUpsertWithoutThreadsInput {
-  update: GroupUpdateWithoutThreadsDataInput!
-  create: GroupCreateWithoutThreadsInput!
+input GroupUpsertWithoutFeedInput {
+  update: GroupUpdateWithoutFeedDataInput!
+  create: GroupCreateWithoutFeedInput!
 }
 
 input GroupUpsertWithWhereUniqueWithoutAdminsInput {
   where: GroupWhereUniqueInput!
   update: GroupUpdateWithoutAdminsDataInput!
   create: GroupCreateWithoutAdminsInput!
+}
+
+input GroupUpsertWithWhereUniqueWithoutAllUsersInput {
+  where: GroupWhereUniqueInput!
+  update: GroupUpdateWithoutAllUsersDataInput!
+  create: GroupCreateWithoutAllUsersInput!
 }
 
 input GroupUpsertWithWhereUniqueWithoutMembersInput {
@@ -940,46 +625,6 @@ input GroupWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  password: String
-
-  """All values that are not equal to given value."""
-  password_not: String
-
-  """All values that are contained in given list."""
-  password_in: [String!]
-
-  """All values that are not contained in given list."""
-  password_not_in: [String!]
-
-  """All values less than the given value."""
-  password_lt: String
-
-  """All values less than or equal the given value."""
-  password_lte: String
-
-  """All values greater than the given value."""
-  password_gt: String
-
-  """All values greater than or equal the given value."""
-  password_gte: String
-
-  """All values containing the given string."""
-  password_contains: String
-
-  """All values not containing the given string."""
-  password_not_contains: String
-
-  """All values starting with the given string."""
-  password_starts_with: String
-
-  """All values not starting with the given string."""
-  password_not_starts_with: String
-
-  """All values ending with the given string."""
-  password_ends_with: String
-
-  """All values not ending with the given string."""
-  password_not_ends_with: String
   name: String
 
   """All values that are not equal to given value."""
@@ -1026,14 +671,16 @@ input GroupWhereInput {
   members_every: UserWhereInput
   members_some: UserWhereInput
   members_none: UserWhereInput
-  threads_every: FeedWhereInput
-  threads_some: FeedWhereInput
-  threads_none: FeedWhereInput
+  allUsers_every: UserWhereInput
+  allUsers_some: UserWhereInput
+  allUsers_none: UserWhereInput
+  feed_every: PostWhereInput
+  feed_some: PostWhereInput
+  feed_none: PostWhereInput
 }
 
 input GroupWhereUniqueInput {
   id: ID
-  password: String
 }
 
 """
@@ -1046,29 +693,26 @@ type Mutation {
   createGroup(data: GroupCreateInput!): Group!
   createPost(data: PostCreateInput!): Post!
   createComment(data: CommentCreateInput!): Comment!
-  createFeed(data: FeedCreateInput!): Feed!
   createUser(data: UserCreateInput!): User!
   updateGroup(data: GroupUpdateInput!, where: GroupWhereUniqueInput!): Group
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
-  updateFeed(data: FeedUpdateInput!, where: FeedWhereUniqueInput!): Feed
+  updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   deleteGroup(where: GroupWhereUniqueInput!): Group
   deletePost(where: PostWhereUniqueInput!): Post
-  deleteFeed(where: FeedWhereUniqueInput!): Feed
+  deleteComment(where: CommentWhereUniqueInput!): Comment
   deleteUser(where: UserWhereUniqueInput!): User
   upsertGroup(where: GroupWhereUniqueInput!, create: GroupCreateInput!, update: GroupUpdateInput!): Group!
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
-  upsertFeed(where: FeedWhereUniqueInput!, create: FeedCreateInput!, update: FeedUpdateInput!): Feed!
+  upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   updateManyGroups(data: GroupUpdateInput!, where: GroupWhereInput): BatchPayload!
   updateManyPosts(data: PostUpdateInput!, where: PostWhereInput): BatchPayload!
   updateManyComments(data: CommentUpdateInput!, where: CommentWhereInput): BatchPayload!
-  updateManyFeeds(data: FeedUpdateInput!, where: FeedWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   deleteManyGroups(where: GroupWhereInput): BatchPayload!
   deleteManyPosts(where: PostWhereInput): BatchPayload!
   deleteManyComments(where: CommentWhereInput): BatchPayload!
-  deleteManyFeeds(where: FeedWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
@@ -1099,12 +743,12 @@ type PageInfo {
   endCursor: String
 }
 
-type Post {
+type Post implements Node {
+  id: ID!
   author(where: UserWhereInput): User!
   text: String!
-  feed(where: FeedWhereInput): Feed!
+  group(where: GroupWhereInput): Group!
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
-  password: String!
 }
 
 """A connection to a list of items."""
@@ -1119,14 +763,13 @@ type PostConnection {
 
 input PostCreateInput {
   text: String!
-  password: String!
   author: UserCreateOneInput!
-  feed: FeedCreateOneWithoutPostsInput!
+  group: GroupCreateOneWithoutFeedInput!
   comments: CommentCreateManyWithoutPostInput
 }
 
-input PostCreateManyWithoutFeedInput {
-  create: [PostCreateWithoutFeedInput!]
+input PostCreateManyWithoutGroupInput {
+  create: [PostCreateWithoutGroupInput!]
   connect: [PostWhereUniqueInput!]
 }
 
@@ -1137,14 +780,12 @@ input PostCreateOneWithoutCommentsInput {
 
 input PostCreateWithoutCommentsInput {
   text: String!
-  password: String!
   author: UserCreateOneInput!
-  feed: FeedCreateOneWithoutPostsInput!
+  group: GroupCreateOneWithoutFeedInput!
 }
 
-input PostCreateWithoutFeedInput {
+input PostCreateWithoutGroupInput {
   text: String!
-  password: String!
   author: UserCreateOneInput!
   comments: CommentCreateManyWithoutPostInput
 }
@@ -1159,12 +800,10 @@ type PostEdge {
 }
 
 enum PostOrderByInput {
-  text_ASC
-  text_DESC
-  password_ASC
-  password_DESC
   id_ASC
   id_DESC
+  text_ASC
+  text_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -1172,8 +811,8 @@ enum PostOrderByInput {
 }
 
 type PostPreviousValues {
+  id: ID!
   text: String!
-  password: String!
 }
 
 type PostSubscriptionPayload {
@@ -1217,19 +856,18 @@ input PostSubscriptionWhereInput {
 
 input PostUpdateInput {
   text: String
-  password: String
   author: UserUpdateOneInput
-  feed: FeedUpdateOneWithoutPostsInput
+  group: GroupUpdateOneWithoutFeedInput
   comments: CommentUpdateManyWithoutPostInput
 }
 
-input PostUpdateManyWithoutFeedInput {
-  create: [PostCreateWithoutFeedInput!]
+input PostUpdateManyWithoutGroupInput {
+  create: [PostCreateWithoutGroupInput!]
   connect: [PostWhereUniqueInput!]
   disconnect: [PostWhereUniqueInput!]
   delete: [PostWhereUniqueInput!]
-  update: [PostUpdateWithWhereUniqueWithoutFeedInput!]
-  upsert: [PostUpsertWithWhereUniqueWithoutFeedInput!]
+  update: [PostUpdateWithWhereUniqueWithoutGroupInput!]
+  upsert: [PostUpsertWithWhereUniqueWithoutGroupInput!]
 }
 
 input PostUpdateOneWithoutCommentsInput {
@@ -1242,21 +880,19 @@ input PostUpdateOneWithoutCommentsInput {
 
 input PostUpdateWithoutCommentsDataInput {
   text: String
-  password: String
   author: UserUpdateOneInput
-  feed: FeedUpdateOneWithoutPostsInput
+  group: GroupUpdateOneWithoutFeedInput
 }
 
-input PostUpdateWithoutFeedDataInput {
+input PostUpdateWithoutGroupDataInput {
   text: String
-  password: String
   author: UserUpdateOneInput
   comments: CommentUpdateManyWithoutPostInput
 }
 
-input PostUpdateWithWhereUniqueWithoutFeedInput {
+input PostUpdateWithWhereUniqueWithoutGroupInput {
   where: PostWhereUniqueInput!
-  data: PostUpdateWithoutFeedDataInput!
+  data: PostUpdateWithoutGroupDataInput!
 }
 
 input PostUpsertWithoutCommentsInput {
@@ -1264,10 +900,10 @@ input PostUpsertWithoutCommentsInput {
   create: PostCreateWithoutCommentsInput!
 }
 
-input PostUpsertWithWhereUniqueWithoutFeedInput {
+input PostUpsertWithWhereUniqueWithoutGroupInput {
   where: PostWhereUniqueInput!
-  update: PostUpdateWithoutFeedDataInput!
-  create: PostCreateWithoutFeedInput!
+  update: PostUpdateWithoutGroupDataInput!
+  create: PostCreateWithoutGroupInput!
 }
 
 input PostWhereInput {
@@ -1279,6 +915,46 @@ input PostWhereInput {
 
   """Logical NOT on all given filters combined by AND."""
   NOT: [PostWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
   text: String
 
   """All values that are not equal to given value."""
@@ -1319,71 +995,29 @@ input PostWhereInput {
 
   """All values not ending with the given string."""
   text_not_ends_with: String
-  password: String
-
-  """All values that are not equal to given value."""
-  password_not: String
-
-  """All values that are contained in given list."""
-  password_in: [String!]
-
-  """All values that are not contained in given list."""
-  password_not_in: [String!]
-
-  """All values less than the given value."""
-  password_lt: String
-
-  """All values less than or equal the given value."""
-  password_lte: String
-
-  """All values greater than the given value."""
-  password_gt: String
-
-  """All values greater than or equal the given value."""
-  password_gte: String
-
-  """All values containing the given string."""
-  password_contains: String
-
-  """All values not containing the given string."""
-  password_not_contains: String
-
-  """All values starting with the given string."""
-  password_starts_with: String
-
-  """All values not starting with the given string."""
-  password_not_starts_with: String
-
-  """All values ending with the given string."""
-  password_ends_with: String
-
-  """All values not ending with the given string."""
-  password_not_ends_with: String
   author: UserWhereInput
-  feed: FeedWhereInput
+  group: GroupWhereInput
   comments_every: CommentWhereInput
   comments_some: CommentWhereInput
   comments_none: CommentWhereInput
 }
 
 input PostWhereUniqueInput {
-  password: String
+  id: ID
 }
 
 type Query {
   groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group]!
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
-  feeds(where: FeedWhereInput, orderBy: FeedOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feed]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   group(where: GroupWhereUniqueInput!): Group
   post(where: PostWhereUniqueInput!): Post
-  feed(where: FeedWhereUniqueInput!): Feed
+  comment(where: CommentWhereUniqueInput!): Comment
   user(where: UserWhereUniqueInput!): User
   groupsConnection(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GroupConnection!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
   commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
-  feedsConnection(where: FeedWhereInput, orderBy: FeedOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FeedConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
@@ -1397,7 +1031,6 @@ type Subscription {
   group(where: GroupSubscriptionWhereInput): GroupSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
-  feed(where: FeedSubscriptionWhereInput): FeedSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -1407,8 +1040,7 @@ type User implements Node {
   email: String
   username: String!
   password: String!
-  feedsCanPostIn(where: FeedWhereInput, orderBy: FeedOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feed!]
-  feedsCanView(where: FeedWhereInput, orderBy: FeedOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feed!]
+  groups(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
   adminOf(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
   memberOf(where: GroupWhereInput, orderBy: GroupOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Group!]
 }
@@ -1428,8 +1060,7 @@ input UserCreateInput {
   email: String
   username: String!
   password: String!
-  feedsCanPostIn: FeedCreateManyWithoutCanPostInput
-  feedsCanView: FeedCreateManyWithoutCanViewInput
+  groups: GroupCreateManyWithoutAllUsersInput
   adminOf: GroupCreateManyWithoutAdminsInput
   memberOf: GroupCreateManyWithoutMembersInput
 }
@@ -1439,13 +1070,8 @@ input UserCreateManyWithoutAdminOfInput {
   connect: [UserWhereUniqueInput!]
 }
 
-input UserCreateManyWithoutFeedsCanPostInInput {
-  create: [UserCreateWithoutFeedsCanPostInInput!]
-  connect: [UserWhereUniqueInput!]
-}
-
-input UserCreateManyWithoutFeedsCanViewInput {
-  create: [UserCreateWithoutFeedsCanViewInput!]
+input UserCreateManyWithoutGroupsInput {
+  create: [UserCreateWithoutGroupsInput!]
   connect: [UserWhereUniqueInput!]
 }
 
@@ -1464,27 +1090,15 @@ input UserCreateWithoutAdminOfInput {
   email: String
   username: String!
   password: String!
-  feedsCanPostIn: FeedCreateManyWithoutCanPostInput
-  feedsCanView: FeedCreateManyWithoutCanViewInput
+  groups: GroupCreateManyWithoutAllUsersInput
   memberOf: GroupCreateManyWithoutMembersInput
 }
 
-input UserCreateWithoutFeedsCanPostInInput {
+input UserCreateWithoutGroupsInput {
   name: String!
   email: String
   username: String!
   password: String!
-  feedsCanView: FeedCreateManyWithoutCanViewInput
-  adminOf: GroupCreateManyWithoutAdminsInput
-  memberOf: GroupCreateManyWithoutMembersInput
-}
-
-input UserCreateWithoutFeedsCanViewInput {
-  name: String!
-  email: String
-  username: String!
-  password: String!
-  feedsCanPostIn: FeedCreateManyWithoutCanPostInput
   adminOf: GroupCreateManyWithoutAdminsInput
   memberOf: GroupCreateManyWithoutMembersInput
 }
@@ -1494,8 +1108,7 @@ input UserCreateWithoutMemberOfInput {
   email: String
   username: String!
   password: String!
-  feedsCanPostIn: FeedCreateManyWithoutCanPostInput
-  feedsCanView: FeedCreateManyWithoutCanViewInput
+  groups: GroupCreateManyWithoutAllUsersInput
   adminOf: GroupCreateManyWithoutAdminsInput
 }
 
@@ -1577,8 +1190,7 @@ input UserUpdateDataInput {
   email: String
   username: String
   password: String
-  feedsCanPostIn: FeedUpdateManyWithoutCanPostInput
-  feedsCanView: FeedUpdateManyWithoutCanViewInput
+  groups: GroupUpdateManyWithoutAllUsersInput
   adminOf: GroupUpdateManyWithoutAdminsInput
   memberOf: GroupUpdateManyWithoutMembersInput
 }
@@ -1588,8 +1200,7 @@ input UserUpdateInput {
   email: String
   username: String
   password: String
-  feedsCanPostIn: FeedUpdateManyWithoutCanPostInput
-  feedsCanView: FeedUpdateManyWithoutCanViewInput
+  groups: GroupUpdateManyWithoutAllUsersInput
   adminOf: GroupUpdateManyWithoutAdminsInput
   memberOf: GroupUpdateManyWithoutMembersInput
 }
@@ -1603,22 +1214,13 @@ input UserUpdateManyWithoutAdminOfInput {
   upsert: [UserUpsertWithWhereUniqueWithoutAdminOfInput!]
 }
 
-input UserUpdateManyWithoutFeedsCanPostInInput {
-  create: [UserCreateWithoutFeedsCanPostInInput!]
+input UserUpdateManyWithoutGroupsInput {
+  create: [UserCreateWithoutGroupsInput!]
   connect: [UserWhereUniqueInput!]
   disconnect: [UserWhereUniqueInput!]
   delete: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutFeedsCanPostInInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutFeedsCanPostInInput!]
-}
-
-input UserUpdateManyWithoutFeedsCanViewInput {
-  create: [UserCreateWithoutFeedsCanViewInput!]
-  connect: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  delete: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutFeedsCanViewInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutFeedsCanViewInput!]
+  update: [UserUpdateWithWhereUniqueWithoutGroupsInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutGroupsInput!]
 }
 
 input UserUpdateManyWithoutMemberOfInput {
@@ -1643,27 +1245,15 @@ input UserUpdateWithoutAdminOfDataInput {
   email: String
   username: String
   password: String
-  feedsCanPostIn: FeedUpdateManyWithoutCanPostInput
-  feedsCanView: FeedUpdateManyWithoutCanViewInput
+  groups: GroupUpdateManyWithoutAllUsersInput
   memberOf: GroupUpdateManyWithoutMembersInput
 }
 
-input UserUpdateWithoutFeedsCanPostInDataInput {
+input UserUpdateWithoutGroupsDataInput {
   name: String
   email: String
   username: String
   password: String
-  feedsCanView: FeedUpdateManyWithoutCanViewInput
-  adminOf: GroupUpdateManyWithoutAdminsInput
-  memberOf: GroupUpdateManyWithoutMembersInput
-}
-
-input UserUpdateWithoutFeedsCanViewDataInput {
-  name: String
-  email: String
-  username: String
-  password: String
-  feedsCanPostIn: FeedUpdateManyWithoutCanPostInput
   adminOf: GroupUpdateManyWithoutAdminsInput
   memberOf: GroupUpdateManyWithoutMembersInput
 }
@@ -1673,8 +1263,7 @@ input UserUpdateWithoutMemberOfDataInput {
   email: String
   username: String
   password: String
-  feedsCanPostIn: FeedUpdateManyWithoutCanPostInput
-  feedsCanView: FeedUpdateManyWithoutCanViewInput
+  groups: GroupUpdateManyWithoutAllUsersInput
   adminOf: GroupUpdateManyWithoutAdminsInput
 }
 
@@ -1683,14 +1272,9 @@ input UserUpdateWithWhereUniqueWithoutAdminOfInput {
   data: UserUpdateWithoutAdminOfDataInput!
 }
 
-input UserUpdateWithWhereUniqueWithoutFeedsCanPostInInput {
+input UserUpdateWithWhereUniqueWithoutGroupsInput {
   where: UserWhereUniqueInput!
-  data: UserUpdateWithoutFeedsCanPostInDataInput!
-}
-
-input UserUpdateWithWhereUniqueWithoutFeedsCanViewInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateWithoutFeedsCanViewDataInput!
+  data: UserUpdateWithoutGroupsDataInput!
 }
 
 input UserUpdateWithWhereUniqueWithoutMemberOfInput {
@@ -1709,16 +1293,10 @@ input UserUpsertWithWhereUniqueWithoutAdminOfInput {
   create: UserCreateWithoutAdminOfInput!
 }
 
-input UserUpsertWithWhereUniqueWithoutFeedsCanPostInInput {
+input UserUpsertWithWhereUniqueWithoutGroupsInput {
   where: UserWhereUniqueInput!
-  update: UserUpdateWithoutFeedsCanPostInDataInput!
-  create: UserCreateWithoutFeedsCanPostInInput!
-}
-
-input UserUpsertWithWhereUniqueWithoutFeedsCanViewInput {
-  where: UserWhereUniqueInput!
-  update: UserUpdateWithoutFeedsCanViewDataInput!
-  create: UserCreateWithoutFeedsCanViewInput!
+  update: UserUpdateWithoutGroupsDataInput!
+  create: UserCreateWithoutGroupsInput!
 }
 
 input UserUpsertWithWhereUniqueWithoutMemberOfInput {
@@ -1936,12 +1514,9 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
-  feedsCanPostIn_every: FeedWhereInput
-  feedsCanPostIn_some: FeedWhereInput
-  feedsCanPostIn_none: FeedWhereInput
-  feedsCanView_every: FeedWhereInput
-  feedsCanView_some: FeedWhereInput
-  feedsCanView_none: FeedWhereInput
+  groups_every: GroupWhereInput
+  groups_some: GroupWhereInput
+  groups_none: GroupWhereInput
   adminOf_every: GroupWhereInput
   adminOf_some: GroupWhereInput
   adminOf_none: GroupWhereInput
@@ -1971,8 +1546,6 @@ export const Prisma = makePrismaBindingClass<BindingConstructor<Prisma>>({typeDe
 
 export type GroupOrderByInput =   'id_ASC' |
   'id_DESC' |
-  'password_ASC' |
-  'password_DESC' |
   'name_ASC' |
   'name_DESC' |
   'updatedAt_ASC' |
@@ -1995,32 +1568,19 @@ export type UserOrderByInput =   'id_ASC' |
   'createdAt_ASC' |
   'createdAt_DESC'
 
-export type FeedOrderByInput =   'id_ASC' |
+export type PostOrderByInput =   'id_ASC' |
   'id_DESC' |
-  'password_ASC' |
-  'password_DESC' |
-  'name_ASC' |
-  'name_DESC' |
+  'text_ASC' |
+  'text_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC'
 
-export type PostOrderByInput =   'text_ASC' |
-  'text_DESC' |
-  'password_ASC' |
-  'password_DESC' |
-  'id_ASC' |
+export type CommentOrderByInput =   'id_ASC' |
   'id_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC'
-
-export type CommentOrderByInput =   'text_ASC' |
+  'text_ASC' |
   'text_DESC' |
-  'id_ASC' |
-  'id_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
   'createdAt_ASC' |
@@ -2030,13 +1590,12 @@ export type MutationType =   'CREATED' |
   'UPDATED' |
   'DELETED'
 
-export interface UserUpdateManyWithoutAdminOfInput {
-  create?: UserCreateWithoutAdminOfInput[] | UserCreateWithoutAdminOfInput
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  update?: UserUpdateWithWhereUniqueWithoutAdminOfInput[] | UserUpdateWithWhereUniqueWithoutAdminOfInput
-  upsert?: UserUpsertWithWhereUniqueWithoutAdminOfInput[] | UserUpsertWithWhereUniqueWithoutAdminOfInput
+export interface GroupUpdateInput {
+  name?: String
+  admins?: UserUpdateManyWithoutAdminOfInput
+  members?: UserUpdateManyWithoutMemberOfInput
+  allUsers?: UserUpdateManyWithoutGroupsInput
+  feed?: PostUpdateManyWithoutGroupInput
 }
 
 export interface GroupWhereInput {
@@ -2057,20 +1616,6 @@ export interface GroupWhereInput {
   id_not_starts_with?: ID_Input
   id_ends_with?: ID_Input
   id_not_ends_with?: ID_Input
-  password?: String
-  password_not?: String
-  password_in?: String[] | String
-  password_not_in?: String[] | String
-  password_lt?: String
-  password_lte?: String
-  password_gt?: String
-  password_gte?: String
-  password_contains?: String
-  password_not_contains?: String
-  password_starts_with?: String
-  password_not_starts_with?: String
-  password_ends_with?: String
-  password_not_ends_with?: String
   name?: String
   name_not?: String
   name_in?: String[] | String
@@ -2091,9 +1636,24 @@ export interface GroupWhereInput {
   members_every?: UserWhereInput
   members_some?: UserWhereInput
   members_none?: UserWhereInput
-  threads_every?: FeedWhereInput
-  threads_some?: FeedWhereInput
-  threads_none?: FeedWhereInput
+  allUsers_every?: UserWhereInput
+  allUsers_some?: UserWhereInput
+  allUsers_none?: UserWhereInput
+  feed_every?: PostWhereInput
+  feed_some?: PostWhereInput
+  feed_none?: PostWhereInput
+}
+
+export interface PostCreateWithoutGroupInput {
+  text: String
+  author: UserCreateOneInput
+  comments?: CommentCreateManyWithoutPostInput
+}
+
+export interface PostUpsertWithWhereUniqueWithoutGroupInput {
+  where: PostWhereUniqueInput
+  update: PostUpdateWithoutGroupDataInput
+  create: PostCreateWithoutGroupInput
 }
 
 export interface UserCreateOneInput {
@@ -2101,12 +1661,13 @@ export interface UserCreateOneInput {
   connect?: UserWhereUniqueInput
 }
 
-export interface GroupUpdateOneWithoutThreadsInput {
-  create?: GroupCreateWithoutThreadsInput
-  connect?: GroupWhereUniqueInput
-  delete?: Boolean
-  update?: GroupUpdateWithoutThreadsDataInput
-  upsert?: GroupUpsertWithoutThreadsInput
+export interface GroupUpdateManyWithoutAllUsersInput {
+  create?: GroupCreateWithoutAllUsersInput[] | GroupCreateWithoutAllUsersInput
+  connect?: GroupWhereUniqueInput[] | GroupWhereUniqueInput
+  disconnect?: GroupWhereUniqueInput[] | GroupWhereUniqueInput
+  delete?: GroupWhereUniqueInput[] | GroupWhereUniqueInput
+  update?: GroupUpdateWithWhereUniqueWithoutAllUsersInput[] | GroupUpdateWithWhereUniqueWithoutAllUsersInput
+  upsert?: GroupUpsertWithWhereUniqueWithoutAllUsersInput[] | GroupUpsertWithWhereUniqueWithoutAllUsersInput
 }
 
 export interface UserCreateInput {
@@ -2114,25 +1675,73 @@ export interface UserCreateInput {
   email?: String
   username: String
   password: String
-  feedsCanPostIn?: FeedCreateManyWithoutCanPostInput
-  feedsCanView?: FeedCreateManyWithoutCanViewInput
+  groups?: GroupCreateManyWithoutAllUsersInput
   adminOf?: GroupCreateManyWithoutAdminsInput
   memberOf?: GroupCreateManyWithoutMembersInput
 }
 
-export interface FeedUpdateWithWhereUniqueWithoutCanPostInput {
-  where: FeedWhereUniqueInput
-  data: FeedUpdateWithoutCanPostDataInput
+export interface PostWhereInput {
+  AND?: PostWhereInput[] | PostWhereInput
+  OR?: PostWhereInput[] | PostWhereInput
+  NOT?: PostWhereInput[] | PostWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  text?: String
+  text_not?: String
+  text_in?: String[] | String
+  text_not_in?: String[] | String
+  text_lt?: String
+  text_lte?: String
+  text_gt?: String
+  text_gte?: String
+  text_contains?: String
+  text_not_contains?: String
+  text_starts_with?: String
+  text_not_starts_with?: String
+  text_ends_with?: String
+  text_not_ends_with?: String
+  author?: UserWhereInput
+  group?: GroupWhereInput
+  comments_every?: CommentWhereInput
+  comments_some?: CommentWhereInput
+  comments_none?: CommentWhereInput
 }
 
 export interface CommentCreateManyWithoutPostInput {
   create?: CommentCreateWithoutPostInput[] | CommentCreateWithoutPostInput
+  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput
 }
 
 export interface CommentWhereInput {
   AND?: CommentWhereInput[] | CommentWhereInput
   OR?: CommentWhereInput[] | CommentWhereInput
   NOT?: CommentWhereInput[] | CommentWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
   text?: String
   text_not?: String
   text_in?: String[] | String
@@ -2154,115 +1763,6 @@ export interface CommentWhereInput {
 export interface CommentCreateWithoutPostInput {
   text: String
   author: UserCreateOneInput
-}
-
-export interface PostWhereInput {
-  AND?: PostWhereInput[] | PostWhereInput
-  OR?: PostWhereInput[] | PostWhereInput
-  NOT?: PostWhereInput[] | PostWhereInput
-  text?: String
-  text_not?: String
-  text_in?: String[] | String
-  text_not_in?: String[] | String
-  text_lt?: String
-  text_lte?: String
-  text_gt?: String
-  text_gte?: String
-  text_contains?: String
-  text_not_contains?: String
-  text_starts_with?: String
-  text_not_starts_with?: String
-  text_ends_with?: String
-  text_not_ends_with?: String
-  password?: String
-  password_not?: String
-  password_in?: String[] | String
-  password_not_in?: String[] | String
-  password_lt?: String
-  password_lte?: String
-  password_gt?: String
-  password_gte?: String
-  password_contains?: String
-  password_not_contains?: String
-  password_starts_with?: String
-  password_not_starts_with?: String
-  password_ends_with?: String
-  password_not_ends_with?: String
-  author?: UserWhereInput
-  feed?: FeedWhereInput
-  comments_every?: CommentWhereInput
-  comments_some?: CommentWhereInput
-  comments_none?: CommentWhereInput
-}
-
-export interface GroupCreateOneWithoutThreadsInput {
-  create?: GroupCreateWithoutThreadsInput
-  connect?: GroupWhereUniqueInput
-}
-
-export interface FeedWhereInput {
-  AND?: FeedWhereInput[] | FeedWhereInput
-  OR?: FeedWhereInput[] | FeedWhereInput
-  NOT?: FeedWhereInput[] | FeedWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  password?: String
-  password_not?: String
-  password_in?: String[] | String
-  password_not_in?: String[] | String
-  password_lt?: String
-  password_lte?: String
-  password_gt?: String
-  password_gte?: String
-  password_contains?: String
-  password_not_contains?: String
-  password_starts_with?: String
-  password_not_starts_with?: String
-  password_ends_with?: String
-  password_not_ends_with?: String
-  name?: String
-  name_not?: String
-  name_in?: String[] | String
-  name_not_in?: String[] | String
-  name_lt?: String
-  name_lte?: String
-  name_gt?: String
-  name_gte?: String
-  name_contains?: String
-  name_not_contains?: String
-  name_starts_with?: String
-  name_not_starts_with?: String
-  name_ends_with?: String
-  name_not_ends_with?: String
-  canPost_every?: UserWhereInput
-  canPost_some?: UserWhereInput
-  canPost_none?: UserWhereInput
-  canView_every?: UserWhereInput
-  canView_some?: UserWhereInput
-  canView_none?: UserWhereInput
-  posts_every?: PostWhereInput
-  posts_some?: PostWhereInput
-  posts_none?: PostWhereInput
-  group?: GroupWhereInput
-}
-
-export interface GroupCreateWithoutThreadsInput {
-  password: String
-  name: String
-  admins?: UserCreateManyWithoutAdminOfInput
-  members?: UserCreateManyWithoutMemberOfInput
 }
 
 export interface UserWhereInput {
@@ -2339,12 +1839,9 @@ export interface UserWhereInput {
   password_not_starts_with?: String
   password_ends_with?: String
   password_not_ends_with?: String
-  feedsCanPostIn_every?: FeedWhereInput
-  feedsCanPostIn_some?: FeedWhereInput
-  feedsCanPostIn_none?: FeedWhereInput
-  feedsCanView_every?: FeedWhereInput
-  feedsCanView_some?: FeedWhereInput
-  feedsCanView_none?: FeedWhereInput
+  groups_every?: GroupWhereInput
+  groups_some?: GroupWhereInput
+  groups_none?: GroupWhereInput
   adminOf_every?: GroupWhereInput
   adminOf_some?: GroupWhereInput
   adminOf_none?: GroupWhereInput
@@ -2361,33 +1858,29 @@ export interface UserWhereInput {
 
 export interface PostCreateInput {
   text: String
-  password: String
   author: UserCreateOneInput
-  feed: FeedCreateOneWithoutPostsInput
+  group: GroupCreateOneWithoutFeedInput
   comments?: CommentCreateManyWithoutPostInput
 }
 
 export interface GroupWhereUniqueInput {
   id?: ID_Input
-  password?: String
 }
 
-export interface FeedCreateOneWithoutPostsInput {
-  create?: FeedCreateWithoutPostsInput
-  connect?: FeedWhereUniqueInput
+export interface GroupCreateOneWithoutFeedInput {
+  create?: GroupCreateWithoutFeedInput
+  connect?: GroupWhereUniqueInput
 }
 
-export interface FeedWhereUniqueInput {
+export interface CommentWhereUniqueInput {
   id?: ID_Input
-  password?: String
 }
 
-export interface FeedCreateWithoutPostsInput {
-  password: String
+export interface GroupCreateWithoutFeedInput {
   name: String
-  canPost?: UserCreateManyWithoutFeedsCanPostInInput
-  canView?: UserCreateManyWithoutFeedsCanViewInput
-  group: GroupCreateOneWithoutThreadsInput
+  admins?: UserCreateManyWithoutAdminOfInput
+  members?: UserCreateManyWithoutMemberOfInput
+  allUsers?: UserCreateManyWithoutGroupsInput
 }
 
 export interface GroupSubscriptionWhereInput {
@@ -2407,11 +1900,9 @@ export interface CommentCreateInput {
   post: PostCreateOneWithoutCommentsInput
 }
 
-export interface PostUpdateWithoutCommentsDataInput {
-  text?: String
-  password?: String
-  author?: UserUpdateOneInput
-  feed?: FeedUpdateOneWithoutPostsInput
+export interface PostUpsertWithoutCommentsInput {
+  update: PostUpdateWithoutCommentsDataInput
+  create: PostCreateWithoutCommentsInput
 }
 
 export interface PostCreateOneWithoutCommentsInput {
@@ -2419,70 +1910,52 @@ export interface PostCreateOneWithoutCommentsInput {
   connect?: PostWhereUniqueInput
 }
 
-export interface CommentUpdateInput {
-  text?: String
-  author?: UserUpdateOneInput
-  post?: PostUpdateOneWithoutCommentsInput
+export interface PostUpdateOneWithoutCommentsInput {
+  create?: PostCreateWithoutCommentsInput
+  connect?: PostWhereUniqueInput
+  delete?: Boolean
+  update?: PostUpdateWithoutCommentsDataInput
+  upsert?: PostUpsertWithoutCommentsInput
 }
 
 export interface PostCreateWithoutCommentsInput {
   text: String
-  password: String
   author: UserCreateOneInput
-  feed: FeedCreateOneWithoutPostsInput
+  group: GroupCreateOneWithoutFeedInput
 }
 
-export interface FeedUpdateInput {
-  password?: String
-  name?: String
-  canPost?: UserUpdateManyWithoutFeedsCanPostInInput
-  canView?: UserUpdateManyWithoutFeedsCanViewInput
-  posts?: PostUpdateManyWithoutFeedInput
-  group?: GroupUpdateOneWithoutThreadsInput
+export interface GroupUpsertWithoutFeedInput {
+  update: GroupUpdateWithoutFeedDataInput
+  create: GroupCreateWithoutFeedInput
 }
 
-export interface FeedCreateInput {
-  password: String
-  name: String
-  canPost?: UserCreateManyWithoutFeedsCanPostInInput
-  canView?: UserCreateManyWithoutFeedsCanViewInput
-  posts?: PostCreateManyWithoutFeedInput
-  group: GroupCreateOneWithoutThreadsInput
+export interface UserUpsertWithWhereUniqueWithoutGroupsInput {
+  where: UserWhereUniqueInput
+  update: UserUpdateWithoutGroupsDataInput
+  create: UserCreateWithoutGroupsInput
 }
 
-export interface FeedUpdateWithoutPostsDataInput {
-  password?: String
-  name?: String
-  canPost?: UserUpdateManyWithoutFeedsCanPostInInput
-  canView?: UserUpdateManyWithoutFeedsCanViewInput
-  group?: GroupUpdateOneWithoutThreadsInput
+export interface GroupUpdateOneWithoutFeedInput {
+  create?: GroupCreateWithoutFeedInput
+  connect?: GroupWhereUniqueInput
+  delete?: Boolean
+  update?: GroupUpdateWithoutFeedDataInput
+  upsert?: GroupUpsertWithoutFeedInput
 }
 
-export interface GroupUpdateInput {
-  password?: String
-  name?: String
-  admins?: UserUpdateManyWithoutAdminOfInput
-  members?: UserUpdateManyWithoutMemberOfInput
-  threads?: FeedUpdateManyWithoutGroupInput
+export interface UserUpdateManyWithoutAdminOfInput {
+  create?: UserCreateWithoutAdminOfInput[] | UserCreateWithoutAdminOfInput
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  update?: UserUpdateWithWhereUniqueWithoutAdminOfInput[] | UserUpdateWithWhereUniqueWithoutAdminOfInput
+  upsert?: UserUpsertWithWhereUniqueWithoutAdminOfInput[] | UserUpsertWithWhereUniqueWithoutAdminOfInput
 }
 
-export interface PostUpdateInput {
-  text?: String
-  password?: String
-  author?: UserUpdateOneInput
-  feed?: FeedUpdateOneWithoutPostsInput
-  comments?: CommentUpdateManyWithoutPostInput
-}
-
-export interface GroupUpsertWithoutThreadsInput {
-  update: GroupUpdateWithoutThreadsDataInput
-  create: GroupCreateWithoutThreadsInput
-}
-
-export interface FeedUpsertWithWhereUniqueWithoutCanPostInput {
-  where: FeedWhereUniqueInput
-  update: FeedUpdateWithoutCanPostDataInput
-  create: FeedCreateWithoutCanPostInput
+export interface UserUpsertWithWhereUniqueWithoutAdminOfInput {
+  where: UserWhereUniqueInput
+  update: UserUpdateWithoutAdminOfDataInput
+  create: UserCreateWithoutAdminOfInput
 }
 
 export interface UserUpdateWithWhereUniqueWithoutAdminOfInput {
@@ -2490,10 +1963,10 @@ export interface UserUpdateWithWhereUniqueWithoutAdminOfInput {
   data: UserUpdateWithoutAdminOfDataInput
 }
 
-export interface GroupUpsertWithWhereUniqueWithoutAdminsInput {
-  where: GroupWhereUniqueInput
-  update: GroupUpdateWithoutAdminsDataInput
-  create: GroupCreateWithoutAdminsInput
+export interface UserUpsertWithWhereUniqueWithoutMemberOfInput {
+  where: UserWhereUniqueInput
+  update: UserUpdateWithoutMemberOfDataInput
+  create: UserCreateWithoutMemberOfInput
 }
 
 export interface UserUpdateWithoutAdminOfDataInput {
@@ -2501,129 +1974,59 @@ export interface UserUpdateWithoutAdminOfDataInput {
   email?: String
   username?: String
   password?: String
-  feedsCanPostIn?: FeedUpdateManyWithoutCanPostInput
-  feedsCanView?: FeedUpdateManyWithoutCanViewInput
+  groups?: GroupUpdateManyWithoutAllUsersInput
   memberOf?: GroupUpdateManyWithoutMembersInput
 }
 
-export interface FeedUpsertWithWhereUniqueWithoutCanViewInput {
-  where: FeedWhereUniqueInput
-  update: FeedUpdateWithoutCanViewDataInput
-  create: FeedCreateWithoutCanViewInput
+export interface GroupCreateInput {
+  name: String
+  admins?: UserCreateManyWithoutAdminOfInput
+  members?: UserCreateManyWithoutMemberOfInput
+  allUsers?: UserCreateManyWithoutGroupsInput
+  feed?: PostCreateManyWithoutGroupInput
 }
 
-export interface FeedUpdateManyWithoutCanPostInput {
-  create?: FeedCreateWithoutCanPostInput[] | FeedCreateWithoutCanPostInput
-  connect?: FeedWhereUniqueInput[] | FeedWhereUniqueInput
-  disconnect?: FeedWhereUniqueInput[] | FeedWhereUniqueInput
-  delete?: FeedWhereUniqueInput[] | FeedWhereUniqueInput
-  update?: FeedUpdateWithWhereUniqueWithoutCanPostInput[] | FeedUpdateWithWhereUniqueWithoutCanPostInput
-  upsert?: FeedUpsertWithWhereUniqueWithoutCanPostInput[] | FeedUpsertWithWhereUniqueWithoutCanPostInput
+export interface GroupUpsertWithWhereUniqueWithoutMembersInput {
+  where: GroupWhereUniqueInput
+  update: GroupUpdateWithoutMembersDataInput
+  create: GroupCreateWithoutMembersInput
 }
 
-export interface UserCreateManyWithoutAdminOfInput {
-  create?: UserCreateWithoutAdminOfInput[] | UserCreateWithoutAdminOfInput
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+export interface UserCreateWithoutAdminOfInput {
+  name: String
+  email?: String
+  username: String
+  password: String
+  groups?: GroupCreateManyWithoutAllUsersInput
+  memberOf?: GroupCreateManyWithoutMembersInput
 }
 
-export interface GroupUpdateWithoutThreadsDataInput {
-  password?: String
+export interface GroupUpdateWithWhereUniqueWithoutAllUsersInput {
+  where: GroupWhereUniqueInput
+  data: GroupUpdateWithoutAllUsersDataInput
+}
+
+export interface GroupCreateWithoutAllUsersInput {
+  name: String
+  admins?: UserCreateManyWithoutAdminOfInput
+  members?: UserCreateManyWithoutMemberOfInput
+  feed?: PostCreateManyWithoutGroupInput
+}
+
+export interface GroupUpdateWithoutAllUsersDataInput {
   name?: String
   admins?: UserUpdateManyWithoutAdminOfInput
   members?: UserUpdateManyWithoutMemberOfInput
+  feed?: PostUpdateManyWithoutGroupInput
 }
 
-export interface FeedCreateManyWithoutCanPostInput {
-  create?: FeedCreateWithoutCanPostInput[] | FeedCreateWithoutCanPostInput
-  connect?: FeedWhereUniqueInput[] | FeedWhereUniqueInput
-}
-
-export interface FeedUpdateWithoutCanPostDataInput {
-  password?: String
-  name?: String
-  canView?: UserUpdateManyWithoutFeedsCanViewInput
-  posts?: PostUpdateManyWithoutFeedInput
-  group?: GroupUpdateOneWithoutThreadsInput
-}
-
-export interface UserCreateManyWithoutFeedsCanViewInput {
-  create?: UserCreateWithoutFeedsCanViewInput[] | UserCreateWithoutFeedsCanViewInput
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-}
-
-export interface UserUpdateManyWithoutFeedsCanViewInput {
-  create?: UserCreateWithoutFeedsCanViewInput[] | UserCreateWithoutFeedsCanViewInput
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  update?: UserUpdateWithWhereUniqueWithoutFeedsCanViewInput[] | UserUpdateWithWhereUniqueWithoutFeedsCanViewInput
-  upsert?: UserUpsertWithWhereUniqueWithoutFeedsCanViewInput[] | UserUpsertWithWhereUniqueWithoutFeedsCanViewInput
-}
-
-export interface GroupCreateManyWithoutAdminsInput {
-  create?: GroupCreateWithoutAdminsInput[] | GroupCreateWithoutAdminsInput
-  connect?: GroupWhereUniqueInput[] | GroupWhereUniqueInput
-}
-
-export interface UserUpdateWithWhereUniqueWithoutFeedsCanViewInput {
-  where: UserWhereUniqueInput
-  data: UserUpdateWithoutFeedsCanViewDataInput
-}
-
-export interface UserCreateManyWithoutMemberOfInput {
-  create?: UserCreateWithoutMemberOfInput[] | UserCreateWithoutMemberOfInput
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-}
-
-export interface UserUpdateWithoutFeedsCanViewDataInput {
-  name?: String
+export interface UserCreateWithoutMemberOfInput {
+  name: String
   email?: String
-  username?: String
-  password?: String
-  feedsCanPostIn?: FeedUpdateManyWithoutCanPostInput
-  adminOf?: GroupUpdateManyWithoutAdminsInput
-  memberOf?: GroupUpdateManyWithoutMembersInput
-}
-
-export interface FeedCreateManyWithoutCanViewInput {
-  create?: FeedCreateWithoutCanViewInput[] | FeedCreateWithoutCanViewInput
-  connect?: FeedWhereUniqueInput[] | FeedWhereUniqueInput
-}
-
-export interface GroupUpdateManyWithoutAdminsInput {
-  create?: GroupCreateWithoutAdminsInput[] | GroupCreateWithoutAdminsInput
-  connect?: GroupWhereUniqueInput[] | GroupWhereUniqueInput
-  disconnect?: GroupWhereUniqueInput[] | GroupWhereUniqueInput
-  delete?: GroupWhereUniqueInput[] | GroupWhereUniqueInput
-  update?: GroupUpdateWithWhereUniqueWithoutAdminsInput[] | GroupUpdateWithWhereUniqueWithoutAdminsInput
-  upsert?: GroupUpsertWithWhereUniqueWithoutAdminsInput[] | GroupUpsertWithWhereUniqueWithoutAdminsInput
-}
-
-export interface UserCreateManyWithoutFeedsCanPostInInput {
-  create?: UserCreateWithoutFeedsCanPostInInput[] | UserCreateWithoutFeedsCanPostInInput
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-}
-
-export interface GroupUpdateWithWhereUniqueWithoutAdminsInput {
-  where: GroupWhereUniqueInput
-  data: GroupUpdateWithoutAdminsDataInput
-}
-
-export interface GroupCreateManyWithoutMembersInput {
-  create?: GroupCreateWithoutMembersInput[] | GroupCreateWithoutMembersInput
-  connect?: GroupWhereUniqueInput[] | GroupWhereUniqueInput
-}
-
-export interface GroupUpdateWithoutAdminsDataInput {
-  password?: String
-  name?: String
-  members?: UserUpdateManyWithoutMemberOfInput
-  threads?: FeedUpdateManyWithoutGroupInput
-}
-
-export interface FeedCreateManyWithoutGroupInput {
-  create?: FeedCreateWithoutGroupInput[] | FeedCreateWithoutGroupInput
-  connect?: FeedWhereUniqueInput[] | FeedWhereUniqueInput
+  username: String
+  password: String
+  groups?: GroupCreateManyWithoutAllUsersInput
+  adminOf?: GroupCreateManyWithoutAdminsInput
 }
 
 export interface UserUpdateManyWithoutMemberOfInput {
@@ -2635,9 +2038,11 @@ export interface UserUpdateManyWithoutMemberOfInput {
   upsert?: UserUpsertWithWhereUniqueWithoutMemberOfInput[] | UserUpsertWithWhereUniqueWithoutMemberOfInput
 }
 
-export interface PostCreateManyWithoutFeedInput {
-  create?: PostCreateWithoutFeedInput[] | PostCreateWithoutFeedInput
-  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput
+export interface GroupCreateWithoutAdminsInput {
+  name: String
+  members?: UserCreateManyWithoutMemberOfInput
+  allUsers?: UserCreateManyWithoutGroupsInput
+  feed?: PostCreateManyWithoutGroupInput
 }
 
 export interface UserUpdateWithWhereUniqueWithoutMemberOfInput {
@@ -2645,15 +2050,13 @@ export interface UserUpdateWithWhereUniqueWithoutMemberOfInput {
   data: UserUpdateWithoutMemberOfDataInput
 }
 
-export interface FeedSubscriptionWhereInput {
-  AND?: FeedSubscriptionWhereInput[] | FeedSubscriptionWhereInput
-  OR?: FeedSubscriptionWhereInput[] | FeedSubscriptionWhereInput
-  NOT?: FeedSubscriptionWhereInput[] | FeedSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: FeedWhereInput
+export interface UserCreateWithoutGroupsInput {
+  name: String
+  email?: String
+  username: String
+  password: String
+  adminOf?: GroupCreateManyWithoutAdminsInput
+  memberOf?: GroupCreateManyWithoutMembersInput
 }
 
 export interface UserUpdateWithoutMemberOfDataInput {
@@ -2661,344 +2064,24 @@ export interface UserUpdateWithoutMemberOfDataInput {
   email?: String
   username?: String
   password?: String
-  feedsCanPostIn?: FeedUpdateManyWithoutCanPostInput
-  feedsCanView?: FeedUpdateManyWithoutCanViewInput
+  groups?: GroupUpdateManyWithoutAllUsersInput
   adminOf?: GroupUpdateManyWithoutAdminsInput
 }
 
-export interface PostSubscriptionWhereInput {
-  AND?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput
-  OR?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput
-  NOT?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: PostWhereInput
-}
-
-export interface FeedUpdateManyWithoutCanViewInput {
-  create?: FeedCreateWithoutCanViewInput[] | FeedCreateWithoutCanViewInput
-  connect?: FeedWhereUniqueInput[] | FeedWhereUniqueInput
-  disconnect?: FeedWhereUniqueInput[] | FeedWhereUniqueInput
-  delete?: FeedWhereUniqueInput[] | FeedWhereUniqueInput
-  update?: FeedUpdateWithWhereUniqueWithoutCanViewInput[] | FeedUpdateWithWhereUniqueWithoutCanViewInput
-  upsert?: FeedUpsertWithWhereUniqueWithoutCanViewInput[] | FeedUpsertWithWhereUniqueWithoutCanViewInput
-}
-
-export interface UserWhereUniqueInput {
-  id?: ID_Input
-  email?: String
-  username?: String
-}
-
-export interface FeedUpdateWithWhereUniqueWithoutCanViewInput {
-  where: FeedWhereUniqueInput
-  data: FeedUpdateWithoutCanViewDataInput
-}
-
-export interface PostUpdateOneWithoutCommentsInput {
-  create?: PostCreateWithoutCommentsInput
-  connect?: PostWhereUniqueInput
-  delete?: Boolean
-  update?: PostUpdateWithoutCommentsDataInput
-  upsert?: PostUpsertWithoutCommentsInput
-}
-
-export interface FeedUpdateWithoutCanViewDataInput {
-  password?: String
-  name?: String
-  canPost?: UserUpdateManyWithoutFeedsCanPostInInput
-  posts?: PostUpdateManyWithoutFeedInput
-  group?: GroupUpdateOneWithoutThreadsInput
-}
-
-export interface FeedUpsertWithoutPostsInput {
-  update: FeedUpdateWithoutPostsDataInput
-  create: FeedCreateWithoutPostsInput
-}
-
-export interface UserUpdateManyWithoutFeedsCanPostInInput {
-  create?: UserCreateWithoutFeedsCanPostInInput[] | UserCreateWithoutFeedsCanPostInInput
-  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
-  update?: UserUpdateWithWhereUniqueWithoutFeedsCanPostInInput[] | UserUpdateWithWhereUniqueWithoutFeedsCanPostInInput
-  upsert?: UserUpsertWithWhereUniqueWithoutFeedsCanPostInInput[] | UserUpsertWithWhereUniqueWithoutFeedsCanPostInInput
-}
-
-export interface UserUpsertWithWhereUniqueWithoutAdminOfInput {
-  where: UserWhereUniqueInput
-  update: UserUpdateWithoutAdminOfDataInput
-  create: UserCreateWithoutAdminOfInput
-}
-
-export interface UserUpdateWithWhereUniqueWithoutFeedsCanPostInInput {
-  where: UserWhereUniqueInput
-  data: UserUpdateWithoutFeedsCanPostInDataInput
-}
-
-export interface UserUpsertWithWhereUniqueWithoutMemberOfInput {
-  where: UserWhereUniqueInput
-  update: UserUpdateWithoutMemberOfDataInput
-  create: UserCreateWithoutMemberOfInput
-}
-
-export interface UserUpdateWithoutFeedsCanPostInDataInput {
-  name?: String
-  email?: String
-  username?: String
-  password?: String
-  feedsCanView?: FeedUpdateManyWithoutCanViewInput
-  adminOf?: GroupUpdateManyWithoutAdminsInput
-  memberOf?: GroupUpdateManyWithoutMembersInput
-}
-
-export interface UserCreateWithoutAdminOfInput {
+export interface GroupCreateWithoutMembersInput {
   name: String
-  email?: String
-  username: String
-  password: String
-  feedsCanPostIn?: FeedCreateManyWithoutCanPostInput
-  feedsCanView?: FeedCreateManyWithoutCanViewInput
-  memberOf?: GroupCreateManyWithoutMembersInput
+  admins?: UserCreateManyWithoutAdminOfInput
+  allUsers?: UserCreateManyWithoutGroupsInput
+  feed?: PostCreateManyWithoutGroupInput
 }
 
-export interface GroupUpdateManyWithoutMembersInput {
-  create?: GroupCreateWithoutMembersInput[] | GroupCreateWithoutMembersInput
+export interface GroupUpdateManyWithoutAdminsInput {
+  create?: GroupCreateWithoutAdminsInput[] | GroupCreateWithoutAdminsInput
   connect?: GroupWhereUniqueInput[] | GroupWhereUniqueInput
   disconnect?: GroupWhereUniqueInput[] | GroupWhereUniqueInput
   delete?: GroupWhereUniqueInput[] | GroupWhereUniqueInput
-  update?: GroupUpdateWithWhereUniqueWithoutMembersInput[] | GroupUpdateWithWhereUniqueWithoutMembersInput
-  upsert?: GroupUpsertWithWhereUniqueWithoutMembersInput[] | GroupUpsertWithWhereUniqueWithoutMembersInput
-}
-
-export interface UserCreateWithoutFeedsCanViewInput {
-  name: String
-  email?: String
-  username: String
-  password: String
-  feedsCanPostIn?: FeedCreateManyWithoutCanPostInput
-  adminOf?: GroupCreateManyWithoutAdminsInput
-  memberOf?: GroupCreateManyWithoutMembersInput
-}
-
-export interface GroupUpdateWithWhereUniqueWithoutMembersInput {
-  where: GroupWhereUniqueInput
-  data: GroupUpdateWithoutMembersDataInput
-}
-
-export interface UserCreateWithoutMemberOfInput {
-  name: String
-  email?: String
-  username: String
-  password: String
-  feedsCanPostIn?: FeedCreateManyWithoutCanPostInput
-  feedsCanView?: FeedCreateManyWithoutCanViewInput
-  adminOf?: GroupCreateManyWithoutAdminsInput
-}
-
-export interface GroupUpdateWithoutMembersDataInput {
-  password?: String
-  name?: String
-  admins?: UserUpdateManyWithoutAdminOfInput
-  threads?: FeedUpdateManyWithoutGroupInput
-}
-
-export interface UserCreateWithoutFeedsCanPostInInput {
-  name: String
-  email?: String
-  username: String
-  password: String
-  feedsCanView?: FeedCreateManyWithoutCanViewInput
-  adminOf?: GroupCreateManyWithoutAdminsInput
-  memberOf?: GroupCreateManyWithoutMembersInput
-}
-
-export interface FeedUpdateManyWithoutGroupInput {
-  create?: FeedCreateWithoutGroupInput[] | FeedCreateWithoutGroupInput
-  connect?: FeedWhereUniqueInput[] | FeedWhereUniqueInput
-  disconnect?: FeedWhereUniqueInput[] | FeedWhereUniqueInput
-  delete?: FeedWhereUniqueInput[] | FeedWhereUniqueInput
-  update?: FeedUpdateWithWhereUniqueWithoutGroupInput[] | FeedUpdateWithWhereUniqueWithoutGroupInput
-  upsert?: FeedUpsertWithWhereUniqueWithoutGroupInput[] | FeedUpsertWithWhereUniqueWithoutGroupInput
-}
-
-export interface FeedCreateWithoutGroupInput {
-  password: String
-  name: String
-  canPost?: UserCreateManyWithoutFeedsCanPostInInput
-  canView?: UserCreateManyWithoutFeedsCanViewInput
-  posts?: PostCreateManyWithoutFeedInput
-}
-
-export interface FeedUpdateWithWhereUniqueWithoutGroupInput {
-  where: FeedWhereUniqueInput
-  data: FeedUpdateWithoutGroupDataInput
-}
-
-export interface UserSubscriptionWhereInput {
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: UserWhereInput
-}
-
-export interface FeedUpdateWithoutGroupDataInput {
-  password?: String
-  name?: String
-  canPost?: UserUpdateManyWithoutFeedsCanPostInInput
-  canView?: UserUpdateManyWithoutFeedsCanViewInput
-  posts?: PostUpdateManyWithoutFeedInput
-}
-
-export interface PostWhereUniqueInput {
-  password?: String
-}
-
-export interface PostUpdateManyWithoutFeedInput {
-  create?: PostCreateWithoutFeedInput[] | PostCreateWithoutFeedInput
-  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput
-  disconnect?: PostWhereUniqueInput[] | PostWhereUniqueInput
-  delete?: PostWhereUniqueInput[] | PostWhereUniqueInput
-  update?: PostUpdateWithWhereUniqueWithoutFeedInput[] | PostUpdateWithWhereUniqueWithoutFeedInput
-  upsert?: PostUpsertWithWhereUniqueWithoutFeedInput[] | PostUpsertWithWhereUniqueWithoutFeedInput
-}
-
-export interface UserUpdateInput {
-  name?: String
-  email?: String
-  username?: String
-  password?: String
-  feedsCanPostIn?: FeedUpdateManyWithoutCanPostInput
-  feedsCanView?: FeedUpdateManyWithoutCanViewInput
-  adminOf?: GroupUpdateManyWithoutAdminsInput
-  memberOf?: GroupUpdateManyWithoutMembersInput
-}
-
-export interface PostUpdateWithWhereUniqueWithoutFeedInput {
-  where: PostWhereUniqueInput
-  data: PostUpdateWithoutFeedDataInput
-}
-
-export interface UserUpsertWithWhereUniqueWithoutFeedsCanViewInput {
-  where: UserWhereUniqueInput
-  update: UserUpdateWithoutFeedsCanViewDataInput
-  create: UserCreateWithoutFeedsCanViewInput
-}
-
-export interface PostUpdateWithoutFeedDataInput {
-  text?: String
-  password?: String
-  author?: UserUpdateOneInput
-  comments?: CommentUpdateManyWithoutPostInput
-}
-
-export interface FeedCreateWithoutCanPostInput {
-  password: String
-  name: String
-  canView?: UserCreateManyWithoutFeedsCanViewInput
-  posts?: PostCreateManyWithoutFeedInput
-  group: GroupCreateOneWithoutThreadsInput
-}
-
-export interface UserUpdateOneInput {
-  create?: UserCreateInput
-  connect?: UserWhereUniqueInput
-  delete?: Boolean
-  update?: UserUpdateDataInput
-  upsert?: UserUpsertNestedInput
-}
-
-export interface FeedCreateWithoutCanViewInput {
-  password: String
-  name: String
-  canPost?: UserCreateManyWithoutFeedsCanPostInInput
-  posts?: PostCreateManyWithoutFeedInput
-  group: GroupCreateOneWithoutThreadsInput
-}
-
-export interface UserUpdateDataInput {
-  name?: String
-  email?: String
-  username?: String
-  password?: String
-  feedsCanPostIn?: FeedUpdateManyWithoutCanPostInput
-  feedsCanView?: FeedUpdateManyWithoutCanViewInput
-  adminOf?: GroupUpdateManyWithoutAdminsInput
-  memberOf?: GroupUpdateManyWithoutMembersInput
-}
-
-export interface PostCreateWithoutFeedInput {
-  text: String
-  password: String
-  author: UserCreateOneInput
-  comments?: CommentCreateManyWithoutPostInput
-}
-
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput
-  create: UserCreateInput
-}
-
-export interface PostUpsertWithoutCommentsInput {
-  update: PostUpdateWithoutCommentsDataInput
-  create: PostCreateWithoutCommentsInput
-}
-
-export interface CommentUpdateManyWithoutPostInput {
-  create?: CommentCreateWithoutPostInput[] | CommentCreateWithoutPostInput
-}
-
-export interface GroupCreateInput {
-  password: String
-  name: String
-  admins?: UserCreateManyWithoutAdminOfInput
-  members?: UserCreateManyWithoutMemberOfInput
-  threads?: FeedCreateManyWithoutGroupInput
-}
-
-export interface UserUpsertWithWhereUniqueWithoutFeedsCanPostInInput {
-  where: UserWhereUniqueInput
-  update: UserUpdateWithoutFeedsCanPostInDataInput
-  create: UserCreateWithoutFeedsCanPostInInput
-}
-
-export interface GroupUpsertWithWhereUniqueWithoutMembersInput {
-  where: GroupWhereUniqueInput
-  update: GroupUpdateWithoutMembersDataInput
-  create: GroupCreateWithoutMembersInput
-}
-
-export interface FeedUpsertWithWhereUniqueWithoutGroupInput {
-  where: FeedWhereUniqueInput
-  update: FeedUpdateWithoutGroupDataInput
-  create: FeedCreateWithoutGroupInput
-}
-
-export interface PostUpsertWithWhereUniqueWithoutFeedInput {
-  where: PostWhereUniqueInput
-  update: PostUpdateWithoutFeedDataInput
-  create: PostCreateWithoutFeedInput
-}
-
-export interface GroupCreateWithoutAdminsInput {
-  password: String
-  name: String
-  members?: UserCreateManyWithoutMemberOfInput
-  threads?: FeedCreateManyWithoutGroupInput
-}
-
-export interface FeedUpdateOneWithoutPostsInput {
-  create?: FeedCreateWithoutPostsInput
-  connect?: FeedWhereUniqueInput
-  delete?: Boolean
-  update?: FeedUpdateWithoutPostsDataInput
-  upsert?: FeedUpsertWithoutPostsInput
+  update?: GroupUpdateWithWhereUniqueWithoutAdminsInput[] | GroupUpdateWithWhereUniqueWithoutAdminsInput
+  upsert?: GroupUpsertWithWhereUniqueWithoutAdminsInput[] | GroupUpsertWithWhereUniqueWithoutAdminsInput
 }
 
 export interface CommentSubscriptionWhereInput {
@@ -3012,11 +2095,243 @@ export interface CommentSubscriptionWhereInput {
   node?: CommentWhereInput
 }
 
-export interface GroupCreateWithoutMembersInput {
-  password: String
-  name: String
-  admins?: UserCreateManyWithoutAdminOfInput
-  threads?: FeedCreateManyWithoutGroupInput
+export interface GroupUpdateWithWhereUniqueWithoutAdminsInput {
+  where: GroupWhereUniqueInput
+  data: GroupUpdateWithoutAdminsDataInput
+}
+
+export interface PostWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface GroupUpdateWithoutAdminsDataInput {
+  name?: String
+  members?: UserUpdateManyWithoutMemberOfInput
+  allUsers?: UserUpdateManyWithoutGroupsInput
+  feed?: PostUpdateManyWithoutGroupInput
+}
+
+export interface UserUpdateInput {
+  name?: String
+  email?: String
+  username?: String
+  password?: String
+  groups?: GroupUpdateManyWithoutAllUsersInput
+  adminOf?: GroupUpdateManyWithoutAdminsInput
+  memberOf?: GroupUpdateManyWithoutMembersInput
+}
+
+export interface UserUpdateManyWithoutGroupsInput {
+  create?: UserCreateWithoutGroupsInput[] | UserCreateWithoutGroupsInput
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  disconnect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  delete?: UserWhereUniqueInput[] | UserWhereUniqueInput
+  update?: UserUpdateWithWhereUniqueWithoutGroupsInput[] | UserUpdateWithWhereUniqueWithoutGroupsInput
+  upsert?: UserUpsertWithWhereUniqueWithoutGroupsInput[] | UserUpsertWithWhereUniqueWithoutGroupsInput
+}
+
+export interface CommentUpdateInput {
+  text?: String
+  author?: UserUpdateOneInput
+  post?: PostUpdateOneWithoutCommentsInput
+}
+
+export interface UserUpdateWithWhereUniqueWithoutGroupsInput {
+  where: UserWhereUniqueInput
+  data: UserUpdateWithoutGroupsDataInput
+}
+
+export interface PostUpdateInput {
+  text?: String
+  author?: UserUpdateOneInput
+  group?: GroupUpdateOneWithoutFeedInput
+  comments?: CommentUpdateManyWithoutPostInput
+}
+
+export interface UserUpdateWithoutGroupsDataInput {
+  name?: String
+  email?: String
+  username?: String
+  password?: String
+  adminOf?: GroupUpdateManyWithoutAdminsInput
+  memberOf?: GroupUpdateManyWithoutMembersInput
+}
+
+export interface GroupUpsertWithWhereUniqueWithoutAdminsInput {
+  where: GroupWhereUniqueInput
+  update: GroupUpdateWithoutAdminsDataInput
+  create: GroupCreateWithoutAdminsInput
+}
+
+export interface GroupUpdateManyWithoutMembersInput {
+  create?: GroupCreateWithoutMembersInput[] | GroupCreateWithoutMembersInput
+  connect?: GroupWhereUniqueInput[] | GroupWhereUniqueInput
+  disconnect?: GroupWhereUniqueInput[] | GroupWhereUniqueInput
+  delete?: GroupWhereUniqueInput[] | GroupWhereUniqueInput
+  update?: GroupUpdateWithWhereUniqueWithoutMembersInput[] | GroupUpdateWithWhereUniqueWithoutMembersInput
+  upsert?: GroupUpsertWithWhereUniqueWithoutMembersInput[] | GroupUpsertWithWhereUniqueWithoutMembersInput
+}
+
+export interface GroupCreateManyWithoutAllUsersInput {
+  create?: GroupCreateWithoutAllUsersInput[] | GroupCreateWithoutAllUsersInput
+  connect?: GroupWhereUniqueInput[] | GroupWhereUniqueInput
+}
+
+export interface GroupUpdateWithWhereUniqueWithoutMembersInput {
+  where: GroupWhereUniqueInput
+  data: GroupUpdateWithoutMembersDataInput
+}
+
+export interface GroupCreateManyWithoutAdminsInput {
+  create?: GroupCreateWithoutAdminsInput[] | GroupCreateWithoutAdminsInput
+  connect?: GroupWhereUniqueInput[] | GroupWhereUniqueInput
+}
+
+export interface GroupUpdateWithoutMembersDataInput {
+  name?: String
+  admins?: UserUpdateManyWithoutAdminOfInput
+  allUsers?: UserUpdateManyWithoutGroupsInput
+  feed?: PostUpdateManyWithoutGroupInput
+}
+
+export interface GroupCreateManyWithoutMembersInput {
+  create?: GroupCreateWithoutMembersInput[] | GroupCreateWithoutMembersInput
+  connect?: GroupWhereUniqueInput[] | GroupWhereUniqueInput
+}
+
+export interface PostUpdateManyWithoutGroupInput {
+  create?: PostCreateWithoutGroupInput[] | PostCreateWithoutGroupInput
+  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput
+  disconnect?: PostWhereUniqueInput[] | PostWhereUniqueInput
+  delete?: PostWhereUniqueInput[] | PostWhereUniqueInput
+  update?: PostUpdateWithWhereUniqueWithoutGroupInput[] | PostUpdateWithWhereUniqueWithoutGroupInput
+  upsert?: PostUpsertWithWhereUniqueWithoutGroupInput[] | PostUpsertWithWhereUniqueWithoutGroupInput
+}
+
+export interface UserSubscriptionWhereInput {
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: UserWhereInput
+}
+
+export interface PostUpdateWithWhereUniqueWithoutGroupInput {
+  where: PostWhereUniqueInput
+  data: PostUpdateWithoutGroupDataInput
+}
+
+export interface UserWhereUniqueInput {
+  id?: ID_Input
+  email?: String
+  username?: String
+}
+
+export interface PostUpdateWithoutGroupDataInput {
+  text?: String
+  author?: UserUpdateOneInput
+  comments?: CommentUpdateManyWithoutPostInput
+}
+
+export interface GroupUpdateWithoutFeedDataInput {
+  name?: String
+  admins?: UserUpdateManyWithoutAdminOfInput
+  members?: UserUpdateManyWithoutMemberOfInput
+  allUsers?: UserUpdateManyWithoutGroupsInput
+}
+
+export interface UserUpdateOneInput {
+  create?: UserCreateInput
+  connect?: UserWhereUniqueInput
+  delete?: Boolean
+  update?: UserUpdateDataInput
+  upsert?: UserUpsertNestedInput
+}
+
+export interface UserCreateManyWithoutAdminOfInput {
+  create?: UserCreateWithoutAdminOfInput[] | UserCreateWithoutAdminOfInput
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+}
+
+export interface UserUpdateDataInput {
+  name?: String
+  email?: String
+  username?: String
+  password?: String
+  groups?: GroupUpdateManyWithoutAllUsersInput
+  adminOf?: GroupUpdateManyWithoutAdminsInput
+  memberOf?: GroupUpdateManyWithoutMembersInput
+}
+
+export interface UserCreateManyWithoutGroupsInput {
+  create?: UserCreateWithoutGroupsInput[] | UserCreateWithoutGroupsInput
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+}
+
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput
+  create: UserCreateInput
+}
+
+export interface PostSubscriptionWhereInput {
+  AND?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput
+  OR?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput
+  NOT?: PostSubscriptionWhereInput[] | PostSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: PostWhereInput
+}
+
+export interface CommentUpsertWithWhereUniqueWithoutPostInput {
+  where: CommentWhereUniqueInput
+  update: CommentUpdateWithoutPostDataInput
+  create: CommentCreateWithoutPostInput
+}
+
+export interface CommentUpdateWithoutPostDataInput {
+  text?: String
+  author?: UserUpdateOneInput
+}
+
+export interface CommentUpdateWithWhereUniqueWithoutPostInput {
+  where: CommentWhereUniqueInput
+  data: CommentUpdateWithoutPostDataInput
+}
+
+export interface CommentUpdateManyWithoutPostInput {
+  create?: CommentCreateWithoutPostInput[] | CommentCreateWithoutPostInput
+  connect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput
+  disconnect?: CommentWhereUniqueInput[] | CommentWhereUniqueInput
+  delete?: CommentWhereUniqueInput[] | CommentWhereUniqueInput
+  update?: CommentUpdateWithWhereUniqueWithoutPostInput[] | CommentUpdateWithWhereUniqueWithoutPostInput
+  upsert?: CommentUpsertWithWhereUniqueWithoutPostInput[] | CommentUpsertWithWhereUniqueWithoutPostInput
+}
+
+export interface PostUpdateWithoutCommentsDataInput {
+  text?: String
+  author?: UserUpdateOneInput
+  group?: GroupUpdateOneWithoutFeedInput
+}
+
+export interface PostCreateManyWithoutGroupInput {
+  create?: PostCreateWithoutGroupInput[] | PostCreateWithoutGroupInput
+  connect?: PostWhereUniqueInput[] | PostWhereUniqueInput
+}
+
+export interface UserCreateManyWithoutMemberOfInput {
+  create?: UserCreateWithoutMemberOfInput[] | UserCreateWithoutMemberOfInput
+  connect?: UserWhereUniqueInput[] | UserWhereUniqueInput
+}
+
+export interface GroupUpsertWithWhereUniqueWithoutAllUsersInput {
+  where: GroupWhereUniqueInput
+  update: GroupUpdateWithoutAllUsersDataInput
+  create: GroupCreateWithoutAllUsersInput
 }
 
 /*
@@ -3035,54 +2350,17 @@ export interface UserPreviousValues {
   password: String
 }
 
-export interface AggregateGroup {
-  count: Int
-}
-
-export interface FeedSubscriptionPayload {
-  mutation: MutationType
-  node?: Feed
-  updatedFields?: String[]
-  previousValues?: FeedPreviousValues
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface GroupEdge {
-  node: Group
-  cursor: String
+export interface BatchPayload {
+  count: Long
 }
 
 export interface Group extends Node {
   id: ID_Output
-  password: String
   name: String
   admins?: User[]
   members?: User[]
-  threads?: Feed[]
-}
-
-export interface User extends Node {
-  id: ID_Output
-  name: String
-  email?: String
-  username: String
-  password: String
-  feedsCanPostIn?: Feed[]
-  feedsCanView?: Feed[]
-  adminOf?: Group[]
-  memberOf?: Group[]
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface UserEdge {
-  node: User
-  cursor: String
+  allUsers?: User[]
+  feed?: Post[]
 }
 
 /*
@@ -3096,7 +2374,38 @@ export interface PageInfo {
   endCursor?: String
 }
 
-export interface AggregateFeed {
+export interface CommentSubscriptionPayload {
+  mutation: MutationType
+  node?: Comment
+  updatedFields?: String[]
+  previousValues?: CommentPreviousValues
+}
+
+export interface User extends Node {
+  id: ID_Output
+  name: String
+  email?: String
+  username: String
+  password: String
+  groups?: Group[]
+  adminOf?: Group[]
+  memberOf?: Group[]
+}
+
+export interface AggregateUser {
+  count: Int
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface UserEdge {
+  node: User
+  cursor: String
+}
+
+export interface AggregateComment {
   count: Int
 }
 
@@ -3114,16 +2423,47 @@ export interface GroupConnection {
  * A connection to a list of items.
 
  */
-export interface FeedConnection {
+export interface CommentConnection {
   pageInfo: PageInfo
-  edges: FeedEdge[]
-  aggregate: AggregateFeed
+  edges: CommentEdge[]
+  aggregate: AggregateComment
 }
 
-export interface FeedPreviousValues {
+export interface CommentPreviousValues {
   id: ID_Output
-  password: String
+  text: String
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface PostEdge {
+  node: Post
+  cursor: String
+}
+
+export interface GroupSubscriptionPayload {
+  mutation: MutationType
+  node?: Group
+  updatedFields?: String[]
+  previousValues?: GroupPreviousValues
+}
+
+export interface AggregateGroup {
+  count: Int
+}
+
+export interface GroupPreviousValues {
+  id: ID_Output
   name: String
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType
+  node?: User
+  updatedFields?: String[]
+  previousValues?: UserPreviousValues
 }
 
 /*
@@ -3135,44 +2475,17 @@ export interface CommentEdge {
   cursor: String
 }
 
-export interface GroupSubscriptionPayload {
-  mutation: MutationType
-  node?: Group
-  updatedFields?: String[]
-  previousValues?: GroupPreviousValues
-}
-
-export interface AggregatePost {
-  count: Int
-}
-
-export interface GroupPreviousValues {
+export interface Post extends Node {
   id: ID_Output
-  password: String
-  name: String
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface PostConnection {
-  pageInfo: PageInfo
-  edges: PostEdge[]
-  aggregate: AggregatePost
-}
-
-export interface Comment {
   author: User
   text: String
-  post: Post
+  group: Group
+  comments?: Comment[]
 }
 
-export interface UserSubscriptionPayload {
-  mutation: MutationType
-  node?: User
-  updatedFields?: String[]
-  previousValues?: UserPreviousValues
+export interface PostPreviousValues {
+  id: ID_Output
+  text: String
 }
 
 export interface PostSubscriptionPayload {
@@ -3180,6 +2493,17 @@ export interface PostSubscriptionPayload {
   node?: Post
   updatedFields?: String[]
   previousValues?: PostPreviousValues
+}
+
+export interface Comment extends Node {
+  id: ID_Output
+  author: User
+  text: String
+  post: Post
+}
+
+export interface AggregatePost {
+  count: Int
 }
 
 /*
@@ -3192,84 +2516,30 @@ export interface UserConnection {
   aggregate: AggregateUser
 }
 
-export interface PostPreviousValues {
-  text: String
-  password: String
-}
-
-export interface AggregateComment {
-  count: Int
-}
-
 /*
  * An edge in a connection.
 
  */
-export interface PostEdge {
-  node: Post
+export interface GroupEdge {
+  node: Group
   cursor: String
-}
-
-export interface Feed extends Node {
-  id: ID_Output
-  password: String
-  canPost?: User[]
-  canView?: User[]
-  posts?: Post[]
-  group: Group
-  name: String
-}
-
-export interface CommentPreviousValues {
-  text: String
-}
-
-export interface CommentSubscriptionPayload {
-  mutation: MutationType
-  node?: Comment
-  updatedFields?: String[]
-  previousValues?: CommentPreviousValues
-}
-
-export interface Post {
-  author: User
-  text: String
-  feed: Feed
-  comments?: Comment[]
-  password: String
-}
-
-export interface BatchPayload {
-  count: Long
 }
 
 /*
  * A connection to a list of items.
 
  */
-export interface CommentConnection {
+export interface PostConnection {
   pageInfo: PageInfo
-  edges: CommentEdge[]
-  aggregate: AggregateComment
+  edges: PostEdge[]
+  aggregate: AggregatePost
 }
 
 /*
- * An edge in a connection.
-
- */
-export interface FeedEdge {
-  node: Feed
-  cursor: String
-}
-
-export interface AggregateUser {
-  count: Int
-}
-
-/*
-The `Boolean` scalar type represents `true` or `false`.
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
 */
-export type Boolean = boolean
+export type Long = string
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
@@ -3277,10 +2547,9 @@ The `Int` scalar type represents non-fractional signed whole numeric values. Int
 export type Int = number
 
 /*
-The `Long` scalar type represents non-fractional signed whole numeric values.
-Long can represent values between -(2^63) and 2^63 - 1.
+The `Boolean` scalar type represents `true` or `false`.
 */
-export type Long = string
+export type Boolean = boolean
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
