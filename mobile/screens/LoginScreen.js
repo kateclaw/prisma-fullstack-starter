@@ -7,11 +7,15 @@ import {
   Text,
   TextInput,
   AsyncStorage,
-  Alert
+  Alert,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback
 } from "react-native";
 
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
+
+// var DismissKeyboard = require("dismissKeyboard");
 
 // FORM SET UP
 import t from "tcomb-form-native";
@@ -65,46 +69,67 @@ export default class LoginScreen extends React.Component {
       <Mutation mutation={LOGIN}>
         {(login, { data, loading, error }) => {
           return (
-            <View style={styles.container}>
-              <Form ref={c => (this._form = c)} type={User} options={options} />
-              <Button
-                title="Log in"
-                onPress={async () => {
-                  const value = this._form.getValue(); // use that ref to get the form value
-
-                  try {
-                    const { data } = await login({
-                      variables: {
-                        username: value.username,
-                        password: value.password
-                      }
-                    });
-                    // once have token.
-                    // save it to asyncstorage.
-                    // redirect user to whatever page you want.
-                    AsyncStorage.setItem(data.login.token, "token");
-                    AsyncStorage.setItem(data.login.user.username, "username");
-
-                    this.props.navigation.navigate("Home");
-
-                    console.log({ data });
-                  } catch (error) {
-                    // redirect to sign up
-                    console.log({ error });
-
-                    Alert.alert(
-                      "There was an error logging you in. Try again!"
-                    );
-                  }
+            <KeyboardAvoidingView style={styles.container} behavior="padding">
+              {/* <TouchableWithoutFeedback
+                onPress={() => {
+                  DismissKeyboard();
                 }}
-              />
+              > */}
+              <View style={styles.container}>
+                <View style={styles.loginHolder}>
+                  <Form
+                    ref={c => (this._form = c)}
+                    type={User}
+                    options={options}
+                  />
+                  <Button
+                    title="Log in"
+                    color="#911826"
+                    onPress={async () => {
+                      const value = this._form.getValue(); // use that ref to get the form value
 
-              <Text>New to Shout?</Text>
-              <Button
-                title="Sign up"
-                onPress={() => this.props.navigation.navigate("Signup")}
-              />
-            </View>
+                      try {
+                        const { data } = await login({
+                          variables: {
+                            username: value.username,
+                            password: value.password
+                          }
+                        });
+                        // once have token.
+                        // save it to asyncstorage.
+                        // redirect user to whatever page you want.
+                        AsyncStorage.setItem(data.login.token, "token");
+                        AsyncStorage.setItem(
+                          data.login.user.username,
+                          "username"
+                        );
+
+                        this.props.navigation.navigate("Home");
+
+                        console.log({ data });
+                      } catch (error) {
+                        // redirect to sign up
+                        console.log({ error });
+
+                        Alert.alert(
+                          "There was an error logging you in. Try again!"
+                        );
+                      }
+                    }}
+                  />
+                </View>
+
+                <View style={styles.signupOption}>
+                  <Text style={{ fontSize: 18 }}>New to Shout?</Text>
+                  <Button
+                    title="Sign up"
+                    color="#911826"
+                    onPress={() => this.props.navigation.navigate("Signup")}
+                  />
+                </View>
+              </View>
+              {/* </TouchableWithoutFeedback> */}
+            </KeyboardAvoidingView>
           );
         }}
       </Mutation>
@@ -115,8 +140,22 @@ export default class LoginScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
-    marginTop: 50,
     padding: 20,
-    backgroundColor: "#ffffff"
+    flex: 1,
+    flexDirection: "column",
+    flexWrap: "wrap",
+    justifyContent: "space-evenly"
+    // backgroundColor: "#ffffff"
+  },
+  title: {
+    color: "#272727",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 100
+  },
+  signupOption: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center"
   }
 });

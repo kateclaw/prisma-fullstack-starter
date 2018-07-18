@@ -24,7 +24,7 @@ const HomeStack = createStackNavigator(
 
 const LoginStack = createStackNavigator(
   {
-    Lgoin: LoginScreen
+    Login: LoginScreen
   },
   {
     headerMode: "none"
@@ -61,7 +61,7 @@ const DrawerStack = createDrawerNavigator(
     }
   },
   {
-    initialRouteName: "Home"
+    initialRouteName: "Login"
   }
 );
 
@@ -75,8 +75,8 @@ export default createStackNavigator(
     initialRouteName: "DrawerStack",
     headerMode: "float",
     navigationOptions: ({ navigation }) => ({
-      headerStyle: { backgroundColor: "#4C3E54" },
-      // title: "Welcome!",
+      headerStyle: { backgroundColor: "#911826" },
+      title: "shout!",
       headerTintColor: "white",
       headerLeft: (
         <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
