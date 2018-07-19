@@ -7,7 +7,7 @@ import { ApolloProvider } from "react-apollo";
 
 // Apollo client
 const client = new ApolloClient({
-  link: new HttpLink({ uri: "http://192.168.1.153:4000" }),
+  link: new HttpLink({ uri: "http://localhost:4000" }),
   cache: new InMemoryCache().restore({})
 });
 
@@ -37,8 +37,6 @@ export default class App extends React.Component {
         </ApolloProvider>
       );
     }
-
-    
   }
 
   _loadResourcesAsync = async () => {

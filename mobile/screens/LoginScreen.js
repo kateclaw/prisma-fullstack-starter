@@ -53,9 +53,17 @@ export default class LoginScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { state, navigate } = navigation;
     return {
-    title: "Log in",
+      title: "Log in",
+      header: null
     };
   };
+
+  async componentDidMount() {
+    const token = await AsyncStorage.getItem("token");
+    if (token) {
+      this.props.navigation.navigate("Home");
+    }
+  }
 
   handleSubmit = () => {
     const value = this._form.getValue(); // use that ref to get the form value
@@ -63,7 +71,6 @@ export default class LoginScreen extends React.Component {
 
   render() {
     return (
-  
       <Mutation mutation={LOGIN}>
         {(login, { data, loading, error }) => {
           return (
@@ -84,8 +91,11 @@ export default class LoginScreen extends React.Component {
                     // once have token.
                     // save it to asyncstorage.
                     // redirect user to whatever page you want.
-                    AsyncStorage.setItem(data.login.token, "token");
-                    AsyncStorage.setItem(data.login.user.username, "username");
+                    await AsyncStorage.setItem("token", data.login.token);
+                    await AsyncStorage.setItem(
+                      "username",
+                      data.login.user.username
+                    );
 
                     this.props.navigation.navigate("Home");
 
@@ -119,6 +129,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 50,
     padding: 20,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#ffffff"
   }
 });
