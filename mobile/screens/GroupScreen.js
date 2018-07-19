@@ -10,6 +10,7 @@ const GET_GROUPS = gql`
   query {
     me {
       groups {
+        id
         name
       }
     }
@@ -17,8 +18,11 @@ const GET_GROUPS = gql`
 `;
 
 export default class GroupScreen extends React.Component {
-  static navigationOptions = {
-    drawerLabel: "Groups"
+  static navigationOptions = ({ navigation }) => {
+    const { state, navigate } = navigation;
+    return {
+      title: "Groups"
+    };
   };
 
   render() {
@@ -37,7 +41,6 @@ export default class GroupScreen extends React.Component {
                 }
                 return "Uh oh something ain't right";
               }
-              console.log(`HI ${data.me}`);
 
               return (
                 <View>
@@ -48,7 +51,20 @@ export default class GroupScreen extends React.Component {
                     }}
                   />
                   {data.me.groups.map(display => {
-                    return <Text key={display.name}>{display.name}</Text>;
+                    // return <Text key={display.id}>{display.name}</Text>;
+                    return (
+                      <Button
+                        title={display.name}
+                        onPress={() => {
+                          this.props.navigation.navigate({
+                            routeName: "OpenGroup",
+                            params: {
+                              groupId: display.id
+                            }
+                          });
+                        }}
+                      />
+                    );
                   })}
                 </View>
               );

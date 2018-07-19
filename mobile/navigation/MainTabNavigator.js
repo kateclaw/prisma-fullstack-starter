@@ -15,6 +15,7 @@ import SignupScreen from "../screens/SignupScreen";
 import GroupScreen from "../screens/GroupScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import CreateGroupScreen from "../screens/CreateGroupScreen";
+import OpenGroupScreen from "../screens/OpenGroupScreen";
 
 const HomeStack = createStackNavigator(
   {
@@ -99,6 +100,9 @@ export default createStackNavigator(
     },
     Signup: {
       screen: SignupScreen
+    },
+    OpenGroup: {
+      screen: OpenGroupScreen
     }
   },
   {
