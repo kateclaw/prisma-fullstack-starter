@@ -19,7 +19,6 @@ type Group {
   # events: [Event!]!
 }
 
-
 type Post {
   id: ID! @unique
   author: User!
@@ -34,5 +33,3 @@ type Comment {
   text: String!
   post: Post!
 }
-
-
