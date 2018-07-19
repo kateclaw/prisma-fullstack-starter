@@ -12,7 +12,7 @@ type Query {
 
   #query takes in a username and a group's ID
   #returns true or false depending on whether or not the user should be allowed to post
-  #also can be used at isAdmin function
+  #also can be considered as isAdmin function
   userCanPost(username: String!, group: ID!): Boolean!
 }
 
@@ -39,6 +39,12 @@ type Mutation {
 
   #text is the inner of the comment and post is the unique id of the parent post
   createComment(text: String!, post: ID!): Comment!
+
+  #takes in a username and group ID and adds a new member to the group
+  addMember(username: String!, group: ID!): Group!
+
+  #takes in a username and group ID and adds a new admin to the group
+  addNewAdmin(username: String!, group: ID!): Group!
 }
 
 type AuthPayload {

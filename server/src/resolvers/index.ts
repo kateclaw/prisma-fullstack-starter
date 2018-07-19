@@ -3,14 +3,14 @@ import Query from "./Query"
 import { auth } from "./Mutation/auth"
 import { group } from "./Mutation/group"
 import { AuthPayload } from "./AuthPayload"
-// import { addMembers } from "./Mutation/addMembers"
+import { addMembers } from "./Mutation/addMembers"
 
 export const resolvers = {
   Query,
   Mutation: {
     ...auth,
-    ...group
-    // ...addMembers
+    ...group,
+    ...addMembers
   },
   AuthPayload
 }
