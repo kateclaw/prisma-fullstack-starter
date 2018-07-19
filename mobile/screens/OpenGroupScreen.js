@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Keyboard,
+  KeyboardAvoidingView
+} from "react-native";
 import Feed from "../components/Feed";
 import Post from "../components/Post";
 import { Query } from "react-apollo";
@@ -17,7 +24,7 @@ export default class OpenGroupScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { state, navigate } = navigation;
     return {
-      title: "Group Feed Screen"
+      title: "Group Feed"
     };
   };
 
@@ -25,7 +32,7 @@ export default class OpenGroupScreen extends React.Component {
     const { navigation } = this.props;
     const groupId = navigation.state.params && navigation.state.params.groupId;
     return (
-      <View>
+      <View style={styles.container}>
         <Query
           query={GET_POSTS}
           pollInterval={500}
@@ -42,15 +49,26 @@ export default class OpenGroupScreen extends React.Component {
               return <Text>Oops, somehing blew up.</Text>;
             }
             if (!data.postsForGroup) {
-              return <Text> no data yet</Text>;
+              return <Text> no data yet </Text>;
             }
 
             return (
-              <View>
-                {/* <Text>{groupId}</Text> */}
-                <Feed posts={data.postsForGroup} />
-                <Post refetchPosts={refetch} groupId={groupId} />
-              </View>
+              <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior="padding"
+                enabled
+              >
+                <View style={styles.holder}>
+                  <View style={styles.feedHolder}>
+                    <ScrollView>
+                      <Feed posts={data.postsForGroup} />
+                    </ScrollView>
+                  </View>
+                  <View style={styles.postHolder}>
+                    <Post refetchPosts={refetch} groupId={groupId} />
+                  </View>
+                </View>
+              </KeyboardAvoidingView>
             );
           }}
         </Query>
@@ -58,3 +76,24 @@ export default class OpenGroupScreen extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    padding: 20
+  },
+  holder: {
+    flex: 1
+  },
+  feedHolder: {
+    flex: 0.8
+  },
+  postHolder: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 60,
+    flex: 0.2
+  }
+});

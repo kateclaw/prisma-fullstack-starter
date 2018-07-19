@@ -36,6 +36,13 @@ export default class GroupScreen extends React.Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
+        <Button
+          title="Create Group"
+          color="#911826"
+          onPress={() => {
+            this.props.navigation.navigate("CreateGroup");
+          }}
+        />
         <ScrollView style={styles.container}>
           <Query query={GET_GROUPS} pollInterval={500}>
             {({ loading, error, data }) => {
@@ -52,13 +59,6 @@ export default class GroupScreen extends React.Component {
 
               return (
                 <View>
-                  <Button
-                    title="Create Group"
-                    color="#911826"
-                    onPress={() => {
-                      this.props.navigation.navigate("CreateGroup");
-                    }}
-                  />
                   {data.me.groups.map(display => {
                     return (
                       <View style={styles.groupHolder}>
