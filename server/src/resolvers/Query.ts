@@ -19,6 +19,15 @@ export default {
     )
   },
 
+  async commentsForPost(parent, args, ctx: Context, info) {
+    return await ctx.db.query.comments(
+      {
+        where: { post: { id: args.post } }
+      },
+      info
+    )
+  },
+
   async adminsForGroup(parent, args, ctx: Context, info) {
     return await ctx.db.query.users(
       { where: { adminOf_some: { id: args.group } } },
