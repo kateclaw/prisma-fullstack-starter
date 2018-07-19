@@ -1,7 +1,7 @@
 import React from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import { View, Button } from "react-native";
+import { View, Button, Text } from "react-native";
 import Post from "../components/Post";
 // import CreateGroupScreen from "../CreateGroupScreen"
 // import CreateGroupScreen from "./CreateGroupScreen";
@@ -25,15 +25,7 @@ export default class GroupScreen extends React.Component {
     return (
       <View>
         <View>
-          <Query
-            // onLoad={async () =>{
-            //  const name = await AsyncStorage.getItem("");
-            // }}
-            //  variables={{
-            //      email: email
-            //     }}
-            query={GET_GROUPS}
-          >
+          <Query query={GET_GROUPS} pollInterval={500}>
             {({ loading, error, data }) => {
               if (loading) {
                 return "Loading...";
@@ -46,34 +38,20 @@ export default class GroupScreen extends React.Component {
 
               return (
                 <View>
-                  {/* <CreateGroupScreen refetchGroups={refetch}/> */}
-                  {/* {data.groups.map(post => {
-                                          return (
-                                             <Post
-                                                 key={post.id}
-                                                 text={post.text}
-                                                 author={post.author}
-                                                />
-                                            )
-                                        })} */}
-
+                  <Button
+                    title="Create Group Screen"
+                    onPress={() => {
+                      this.props.navigation.navigate("CreateGroup");
+                    }}
+                  />
                   {data.me.groups.map(display => {
-                    return <Text key={display.groups}>{display.name}</Text>;
+                    return <Text key={display.name}>{display.name}</Text>;
                   })}
                 </View>
               );
             }}
           </Query>
         </View>
-
-        <Button
-          title="Create Group Screen"
-          onPress={() => {
-            {
-              this.props.navigation.navigate("CreateGroup");
-            }
-          }}
-        />
       </View>
     );
   }
