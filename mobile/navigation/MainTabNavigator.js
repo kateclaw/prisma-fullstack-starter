@@ -12,6 +12,8 @@ import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import SignupScreen from "../screens/SignupScreen";
+import GroupScreen from "../screens/GroupScreen";
+import CreateGroupScreen from "../screens/CreateGroupScreen";
 
 const HomeStack = createStackNavigator(
   {
@@ -24,7 +26,16 @@ const HomeStack = createStackNavigator(
 
 const LoginStack = createStackNavigator(
   {
-    Lgoin: LoginScreen
+    Login: LoginScreen
+  },
+  {
+    headerMode: "none"
+  }
+);
+
+const GroupStack = createStackNavigator(
+  {
+    Group: GroupScreen
   },
   {
     headerMode: "none"
@@ -48,20 +59,35 @@ const styles = StyleSheet.create({
   }
 });
 
+const AuthStack = createStackNavigator(
+  {
+    Login: {
+      screen: LoginStack
+    },
+    Signup: {
+      screen: SignupStack
+    }
+  },
+  {
+    headerMode: "none",
+    initialRouteName: "Login"
+  }
+);
+
 const DrawerStack = createDrawerNavigator(
   {
     Home: {
       screen: HomeStack
     },
-    Signup: {
-      screen: SignupStack
+    Groups: {
+      screen: GroupStack
     },
-    Login: {
-      screen: LoginStack
+    Auth: {
+      screen: AuthStack
     }
   },
   {
-    initialRouteName: "Home"
+    initialRouteName: "Auth"
   }
 );
 
@@ -69,11 +95,14 @@ export default createStackNavigator(
   {
     DrawerStack: {
       screen: DrawerStack
+    },
+    CreateGroup: {
+      screen: CreateGroupScreen
     }
   },
   {
     initialRouteName: "DrawerStack",
-    headerMode: "float",
+    headerMode: "screen",
     navigationOptions: ({ navigation }) => ({
       headerStyle: { backgroundColor: "#4C3E54" },
       // title: "Welcome!",

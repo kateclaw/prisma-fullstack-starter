@@ -91,8 +91,8 @@ export default class SignupScreen extends React.Component {
                         password: value.password
                       }
                     });
-                    AsyncStorage.setItem(data.signup.token, "token");
-                    AsyncStorage.setItem(data.signup.user.username, "username");
+                    AsyncStorage.setItem("token", data.signup.token);
+                    AsyncStorage.setItem("username", data.signup.user.username);
 
                     // CHANGE THIS TO GROUP PAGE
                     this.props.navigation.navigate("Home");
