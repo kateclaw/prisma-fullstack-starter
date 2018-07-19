@@ -47,7 +47,7 @@ export default class OpenGroupScreen extends React.Component {
 
             return (
               <View>
-                <Text>{groupId}</Text>
+                {/* <Text>{groupId}</Text> */}
                 <Feed posts={data.postsForGroup} />
                 <Post refetchPosts={refetch} groupId={groupId} />
               </View>

@@ -13,6 +13,7 @@ import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import SignupScreen from "../screens/SignupScreen";
 import GroupScreen from "../screens/GroupScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 import CreateGroupScreen from "../screens/CreateGroupScreen";
 import OpenGroupScreen from "../screens/OpenGroupScreen";
 
@@ -52,6 +53,15 @@ const SignupStack = createStackNavigator(
   }
 );
 
+const ProfileStack = createStackNavigator(
+  {
+    Profile: ProfileScreen
+  },
+  {
+    headerMode: "none"
+  }
+);
+
 const styles = StyleSheet.create({
   icon: {
     width: 24,
@@ -83,13 +93,12 @@ const DrawerStack = createDrawerNavigator(
     Groups: {
       screen: GroupStack
     },
-    Login: {
-      screen: LoginStack
+    Profile: {
+      screen: ProfileStack
     }
-    
   },
   {
-    initialRouteName: "Login"
+    initialRouteName: "Home"
   }
 );
 
@@ -101,6 +110,12 @@ export default createStackNavigator(
     CreateGroup: {
       screen: CreateGroupScreen
     },
+    Login: {
+      screen: LoginScreen
+    },
+    Signup: {
+      screen: SignupScreen
+    },
     OpenGroup: {
       screen: OpenGroupScreen
     }
@@ -109,8 +124,8 @@ export default createStackNavigator(
     initialRouteName: "DrawerStack",
     headerMode: "screen",
     navigationOptions: ({ navigation }) => ({
-      headerStyle: { backgroundColor: "#4C3E54" },
-      // title: "Welcome!",
+      headerStyle: { backgroundColor: "#911826" },
+      title: "shout!",
       headerTintColor: "white",
       headerLeft: (
         <TouchableOpacity onPress={() => navigation.toggleDrawer()}>

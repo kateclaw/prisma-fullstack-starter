@@ -7,7 +7,8 @@ import {
   Text,
   TouchableOpacity,
   View,
-  StatusBar
+  StatusBar,
+  AsyncStorage
 } from "react-native";
 import { WebBrowser } from "expo";
 import { Query } from "react-apollo";
@@ -23,6 +24,13 @@ export default class HomeScreen extends React.Component {
       mode: "card"
     };
   };
+
+  async componentDidMount() {
+    const token = await AsyncStorage.getItem("token");
+    if (!token) {
+      this.props.navigation.navigate("Login");
+    }
+  }
 
   render() {
     return (

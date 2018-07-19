@@ -5,31 +5,37 @@ import {
   StyleSheet,
   Button,
   Text,
-  AsyncStorage
+  AsyncStorage,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Alert,
+  StatusBar
 } from "react-native";
 
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
+
+var DismissKeyboard = require("dismissKeyboard");
 
 // FORM SET UP
 import t from "tcomb-form-native";
 const Form = t.form.Form;
 
 const User = t.struct({
-  email: t.String,
   name: t.String,
+  email: t.String,
   username: t.String,
   password: t.String
 });
 
 const options = {
-  auto: "placeholders",
-  fields: {
-    password: {
-      password: true,
-      secureTextEntry: true
-    }
-  }
+  auto: "placeholders"
+  // fields: {
+  //   password: {
+  //     password: true,
+  //     secureTextEntry: true
+  //   }
+  // }
 };
 
 // BACKEND SETUP
@@ -67,7 +73,6 @@ export default class SignupScreen extends React.Component {
 
   handleSubmit = () => {
     const value = this._form.getValue(); // use that ref to get the form value
-    console.log("value: ", value);
   };
 
   render() {
@@ -75,40 +80,59 @@ export default class SignupScreen extends React.Component {
       <Mutation mutation={SIGNUP}>
         {(signup, { data, loading, error }) => {
           return (
-            <View style={styles.container}>
-              <Form ref={c => (this._form = c)} type={User} options={options} />
-              <Button
-                title="Sign up"
-                onPress={async () => {
-                  const value = this._form.getValue(); // use that ref to get the form value
-
-                  try {
-                    const { data } = await signup({
-                      variables: {
-                        email: value.email,
-                        name: value.name,
-                        username: value.username,
-                        password: value.password
-                      }
-                    });
-                    AsyncStorage.setItem("token", data.signup.token);
-                    AsyncStorage.setItem("username", data.signup.user.username);
-
-                    // CHANGE THIS TO GROUP PAGE
-                    this.props.navigation.navigate("Home");
-
-                    console.log({ data });
-                  } catch (error) {
-                    // redirect to sign up
-                    console.log({ error });
-
-                    Alert.alert(
-                      "There was an error signing you up. Try again!"
-                    );
-                  }
+            <KeyboardAvoidingView style={styles.container} behavior="padding">
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  DismissKeyboard();
                 }}
-              />
-            </View>
+              >
+                <View style={styles.container}>
+                  <StatusBar barStyle="light-content" />
+                  <View style={styles.signupHolder}>
+                    <Form
+                      ref={c => (this._form = c)}
+                      type={User}
+                      options={options}
+                    />
+                    <Button
+                      title="Sign up"
+                      color="#911826"
+                      onPress={async () => {
+                        const value = this._form.getValue(); // use that ref to get the form value
+
+                        try {
+                          const { data } = await signup({
+                            variables: {
+                              name: value.name,
+                              email: value.email,
+                              username: value.username,
+                              password: value.password
+                            }
+                          });
+                          AsyncStorage.setItem("token", data.signup.token);
+                          AsyncStorage.setItem(
+                            "username",
+                            data.signup.user.username
+                          );
+
+                          // CHANGE THIS TO GROUP PAGE
+                          this.props.navigation.navigate("Home");
+
+                          console.log({ data });
+                        } catch (error) {
+                          // redirect to sign up
+                          console.log({ error });
+
+                          Alert.alert(
+                            "There was an error signing you up. Try again!"
+                          );
+                        }
+                      }}
+                    />
+                  </View>
+                </View>
+              </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
           );
         }}
       </Mutation>
@@ -119,8 +143,17 @@ export default class SignupScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
-    marginTop: 50,
     padding: 20,
-    backgroundColor: "#ffffff"
+    flex: 1,
+    flexDirection: "column",
+    flexWrap: "wrap",
+    justifyContent: "space-evenly"
+    // backgroundColor: "#ffffff"
+  },
+  title: {
+    color: "#272727",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 100
   }
 });
