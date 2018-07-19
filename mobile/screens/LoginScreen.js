@@ -70,12 +70,12 @@ export default class LoginScreen extends React.Component {
     };
   };
 
-  async componentDidMount() {
+async componentDidMount() {
     const token = await AsyncStorage.getItem("token");
     if (token) {
       this.props.navigation.navigate("Home");
     }
-  }
+  }  
 
   handleSubmit = () => {
     const value = this._form.getValue(); // use that ref to get the form value
