@@ -8,7 +8,8 @@ import {
   AsyncStorage,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
-  Alert
+  Alert,
+  StatusBar
 } from "react-native";
 
 import { Mutation } from "react-apollo";
@@ -86,6 +87,7 @@ export default class SignupScreen extends React.Component {
                 }}
               >
                 <View style={styles.container}>
+                  <StatusBar barStyle="light-content" />
                   <View style={styles.signupHolder}>
                     <Form
                       ref={c => (this._form = c)}

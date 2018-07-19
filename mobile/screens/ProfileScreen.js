@@ -5,7 +5,8 @@ import {
   StyleSheet,
   Image,
   Button,
-  AsyncStorage
+  AsyncStorage,
+  StatusBar
 } from "react-native";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
@@ -37,6 +38,7 @@ export default class ProfileScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <StatusBar barStyle="light-content" />
         <Query query={GET_MY_PROFILE} fetchPolicy="network-only">
           {({ loading, error, data }) => {
             if (loading) {
