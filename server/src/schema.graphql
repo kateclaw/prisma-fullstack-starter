@@ -10,7 +10,10 @@ type Query {
   nonAdminsForGroup(group: ID!): [User]
   allMembersForGroup(group: ID!): [User]
 
-  # userCanPost(username: String!, group: ID!): Boolean!
+  #query takes in a username and a group's ID
+  #returns true or false depending on whether or not the user should be allowed to post
+  #also can be used at isAdmin function
+  userCanPost(username: String!, group: ID!): Boolean!
 }
 
 type Mutation {

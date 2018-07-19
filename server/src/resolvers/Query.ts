@@ -1,6 +1,8 @@
 import { Context, getUserId } from "../utils"
 import { Group, User } from "../generated/prisma"
 
+let flag: boolean
+
 export default {
   async me(parent, args, ctx: Context, info) {
     const id = getUserId(ctx)
@@ -40,17 +42,23 @@ export default {
       },
       info
     )
+  },
+
+  async userCanPost(parent, args, ctx: Context, info) {
+    const group = await ctx.db.query.group(
+      { where: { id: args.group } },
+      `{ admins{
+        username
+      } }`
+    )
+
+    flag = false
+    group.admins.forEach(element => {
+      if (element.username == args.username) {
+        flag = true
+        console.log(flag)
+      }
+    })
+    return flag
   }
-
-  // async userCanPost(parent, args, ctx: Context, info) {
-
-  //   // const group = await ctx.db.query.group({ where: { id: args.group } }, info)
-  //   helper()
-
-  //   console.log(group.admins)
-
-  //   // let admins = grop.admins
-  //   // console.log("admins: " + group)
-  //   return true
-  // }
 }
