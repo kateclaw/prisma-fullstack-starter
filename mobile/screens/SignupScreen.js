@@ -21,8 +21,8 @@ import t from "tcomb-form-native";
 const Form = t.form.Form;
 
 const User = t.struct({
-  email: t.String,
   name: t.String,
+  email: t.String,
   username: t.String,
   password: t.String
 });
@@ -101,8 +101,8 @@ export default class SignupScreen extends React.Component {
                         try {
                           const { data } = await signup({
                             variables: {
-                              email: value.email,
                               name: value.name,
+                              email: value.email,
                               username: value.username,
                               password: value.password
                             }

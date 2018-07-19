@@ -1,17 +1,37 @@
 import React from "react";
-import { Platform, StatusBar, StyleSheet, View } from "react-native";
-import { AppLoading, Asset, Font, Icon } from "expo";
-import ApolloClient from "apollo-client";
-import { HttpLink, InMemoryCache } from "apollo-client-preset";
+import {
+  Platform,
+  StatusBar,
+  StyleSheet,
+  View,
+  AsyncStorage
+} from "react-native";
 import { ApolloProvider } from "react-apollo";
+import { AppLoading, Asset, Font, Icon } from "expo";
+import { ApolloClient } from "apollo-client";
+import { HttpLink, InMemoryCache, ApolloLink } from "apollo-client-preset";
+import { setContext } from "apollo-link-context";
+import AppNavigator from "./navigation/AppNavigator";
 
 // Apollo client
-const client = new ApolloClient({
-  link: new HttpLink({ uri: "http://192.168.1.153:4000" }),
-  cache: new InMemoryCache().restore({})
+
+const httpLink = new HttpLink({ uri: "http://10.0.20.65:4000" });
+const authLink = setContext(async (_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = await AsyncStorage.getItem("token");
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : ""
+    }
+  };
 });
 
-import AppNavigator from "./navigation/AppNavigator";
+const client = new ApolloClient({
+  link: ApolloLink.from([authLink, httpLink]),
+  cache: new InMemoryCache().restore({})
+});
 
 export default class App extends React.Component {
   state = {

@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, Button } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Button,
+  AsyncStorage
+} from "react-native";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
 
@@ -30,45 +37,46 @@ export default class ProfileScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.profileHolder}>
-          <View style={styles.profileInfo}>
-            <Text style={styles.profileName}>Name</Text>
-            <Text style={styles.profileUser}>Username</Text>
-            <Text style={styles.profileEmail}>Email</Text>
-          </View>
-          <View style={styles.profileImg}>
-            <Image source={require("../assets/images/profile.png")} />
-          </View>
-        </View>
-        <View style={styles.logoutHolder}>
-          {/* REMOVE TOKEN - LOG OUT USER */}
-          <Button
-            title="Log out"
-            color="#911826"
-            onPress={() => this.props.navigation.navigate("Login")}
-          />
-        </View>
-
-        <Query query={GET_MY_PROFILE}>
-          {({ data, loading, error }) => {
+        <Query query={GET_MY_PROFILE} fetchPolicy="network-only">
+          {({ loading, error, data }) => {
             if (loading) {
-              return "Loading...";
+              return <Text>"Loading..."</Text>;
             }
             if (error) {
-              return "Oops, somehing blew up.";
+              if (error.message === "GraphQL error: Not authorized") {
+                this.props.navigation.navigate("Login");
+              }
+              // return <Text>"Oops, somehing blew up."</Text>;
             }
-            if (!data) {
-              return "no data";
+            if (!data.me) {
+              return <Text>"no data"</Text>;
             }
+
             return (
-              <View>
-                {data.me.map(mine => {
-                  return <Text key={mine.id}>{mine.name}</Text>;
-                })}
+              <View style={styles.profileHolder}>
+                <View style={styles.profileInfo}>
+                  <Text style={styles.profileName}>{data.me.name}</Text>
+                  <Text style={styles.profileUser}>{data.me.username}</Text>
+                  <Text style={styles.profileEmail}>{data.me.email}</Text>
+                </View>
+                <View style={styles.profileImg}>
+                  <Image source={require("../assets/images/profile.png")} />
+                </View>
               </View>
             );
           }}
         </Query>
+
+        <View style={styles.logoutHolder}>
+          <Button
+            title="Log out"
+            color="#911826"
+            onPress={async () => {
+              await AsyncStorage.removeItem("token");
+              this.props.navigation.navigate("Login");
+            }}
+          />
+        </View>
       </View>
     );
   }

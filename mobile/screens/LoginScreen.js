@@ -22,6 +22,7 @@ var DismissKeyboard = require("dismissKeyboard");
 
 // FORM SET UP
 import t from "tcomb-form-native";
+import { hidden } from "ansi-colors";
 
 t.form.Form.templates = templates;
 
@@ -69,12 +70,12 @@ export default class LoginScreen extends React.Component {
     };
   };
 
-  // async componentDidMount() {
-  //   const token = await AsyncStorage.getItem("token");
-  //   if (token) {
-  //     this.props.navigation.navigate("Home");
-  //   }
-  // }
+  async componentDidMount() {
+    const token = await AsyncStorage.getItem("token");
+    if (token) {
+      this.props.navigation.navigate("Home");
+    }
+  }
 
   handleSubmit = () => {
     const value = this._form.getValue(); // use that ref to get the form value
@@ -111,9 +112,7 @@ export default class LoginScreen extends React.Component {
                               password: value.password
                             }
                           });
-                          // once have token.
-                          // save it to asyncstorage.
-                          // redirect user to whatever page you want.
+
                           await AsyncStorage.setItem("token", data.login.token);
                           await AsyncStorage.setItem(
                             "username",

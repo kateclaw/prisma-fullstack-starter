@@ -69,21 +69,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const AuthStack = createStackNavigator(
-  {
-    Login: {
-      screen: LoginStack
-    },
-    Signup: {
-      screen: SignupStack
-    }
-  },
-  {
-    headerMode: "none",
-    initialRouteName: "Login"
-  }
-);
-
 const DrawerStack = createDrawerNavigator(
   {
     Home: {
@@ -94,13 +79,10 @@ const DrawerStack = createDrawerNavigator(
     },
     Profile: {
       screen: ProfileStack
-    },
-    Auth: {
-      screen: AuthStack
     }
   },
   {
-    initialRouteName: "Auth"
+    initialRouteName: "Home"
   }
 );
 
@@ -111,6 +93,12 @@ export default createStackNavigator(
     },
     CreateGroup: {
       screen: CreateGroupScreen
+    },
+    Login: {
+      screen: LoginScreen
+    },
+    Signup: {
+      screen: SignupScreen
     }
   },
   {
