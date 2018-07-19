@@ -22,25 +22,16 @@ const Post = t.struct({
   text: t.String
 });
 
-
 const options = {
   auto: "placeholders"
 };
 
 // //BACKEND SET UP
 const CREATE_POST = gql`
-  mutation createPost(
-    $username: String!
-    $name: String!
-    $text: String!
-    $group: ID!
-  ) {
-    createPost(
-      text: $text
-      group: $group
-    ){
+  mutation createPost($text: String!, $group: ID!) {
+    createPost(text: $text, group: $group) {
       id
-      author{
+      author {
         username
       }
       text
@@ -80,15 +71,15 @@ export default class CreatePost extends React.Component {
                     const { data } = await createPost({
                       variables: {
                         username: username,
-                        text:value.text,
+                        text: value.text,
                         group: this.props.groupId
                       }
                     });
+
+                    await this.props.refetchPosts();
                     // once have token.
                     // save it to asyncstorage.
                     // redirect user to whatever page you want.
-
-                    
 
                     console.log({ data });
                   } catch (error) {
@@ -118,8 +109,6 @@ const styles = StyleSheet.create({
   }
 });
 
-
-
 // class Post extends React.Component{
 //     render () {
 //         return (
@@ -127,12 +116,12 @@ const styles = StyleSheet.create({
 //               <Panel bsStyle="info">
 //                  <Panel.Heading>
 //                      <Panel.Title componentClass="h3">{this.props.author.name}
-        
+
 //                      </Panel.Title>
 //                     </Panel.Heading>
 //                  <Panel.Body>{this.props.text}</Panel.Body>
 //                 </Panel>
-        
+
 //             </View>
 //         )
 //     }

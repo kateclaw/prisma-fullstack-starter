@@ -60,7 +60,6 @@ export default class GroupScreen extends React.Component {
                     }}
                   />
                   {data.me.groups.map(display => {
-                    // return <Text key={display.id}>{display.name}</Text>;
                     return (
                       <View style={styles.groupHolder}>
                         <Button
