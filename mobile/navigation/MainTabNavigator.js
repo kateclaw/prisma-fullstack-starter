@@ -14,6 +14,7 @@ import LoginScreen from "../screens/LoginScreen";
 import SignupScreen from "../screens/SignupScreen";
 import GroupScreen from "../screens/GroupScreen";
 import CreateGroupScreen from "../screens/CreateGroupScreen";
+import OpenGroupScreen from "../screens/OpenGroupScreen";
 
 const HomeStack = createStackNavigator(
   {
@@ -59,20 +60,20 @@ const styles = StyleSheet.create({
   }
 });
 
-const AuthStack = createStackNavigator(
-  {
-    Login: {
-      screen: LoginStack
-    },
-    Signup: {
-      screen: SignupStack
-    }
-  },
-  {
-    headerMode: "none",
-    initialRouteName: "Login"
-  }
-);
+// const AuthStack = createStackNavigator(
+//   {
+//     Login: {
+//       screen: LoginStack
+//     },
+//     Signup: {
+//       screen: SignupStack
+//     }
+//   },
+//   {
+//     headerMode: "none",
+//     initialRouteName: "Login"
+//   }
+// );
 
 const DrawerStack = createDrawerNavigator(
   {
@@ -82,12 +83,13 @@ const DrawerStack = createDrawerNavigator(
     Groups: {
       screen: GroupStack
     },
-    Auth: {
-      screen: AuthStack
+    Login: {
+      screen: LoginStack
     }
+    
   },
   {
-    initialRouteName: "Auth"
+    initialRouteName: "Login"
   }
 );
 
@@ -98,6 +100,9 @@ export default createStackNavigator(
     },
     CreateGroup: {
       screen: CreateGroupScreen
+    },
+    OpenGroup: {
+      screen: OpenGroupScreen
     }
   },
   {
