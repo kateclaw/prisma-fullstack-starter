@@ -48,19 +48,20 @@ export default class GroupScreen extends React.Component {
                     }}
                   />
                   {data.me.groups.map(display => {
-                    // return <Text key={display.id}>{display.name}</Text>;
                     return (
-                      <Button
-                        title={display.name}
-                        onPress={() => {
-                          this.props.navigation.navigate({
-                            routeName: "OpenGroup",
-                            params: {
-                              groupId: display.id
-                            }
-                          });
-                        }}
-                      />
+                      <View>
+                        <Button
+                          title={display.name}
+                          onPress={() => {
+                            this.props.navigation.navigate({
+                              routeName: "OpenGroup",
+                              params: {
+                                groupId: display.id
+                              }
+                            });
+                          }}
+                        />
+                      </View>
                     );
                   })}
                 </View>
