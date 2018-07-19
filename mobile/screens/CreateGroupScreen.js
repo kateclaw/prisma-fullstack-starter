@@ -62,7 +62,7 @@ export default class CreateGroupScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { state, navigate } = navigation;
     return {
-      title: "Create Group Screen"
+      title: "Create Group"
     };
   };
 
@@ -73,12 +73,14 @@ export default class CreateGroupScreen extends React.Component {
           return (
             <View style={styles.container}>
               <Form
+                style={styles.formHolder}
                 ref={c => (this._CreateGroupForm = c)}
                 type={Group}
                 options={options}
               />
               <Button
-                title="createGroup"
+                title="Create"
+                color="#911826"
                 onPress={async () => {
                   const value = this._CreateGroupForm.getValue();
                   const members = value.members.split(",");
@@ -127,8 +129,14 @@ export default class CreateGroupScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
-    marginTop: 50,
     padding: 20,
+    flex: 1,
+    flexDirection: "column",
+    flexWrap: "wrap",
+    justifyContent: "space-evenly",
     backgroundColor: "#ffffff"
+  },
+  formHolder: {
+    marginTop: 100
   }
 });
