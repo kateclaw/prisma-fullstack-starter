@@ -58,4 +58,8 @@ export const addMembers = {
       info
     )
   }
+
+  // async removeMember(parent, args, ctx: Context, info){
+
+  // }
 }

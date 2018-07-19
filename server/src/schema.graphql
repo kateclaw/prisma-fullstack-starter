@@ -5,6 +5,7 @@ type Query {
 
   #given a group's ID postsForGroup will return an array of tweets in the proper order
   postsForGroup(group: ID!): [Post]
+  commentsForPost(post: ID!): [Comment]
 
   adminsForGroup(group: ID!): [User]
   nonAdminsForGroup(group: ID!): [User]
