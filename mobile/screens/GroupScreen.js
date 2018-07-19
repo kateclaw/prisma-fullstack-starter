@@ -1,7 +1,14 @@
 import React from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import { View, Button, Text, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Button,
+  Text,
+  StyleSheet,
+  ScrollView,
+  StatusBar
+} from "react-native";
 import Post from "../components/Post";
 // import CreateGroupScreen from "../CreateGroupScreen"
 // import CreateGroupScreen from "./CreateGroupScreen";
@@ -28,6 +35,7 @@ export default class GroupScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <StatusBar barStyle="light-content" />
         <ScrollView style={styles.container}>
           <Query query={GET_GROUPS} pollInterval={500}>
             {({ loading, error, data }) => {

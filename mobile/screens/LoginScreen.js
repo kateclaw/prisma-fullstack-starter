@@ -10,7 +10,8 @@ import {
   Alert,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
-  Scene
+  Scene,
+  StatusBar
 } from "react-native";
 
 const templates = require("tcomb-form-native/lib/templates/bootstrap");
@@ -70,12 +71,12 @@ export default class LoginScreen extends React.Component {
     };
   };
 
-async componentDidMount() {
+  async componentDidMount() {
     const token = await AsyncStorage.getItem("token");
     if (token) {
       this.props.navigation.navigate("Home");
     }
-  }  
+  }
 
   handleSubmit = () => {
     const value = this._form.getValue(); // use that ref to get the form value
@@ -93,6 +94,7 @@ async componentDidMount() {
                 }}
               >
                 <View style={styles.container}>
+                  <StatusBar barStyle="light-content" />
                   <View style={styles.loginHolder}>
                     <Form
                       ref={c => (this._form = c)}
