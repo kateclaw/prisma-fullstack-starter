@@ -5,6 +5,15 @@ type Query {
 
   #given a group's ID postsForGroup will return an array of tweets in the proper order
   postsForGroup(group: ID!): [Post]
+
+  adminsForGroup(group: ID!): [User]
+  nonAdminsForGroup(group: ID!): [User]
+  allMembersForGroup(group: ID!): [User]
+
+  #query takes in a username and a group's ID
+  #returns true or false depending on whether or not the user should be allowed to post
+  #also can be used at isAdmin function
+  userCanPost(username: String!, group: ID!): Boolean!
 }
 
 type Mutation {

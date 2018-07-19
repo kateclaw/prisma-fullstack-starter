@@ -7,7 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
-  StatusBar,
+  StatusBar
 } from "react-native";
 import { WebBrowser } from "expo";
 import { Query } from "react-apollo";
@@ -16,14 +16,18 @@ import gql from "graphql-tag";
 import { MonoText } from "../components/StyledText";
 
 export default class HomeScreen extends React.Component {
-  static navigationOptions = {
-    drawerLabel: "Home"
+  static navigationOptions = ({ navigation }) => {
+    return {
+      drawerLabel: "Home",
+      headerMode: "screen",
+      mode: "card"
+    };
   };
 
   render() {
     return (
       <View style={styles.container}>
-      <StatusBar barStyle="light-content"/>
+        <StatusBar barStyle="light-content" />
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.contentContainer}

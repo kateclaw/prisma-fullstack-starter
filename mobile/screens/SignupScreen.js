@@ -7,11 +7,14 @@ import {
   Text,
   AsyncStorage,
   KeyboardAvoidingView,
+  TouchableWithoutFeedback,
   Alert
 } from "react-native";
 
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
+
+var DismissKeyboard = require("dismissKeyboard");
 
 // FORM SET UP
 import t from "tcomb-form-native";
@@ -25,13 +28,13 @@ const User = t.struct({
 });
 
 const options = {
-  auto: "placeholders",
-  fields: {
-    password: {
-      password: true,
-      secureTextEntry: true
-    }
-  }
+  auto: "placeholders"
+  // fields: {
+  //   password: {
+  //     password: true,
+  //     secureTextEntry: true
+  //   }
+  // }
 };
 
 // BACKEND SETUP
@@ -77,50 +80,56 @@ export default class SignupScreen extends React.Component {
         {(signup, { data, loading, error }) => {
           return (
             <KeyboardAvoidingView style={styles.container} behavior="padding">
-              <View style={styles.container}>
-                <View style={styles.signupHolder}>
-                  <Form
-                    ref={c => (this._form = c)}
-                    type={User}
-                    options={options}
-                  />
-                  <Button
-                    title="Sign up"
-                    color="#911826"
-                    onPress={async () => {
-                      const value = this._form.getValue(); // use that ref to get the form value
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  DismissKeyboard();
+                }}
+              >
+                <View style={styles.container}>
+                  <View style={styles.signupHolder}>
+                    <Form
+                      ref={c => (this._form = c)}
+                      type={User}
+                      options={options}
+                    />
+                    <Button
+                      title="Sign up"
+                      color="#911826"
+                      onPress={async () => {
+                        const value = this._form.getValue(); // use that ref to get the form value
 
-                      try {
-                        const { data } = await signup({
-                          variables: {
-                            email: value.email,
-                            name: value.name,
-                            username: value.username,
-                            password: value.password
-                          }
-                        });
-                        AsyncStorage.setItem(data.signup.token, "token");
-                        AsyncStorage.setItem(
-                          data.signup.user.username,
-                          "username"
-                        );
+                        try {
+                          const { data } = await signup({
+                            variables: {
+                              email: value.email,
+                              name: value.name,
+                              username: value.username,
+                              password: value.password
+                            }
+                          });
+                          AsyncStorage.setItem("token", data.signup.token);
+                          AsyncStorage.setItem(
+                            "username",
+                            data.signup.user.username
+                          );
 
-                        // CHANGE THIS TO GROUP PAGE
-                        this.props.navigation.navigate("Home");
+                          // CHANGE THIS TO GROUP PAGE
+                          this.props.navigation.navigate("Home");
 
-                        console.log({ data });
-                      } catch (error) {
-                        // redirect to sign up
-                        console.log({ error });
+                          console.log({ data });
+                        } catch (error) {
+                          // redirect to sign up
+                          console.log({ error });
 
-                        Alert.alert(
-                          "There was an error signing you up. Try again!"
-                        );
-                      }
-                    }}
-                  />
+                          Alert.alert(
+                            "There was an error signing you up. Try again!"
+                          );
+                        }
+                      }}
+                    />
+                  </View>
                 </View>
-              </View>
+              </TouchableWithoutFeedback>
             </KeyboardAvoidingView>
           );
         }}
