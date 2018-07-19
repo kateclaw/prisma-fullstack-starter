@@ -1,5 +1,5 @@
 # source: https://eu1.prisma.sh/kylepecci-e3ce8e/prisma/dev
-# timestamp: Wed Jul 18 2018 18:04:46 GMT+0100 (Western European Summer Time)
+# timestamp: Thu Jul 19 2018 03:26:54 GMT+0100 (Western European Summer Time)
 
 type AggregateComment {
   count: Int!
