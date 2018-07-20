@@ -56,7 +56,7 @@ export default class GroupScreen extends React.Component {
           <Query query={GET_GROUPS} pollInterval={500}>
             {({ loading, error, data }) => {
               if (loading) {
-                return "Loading...";
+                return <mdl.Spinner />;
               }
 
               if (error) {

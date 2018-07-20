@@ -59,8 +59,9 @@ export default class OpenGroupScreen extends React.Component {
               <View>
                 {/* <Text>{groupId}</Text> */}
                 <Feed posts={data.postsForGroup} />
+                <Post refetchPosts={refetch} groupId={groupId} />
 
-                <Query
+                {/* <Query
                   query={ADMIN_CHECK}
                   variables={{
                     username: username,
@@ -70,11 +71,11 @@ export default class OpenGroupScreen extends React.Component {
                   {({ loading, error, data }) => {
                     console.log(data.userCanPost);
 
-                    if (data.userCanPost) {
-                      return <Post refetchPosts={refetch} groupId={groupId} />;
-                    }
-                  }}
-                </Query>
+                //     if (data.userCanPost) {
+                //       return <Post refetchPosts={refetch} groupId={groupId} />;
+                //     }
+                //   }}
+                </Query> */}
               </View>
             );
           }}
