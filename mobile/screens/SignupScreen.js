@@ -115,7 +115,6 @@ export default class SignupScreen extends React.Component {
                             data.signup.user.username
                           );
 
-                          // CHANGE THIS TO GROUP PAGE
                           this.props.navigation.navigate("Home");
 
                           console.log({ data });
