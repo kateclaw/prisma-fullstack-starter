@@ -25,6 +25,7 @@ export default class OpenGroupScreen extends React.Component {
     const { state, navigate } = navigation;
     return {
       title: "Group Feed"
+      // header: null
     };
   };
 

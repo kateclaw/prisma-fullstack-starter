@@ -63,6 +63,7 @@ export default class CreateGroupScreen extends React.Component {
     const { state, navigate } = navigation;
     return {
       title: "Create Group"
+      // header: null
     };
   };
 
