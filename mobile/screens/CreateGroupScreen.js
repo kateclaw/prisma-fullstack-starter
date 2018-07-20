@@ -78,7 +78,7 @@ export default class CreateGroupScreen extends React.Component {
                 options={options}
               />
               <Button
-                title="createGroup"
+                title="Create Group"
                 onPress={async () => {
                   const value = this._CreateGroupForm.getValue();
                   const members = value.members.split(",");

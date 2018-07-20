@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, AsyncStorage, Alert } from "react-native";
 import Feed from "../components/Feed";
 import Post from "../components/Post";
 import { Query } from "react-apollo";
@@ -13,6 +13,14 @@ const GET_POSTS = gql`
   }
 `;
 
+const ADMIN_CHECK = gql`
+  query userCanPost($username: String!, $group: ID!) {
+    userCanPost(username: $username, group: $group)
+  }
+`;
+
+// {async() => {const username = await AsyncStorage.getItem("username")}}
+
 export default class OpenGroupScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { state, navigate } = navigation;
@@ -22,6 +30,7 @@ export default class OpenGroupScreen extends React.Component {
   };
 
   render() {
+    const username = AsyncStorage.getItem("username");
     const { navigation } = this.props;
     const groupId = navigation.state.params && navigation.state.params.groupId;
     return (
@@ -30,6 +39,7 @@ export default class OpenGroupScreen extends React.Component {
           query={GET_POSTS}
           pollInterval={500}
           variables={{
+            username: username,
             group: groupId
           }}
         >
@@ -49,7 +59,22 @@ export default class OpenGroupScreen extends React.Component {
               <View>
                 {/* <Text>{groupId}</Text> */}
                 <Feed posts={data.postsForGroup} />
-                <Post refetchPosts={refetch} groupId={groupId} />
+
+                <Query
+                  query={ADMIN_CHECK}
+                  variables={{
+                    username: username,
+                    group: groupId
+                  }}
+                >
+                  {({ loading, error, data }) => {
+                    console.log(data.userCanPost);
+
+                    if (data.userCanPost) {
+                      return <Post refetchPosts={refetch} groupId={groupId} />;
+                    }
+                  }}
+                </Query>
               </View>
             );
           }}

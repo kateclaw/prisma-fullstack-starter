@@ -9,6 +9,7 @@ import {
   ScrollView,
   StatusBar
 } from "react-native";
+import Modal from "react-native-modal";
 import Post from "../components/Post";
 // import CreateGroupScreen from "../CreateGroupScreen"
 // import CreateGroupScreen from "./CreateGroupScreen";
@@ -32,11 +33,26 @@ export default class GroupScreen extends React.Component {
     };
   };
 
+  //   state = {
+  //     modalVisible: false
+  //   };
+
+  //   setModalVisible(visible) {
+  //     this.setState({ modalVisible: visible });
+  //   }
+
   render() {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         <ScrollView style={styles.container}>
+          <Button
+            title="Create Group"
+            color="#911826"
+            onPress={() => {
+              this.props.navigation.navigate("CreateGroup");
+            }}
+          />
           <Query query={GET_GROUPS} pollInterval={500}>
             {({ loading, error, data }) => {
               if (loading) {
@@ -52,13 +68,21 @@ export default class GroupScreen extends React.Component {
 
               return (
                 <View>
-                  <Button
+                  {/* <Button
                     title="Create Group"
                     color="#911826"
                     onPress={() => {
-                      this.props.navigation.navigate("CreateGroup");
+                    //   <Modal isVisible={true} />;
+
+                        this.props.navigation.navigate("CreateGroup");
                     }}
                   />
+                  {/* <Modal isVisible={false}>
+                    <View style={{ flex: 1 }}>
+                      {this.props.navigation.navigate("CreateGroup")};
+                    </View>
+                  </Modal>; */}{" "}
+                  */}
                   {data.me.groups.map(display => {
                     return (
                       <View style={styles.groupHolder}>
