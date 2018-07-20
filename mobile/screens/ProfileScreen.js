@@ -35,6 +35,12 @@ const GET_MY_PROFILE = gql`
 `;
 
 export default class ProfileScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    const { state, navigate } = navigation;
+    return {
+      title: "Profile"
+    };
+  };
   render() {
     return (
       <View style={styles.container}>

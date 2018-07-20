@@ -6,17 +6,15 @@ import {
   ScrollView,
   Keyboard,
   KeyboardAvoidingView,
+  AsyncStorage,
   Button,
   Image,
-  TouchableWithoutFeedback,
   TouchableOpacity
 } from "react-native";
 import Feed from "../components/Feed";
 import Post from "../components/Post";
-import { Query } from "react-apollo";
+import { Query, graphql } from "react-apollo";
 import gql from "graphql-tag";
-
-var DismissKeyboard = require("dismissKeyboard");
 
 const GET_POSTS = gql`
   query postsForGroup($group: ID!) {
@@ -26,7 +24,17 @@ const GET_POSTS = gql`
   }
 `;
 
-export default class OpenGroupScreen extends React.Component {
+const ADMINS = gql`
+  query adminsForGroup($group: ID!) {
+    adminsForGroup(group: $group) {
+      username
+    }
+  }
+`;
+
+var flag = false;
+
+class OpenGroupScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { state, navigate } = navigation;
     return {
@@ -38,6 +46,14 @@ export default class OpenGroupScreen extends React.Component {
   render() {
     const { navigation } = this.props;
     const groupId = navigation.state.params && navigation.state.params.groupId;
+    const currentUsername = this.props.navigation.getParam("username");
+    const hasAdmin =
+      this.props.data.adminsForGroup &&
+      this.props.data.adminsForGroup.filter(a => {
+        return a.username === currentUsername;
+      });
+
+    console.log({ admins: this.props.data });
     return (
       <View style={styles.pageHolder}>
         <View style={styles.backHeader}>
@@ -52,14 +68,10 @@ export default class OpenGroupScreen extends React.Component {
               source={require("../assets/images/back-arrow.png")}
             />
           </TouchableOpacity>
-          {/* <View style={styles.headerTextHolder}>
-            <Text style={styles.headerText}>shout!</Text>
-          </View> */}
         </View>
         <View style={styles.container}>
           <Query
             query={GET_POSTS}
-            pollInterval={500}
             variables={{
               group: groupId
             }}
@@ -78,33 +90,25 @@ export default class OpenGroupScreen extends React.Component {
                   <Text style={styles.errorMsg}>Oops, somehing blew up.</Text>
                 );
               }
+
               if (!data.postsForGroup) {
-                return <Text style={styles.errorMsg}> No data yet! </Text>;
+                return <Text style={styles.errorMsg}> no data yet </Text>;
               }
 
               return (
-                <KeyboardAvoidingView
-                  style={{ flex: 1 }}
-                  behavior="padding"
-                  enabled
-                >
-                  <TouchableWithoutFeedback
-                    onPress={() => {
-                      DismissKeyboard();
-                    }}
-                  >
-                    <View style={styles.holder}>
-                      <View style={styles.feedHolder}>
-                        <ScrollView>
-                          <Feed posts={data.postsForGroup} />
-                        </ScrollView>
-                      </View>
+                <View style={{ flex: 1 }}>
+                  <View style={styles.feedHolder}>
+                    <ScrollView>
+                      <Feed posts={data.postsForGroup} />
+                    </ScrollView>
+                  </View>
+                  {hasAdmin &&
+                    hasAdmin.length > 0 && (
                       <View style={styles.postHolder}>
-                        <Post refetchPosts={refetch} groupId={groupId} />
+                        <Post refetchPosts={refetch} groupId={groupId} />;
                       </View>
-                    </View>
-                  </TouchableWithoutFeedback>
-                </KeyboardAvoidingView>
+                    )}
+                </View>
               );
             }}
           </Query>
@@ -114,6 +118,18 @@ export default class OpenGroupScreen extends React.Component {
   }
 }
 
+export default graphql(ADMINS, {
+  options: props => {
+    const groupId =
+      props.navigation.state.params && props.navigation.state.params.groupId;
+
+    return {
+      variables: {
+        group: groupId
+      }
+    };
+  }
+})(OpenGroupScreen);
 const styles = StyleSheet.create({
   pageHolder: {
     flex: 1

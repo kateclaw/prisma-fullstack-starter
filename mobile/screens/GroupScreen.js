@@ -8,7 +8,8 @@ import {
   StyleSheet,
   ScrollView,
   StatusBar,
-  Image
+  Image,
+  AsyncStorage
 } from "react-native";
 import Post from "../components/Post";
 // import CreateGroupScreen from "../CreateGroupScreen"
@@ -56,11 +57,12 @@ export default class GroupScreen extends React.Component {
               }
 
               if (error) {
+                console.log(error);
                 if (error.message === "GraphQL error: Not authorized") {
                   this.props.navigation.navigate("Login");
                 }
                 return (
-                  <Text style={(styles = errorMsg)}>
+                  <Text style={styles.errorMsg}>
                     "Uh oh something ain't right"
                   </Text>
                 );
@@ -70,15 +72,16 @@ export default class GroupScreen extends React.Component {
                 <View>
                   {data.me.groups.map(display => {
                     return (
-                      <View style={styles.groupHolder}>
+                      <View style={styles.groupHolder} key={display.id}>
                         <Button
                           title={display.name}
                           color="#272727"
-                          onPress={() => {
+                          onPress={async () => {
                             this.props.navigation.navigate({
                               routeName: "OpenGroup",
                               params: {
-                                groupId: display.id
+                                groupId: display.id,
+                                username: await AsyncStorage.getItem("username")
                               }
                             });
                           }}
