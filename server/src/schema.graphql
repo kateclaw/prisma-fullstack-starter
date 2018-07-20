@@ -14,7 +14,7 @@ type Query {
   #query takes in a username and a group's ID
   #returns true or false depending on whether or not the user should be allowed to post
   #also can be considered as isAdmin function
-  userCanPost(username: String!, group: ID!): Boolean!
+  userCanPost(username: String!, group: ID!): Bool!
 }
 
 type Mutation {
@@ -52,6 +52,9 @@ type AuthPayload {
   token: String!
   user: User!
 }
+ type Bool {
+   bool: Boolean!
+ }
 
 type User {
   id: ID!
