@@ -118,6 +118,9 @@ export default createStackNavigator(
     },
     OpenGroup: {
       screen: OpenGroupScreen
+    },
+    Profile: {
+      screen: ProfileScreen
     }
   },
   {

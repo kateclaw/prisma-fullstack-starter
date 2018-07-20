@@ -31,8 +31,8 @@ type Mutation {
   createGroup(
     username: String!
     name: String!
-    members: [String!]!
-    admins: [String!]!
+    members: [String]
+    admins: [String]
   ): Group!
 
   #text is the inner of the post and feed is the unique id of the parent feed

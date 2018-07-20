@@ -7,7 +7,8 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  StatusBar
+  StatusBar,
+  Image
 } from "react-native";
 import Modal from "react-native-modal";
 import Post from "../components/Post";
@@ -45,44 +46,45 @@ export default class GroupScreen extends React.Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
-        <ScrollView style={styles.container}>
+        <Button
+          title="Create Group"
+          color="#911826"
+          onPress={() => {
+            this.props.navigation.navigate("CreateGroup");
+          }}
+        />
+        {/* <ScrollView style={styles.container}>
           <Button
             title="Create Group"
             color="#911826"
             onPress={() => {
               this.props.navigation.navigate("CreateGroup");
             }}
-          />
+          /> */}
           <Query query={GET_GROUPS} pollInterval={500}>
             {({ loading, error, data }) => {
               if (loading) {
-                return <mdl.Spinner />;
+                
+                return (
+                  <View style={styles.loader}>
+                    <Image source={require("../assets/images/loader.gif")} />
+                  </View>
+                );
               }
 
               if (error) {
                 if (error.message === "GraphQL error: Not authorized") {
-                  this.props.navigation.navigate("Login");
+                  return this.props.navigation.navigate("Login");
                 }
-                return "Uh oh something ain't right";
+                return (
+                  <Text style={(styles.errorMsg)}>
+                    "Uh oh something ain't right"
+                  </Text>
+                );
               }
 
               return (
                 <View>
-                  {/* <Button
-                    title="Create Group"
-                    color="#911826"
-                    onPress={() => {
-                    //   <Modal isVisible={true} />;
-
-                        this.props.navigation.navigate("CreateGroup");
-                    }}
-                  />
-                  {/* <Modal isVisible={false}>
-                    <View style={{ flex: 1 }}>
-                      {this.props.navigation.navigate("CreateGroup")};
-                    </View>
-                  </Modal>; */}{" "}
-                  */}
                   {data.me.groups.map(display => {
                     return (
                       <View style={styles.groupHolder}>
@@ -105,7 +107,7 @@ export default class GroupScreen extends React.Component {
               );
             }}
           </Query>
-        </ScrollView>
+        {/* </ScrollView> */}
       </View>
     );
   }
@@ -122,5 +124,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#e0e0e0",
     marginTop: 20,
     padding: 20
+  },
+  loader: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  errorMsg: {
+    textAlign: "center"
   }
 });

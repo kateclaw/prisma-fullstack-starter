@@ -36,15 +36,15 @@ const User = t.struct({
 });
 
 const options = {
-  auto: "placeholders"
-  // fields: {
-  //   password: {
-  //     secureTextEntry: true,
-  //     autoCorrect: false,
-  //     returnKeyType: "next",
-  //     password: true
-  //   }
-  // }
+  auto: "placeholders",
+  fields: {
+    password: {
+      secureTextEntry: true,
+      autoCorrect: false,
+      returnKeyType: "next",
+      password: true
+    }
+  }
 };
 
 // //BACKEND SET UP
@@ -161,8 +161,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     flexWrap: "wrap",
-    justifyContent: "space-evenly"
-    // backgroundColor: "#ffffff"
+    justifyContent: "space-evenly",
+    backgroundColor: "#fff"
   },
   title: {
     color: "#272727",

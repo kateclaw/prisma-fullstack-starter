@@ -35,6 +35,13 @@ const GET_MY_PROFILE = gql`
 `;
 
 export default class ProfileScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    const { state, navigate } = navigation;
+    return {
+      title: "MyProfile"
+    };
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -42,13 +49,16 @@ export default class ProfileScreen extends React.Component {
         <Query query={GET_MY_PROFILE} fetchPolicy="network-only">
           {({ loading, error, data }) => {
             if (loading) {
-              return <Text>"Loading..."</Text>;
+              return (
+                <View style={styles.loader}>
+                  <Image source={require("../assets/images/loader.gif")} />
+                </View>
+              );
             }
             if (error) {
               if (error.message === "GraphQL error: Not authorized") {
                 this.props.navigation.navigate("Login");
               }
-              // return <Text>"Oops, somehing blew up."</Text>;
             }
             if (!data.me) {
               return <Text>"no data"</Text>;
@@ -93,14 +103,10 @@ const styles = StyleSheet.create({
   profileHolder: {
     flex: 1,
     marginTop: 100,
-    // marginLeft: 50
     flexWrap: "wrap",
     flexDirection: "row",
     justifyContent: "center",
     justifyContent: "space-evenly"
-  },
-  profileInfo: {
-    // padding: 20
   },
   profileName: {
     fontSize: 30,
@@ -117,5 +123,10 @@ const styles = StyleSheet.create({
   },
   logoutHolder: {
     marginBottom: 100
+  },
+  loader: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
   }
 });

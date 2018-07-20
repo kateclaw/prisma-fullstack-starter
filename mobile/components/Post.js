@@ -8,7 +8,8 @@ import {
   TextInput,
   AsyncStorage,
   Alert,
-  Scene
+  Scene,
+  KeyboardAvoidingView
 } from "react-native";
 
 import { Mutation } from "react-apollo";
@@ -43,7 +44,7 @@ export default class CreatePost extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { state, navigate } = navigation;
     return {
-      title: "Create Post Form"
+      title: "Create Post"
     };
   };
 
@@ -54,12 +55,14 @@ export default class CreatePost extends React.Component {
           return (
             <View style={styles.container}>
               <Form
+                style={styles.formHolder}
                 ref={c => (this._CreatePostForm = c)}
                 type={Post}
                 options={options}
               />
               <Button
                 title="Post"
+                color="#911826"
                 onPress={async () => {
                   const value = this._CreatePostForm.getValue();
                   const username = await AsyncStorage.getItem("username");
@@ -77,9 +80,6 @@ export default class CreatePost extends React.Component {
                     });
 
                     await this.props.refetchPosts();
-                    // once have token.
-                    // save it to asyncstorage.
-                    // redirect user to whatever page you want.
 
                     console.log({ data });
                   } catch (error) {
@@ -103,9 +103,8 @@ export default class CreatePost extends React.Component {
 const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
-    marginTop: 50,
-    padding: 20,
-    backgroundColor: "#ffffff"
+    backgroundColor: "#ffffff",
+    padding: 10
   }
 });
 

@@ -8,7 +8,9 @@ import {
   TextInput,
   AsyncStorage,
   Alert,
-  Scene
+  Scene,
+  TouchableOpacity,
+  Image
 } from "react-native";
 
 import { Mutation } from "react-apollo";
@@ -62,73 +64,109 @@ export default class CreateGroupScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { state, navigate } = navigation;
     return {
-      title: "Create Group Screen"
+      title: "Create Group",
+      header: null
     };
   };
 
   render() {
     return (
-      <Mutation mutation={CREATE_GROUP}>
-        {(createGroup, { data, loading, error }) => {
-          return (
-            <View style={styles.container}>
-              <Form
-                ref={c => (this._CreateGroupForm = c)}
-                type={Group}
-                options={options}
-              />
-              <Button
-                title="Create Group"
-                onPress={async () => {
-                  const value = this._CreateGroupForm.getValue();
-                  const members = value.members.split(",");
-                  const admins = value.admins.split(",");
-                  const username = await AsyncStorage.getItem("username");
-                  console.log({
-                    name: value.name,
-                    admins,
-                    members,
-                    username
-                  });
-                  try {
-                    const { data } = await createGroup({
-                      variables: {
-                        username: username,
-                        name: value.name,
-                        admins: admins,
-                        members: members
-                      }
+      <View style={styles.pageHolder}>
+        <View style={styles.backHeader}>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate("Group");
+            }}
+            style={styles.backButton}
+          >
+            <Image
+              style={{ width: 18, height: 18 }}
+              source={require("../assets/images/back-arrow.png")}
+            />
+          </TouchableOpacity>
+        </View>
+        <Mutation mutation={CREATE_GROUP}>
+          {(createGroup, { data, loading, error }) => {
+            return (
+              <View style={styles.container}>
+                <Form
+                  style={styles.formHolder}
+                  ref={c => (this._CreateGroupForm = c)}
+                  type={Group}
+                  options={options}
+                />
+                <Button
+                  title="Create"
+                  color="#911826"
+                  onPress={async () => {
+                    const value = this._CreateGroupForm.getValue();
+                    const members = value.members.split(",");
+                    const admins = value.admins.split(",");
+                    const username = await AsyncStorage.getItem("username");
+                    console.log({
+                      name: value.name,
+                      admins,
+                      members,
+                      username
                     });
-                    // once have token.
-                    // save it to asyncstorage.
-                    // redirect user to whatever page you want.
+                    try {
+                      const { data } = await createGroup({
+                        variables: {
+                          username: username,
+                          name: value.name,
+                          admins: admins,
+                          members: members
+                        }
+                      });
 
-                    this.props.navigation.navigate("Groups");
+                      this.props.navigation.navigate("Groups");
 
-                    console.log({ data });
-                  } catch (error) {
-                    // redirect to sign up
-                    console.log({ error });
+                      console.log({ data });
+                    } catch (error) {
+                      // redirect to sign up
+                      console.log({ error });
 
-                    Alert.alert(
-                      "There was an error creating a Group. Try again!"
-                    );
-                  }
-                }}
-              />
-            </View>
-          );
-        }}
-      </Mutation>
+                      Alert.alert(
+                        "There was an error creating a Group. Try again!"
+                      );
+                    }
+                  }}
+                />
+              </View>
+            );
+          }}
+        </Mutation>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  pageHolder: {
+    flex: 1
+  },
+  backHeader: {
+    height: 60,
+    width: "100%",
+    backgroundColor: "#911826",
+    flex: 0.1,
+    alignItems: "flex-start",
+    justifyContent: "flex-end"
+  },
+  backButton: {
+    marginLeft: 10,
+    marginBottom: 10
+  },
   container: {
     justifyContent: "center",
-    marginTop: 50,
     padding: 20,
+    flex: 1,
+    flexDirection: "column",
+    flexWrap: "wrap",
+    justifyContent: "space-evenly",
     backgroundColor: "#ffffff"
+  },
+  formHolder: {
+    marginTop: 100
   }
 });

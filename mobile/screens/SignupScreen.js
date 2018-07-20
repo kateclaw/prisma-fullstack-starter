@@ -115,7 +115,6 @@ export default class SignupScreen extends React.Component {
                             data.signup.user.username
                           );
 
-                          // CHANGE THIS TO GROUP PAGE
                           this.props.navigation.navigate("Home");
 
                           console.log({ data });
@@ -147,8 +146,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     flexWrap: "wrap",
-    justifyContent: "space-evenly"
-    // backgroundColor: "#ffffff"
+    justifyContent: "space-evenly",
+    backgroundColor: "#fff"
   },
   title: {
     color: "#272727",
