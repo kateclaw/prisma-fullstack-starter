@@ -53,7 +53,6 @@ export default class CreatePost extends React.Component {
       <Mutation mutation={CREATE_POST}>
         {(createPost, { data, loading, error }) => {
           return (
-            // <KeyboardAvoidingView style={styles.container} behavior="padding">
             <View style={styles.container}>
               <Form
                 style={styles.formHolder}
@@ -81,9 +80,6 @@ export default class CreatePost extends React.Component {
                     });
 
                     await this.props.refetchPosts();
-                    // once have token.
-                    // save it to asyncstorage.
-                    // redirect user to whatever page you want.
 
                     console.log({ data });
                   } catch (error) {
@@ -97,7 +93,6 @@ export default class CreatePost extends React.Component {
                 }}
               />
             </View>
-            // </KeyboardAvoidingView>
           );
         }}
       </Mutation>
