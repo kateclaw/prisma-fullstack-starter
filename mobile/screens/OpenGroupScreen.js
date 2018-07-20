@@ -20,6 +20,23 @@ const GET_POSTS = gql`
   }
 `;
 
+const ADMINS = gql`
+  query adminsForGroup($username: String!, $group: ID!) {
+    adminsForGroup(username: $username, group: $group) {
+      username
+    }
+  }
+`;
+
+function isAdmin(username, admins) {
+  if (admins.includes(username)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+var flag = false;
+
 export default class OpenGroupScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { state, navigate } = navigation;
@@ -53,22 +70,55 @@ export default class OpenGroupScreen extends React.Component {
             }
 
             return (
-              <KeyboardAvoidingView
-                style={{ flex: 1 }}
-                behavior="padding"
-                enabled
-              >
-                <View style={styles.holder}>
-                  <View style={styles.feedHolder}>
-                    <ScrollView>
-                      <Feed posts={data.postsForGroup} />
-                    </ScrollView>
-                  </View>
-                  <View style={styles.postHolder}>
-                    <Post refetchPosts={refetch} groupId={groupId} />
-                  </View>
-                </View>
-              </KeyboardAvoidingView>
+              <View>
+                {/* <Text>{groupId}</Text> */}
+                <Feed posts={data.postsForGroup} />
+
+                <Query
+                  query={ADMIN}
+                  variables={{
+                    username: username,
+                    group: groupId
+                  }}
+                >
+                  {({ loading, error, data }) => {
+                    console.log(data.adminsForGroup);
+                    if (loading) {
+                      return <Text> loading </Text>;
+                    }
+                    if (error) {
+                      return <Text> error </Text>;
+                    }
+
+                    flag = false;
+                    data.adminsForGroup.forEach(element => {
+                      if (element.username == username) {
+                        flag = true;
+                      }
+                    });
+
+                    if (flag) {
+                      return <Post refetchPosts={refetch} groupId={groupId} />;
+                    }
+                  }}
+                </Query>
+              </View>
+              // <KeyboardAvoidingView
+              //   style={{ flex: 1 }}
+              //   behavior="padding"
+              //   enabled
+              // >
+              //   <View style={styles.holder}>
+              //     <View style={styles.feedHolder}>
+              //       <ScrollView>
+              //         <Feed posts={data.postsForGroup} />
+              //       </ScrollView>
+              //     </View>
+              //     <View style={styles.postHolder}>
+              //       <Post refetchPosts={refetch} groupId={groupId} />
+              //     </View>
+              //   </View>
+              // </KeyboardAvoidingView>
             );
           }}
         </Query>
